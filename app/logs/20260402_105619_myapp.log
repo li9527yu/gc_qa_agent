@@ -1,0 +1,90 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+INFO:     Started server process [3043322]
+INFO:     Waiting for application startup.
+[2026-04-02 10:56:26] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+2026-04-02 10:56:26,307 - INFO - 启动Easy-RAG API服务...
+[2026-04-02 10:56:26] INFO     [rag_service.py:97] 开始初始化RAG服务...
+2026-04-02 10:56:26,307 - INFO - 开始初始化RAG服务...
+2026-04-02 10:56:26,307 - INFO - 正在从缓存加载语料库...
+2026-04-02 10:56:26,315 - INFO - 已从缓存加载 1428 段文本
+2026-04-02 10:56:26,315 - INFO - 缓存验证通过
+[2026-04-02 10:56:26] INFO     [rag_service.py:108] 语料库加载完成，共1428个文档
+2026-04-02 10:56:26,315 - INFO - 语料库加载完成，共1428个文档
+[2026-04-02 10:56:26] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
+2026-04-02 10:56:26,319 - INFO - 检测到语料库变化，当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
+[2026-04-02 10:56:26] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
+2026-04-02 10:56:26,319 - INFO - 将自动重建向量库以同步最新语料库
+[2026-04-02 10:56:26] INFO     [rag_service.py:137]    GPU 1 可用显存: 94.97 GB
+2026-04-02 10:56:26,415 - INFO -    GPU 1 可用显存: 94.97 GB
+2026-04-02 10:56:27,386 - INFO - Use pytorch device_name: cuda:0
+2026-04-02 10:56:27,387 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-02 10:56:29,031 - INFO - 1 prompt is loaded, with the key: query
+2026-04-02 10:56:29,190 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-02 10:56:29,191 - INFO - Rebuilding vector database...
+2026-04-02 10:56:29,191 - INFO - 语料库哈希值发生变化，需要重建缓存
+2026-04-02 10:56:29,191 - INFO - 当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
+2026-04-02 10:56:29,191 - INFO - 强制重建模式，删除所有缓存
+2026-04-02 10:56:29,191 - INFO - 删除分词缓存文件: tokenized_docs.pkl
+2026-04-02 10:56:29,191 - INFO - 未找到缓存文件，开始预处理语料...
+2026-04-02 10:56:29,191 - WARNING - 停用词文件 /home/tpc/suda/rag/easy-rag/rag_cache/stopwords/stopwords_hit.txt 不存在，跳过停用词过滤。
+分词处理中:   0%|          | 0/1428 [00:00<?, ?it/s]Building prefix dict from the default dictionary ...
+2026-04-02 10:56:29,193 - DEBUG - Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+2026-04-02 10:56:29,193 - DEBUG - Loading model from cache /tmp/jieba.cache
+Loading model cost 0.720 seconds.
+2026-04-02 10:56:29,913 - DEBUG - Loading model cost 0.720 seconds.
+Prefix dict has been built successfully.
+2026-04-02 10:56:29,913 - DEBUG - Prefix dict has been built successfully.
+分词处理中:   0%|          | 1/1428 [00:00<17:10,  1.39it/s]分词处理中:   7%|▋         | 98/1428 [00:00<00:08, 161.17it/s]分词处理中:  17%|█▋        | 245/1428 [00:00<00:02, 410.64it/s]分词处理中:  31%|███▏      | 448/1428 [00:01<00:01, 757.11it/s]分词处理中:  46%|████▌     | 653/1428 [00:01<00:00, 1058.77it/s]分词处理中:  61%|██████    | 865/1428 [00:01<00:00, 1323.97it/s]分词处理中:  75%|███████▍  | 1067/1428 [00:01<00:00, 1506.87it/s]分词处理中:  90%|████████▉ | 1284/1428 [00:01<00:00, 1686.34it/s]分词处理中: 100%|██████████| 1428/1428 [00:01<00:00, 951.39it/s] 
+2026-04-02 10:56:30,694 - INFO - 正在将分词结果缓存到 tokenized_docs.pkl ...
+2026-04-02 10:56:30,745 - INFO - 重建向量数据库...
+2026-04-02 10:57:01,843 - INFO - 向量数据库构建完成，共 1428 个文档
+[2026-04-02 10:57:01] INFO     [rag_service.py:169] 检索器初始化完成
+2026-04-02 10:57:01,851 - INFO - 检索器初始化完成
+[2026-04-02 10:57:01] INFO     [rag_service.py:175] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-02 10:57:01,852 - INFO - 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+[2026-04-02 10:57:01] INFO     [rag_service.py:176]    设备: cpu
+2026-04-02 10:57:01,852 - INFO -    设备: cpu
+2026-04-02 10:57:01,852 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-02 10:57:01,854 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-02 10:57:01,854 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
+2026-04-02 10:57:01,854 - INFO - Instruction: Given a query and a passage, determine whether the...
+2026-04-02 10:57:02,433 - INFO - Using existing pad_token: <|endoftext|>
+Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-04-02 10:57:03,186 - INFO - Set model.config.pad_token_id to: 151643
+2026-04-02 10:57:03,190 - INFO - Qwen3-Reranker model loaded successfully
+2026-04-02 10:57:03,190 - INFO - Qwen3 Reranker loaded successfully
+[2026-04-02 10:57:03] INFO     [rag_service.py:181] 重排器初始化完成
+2026-04-02 10:57:03,190 - INFO - 重排器初始化完成
+[2026-04-02 10:57:03] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+2026-04-02 10:57:03,250 - INFO - 🤖 初始化 LLM 客户端
+[2026-04-02 10:57:03] INFO     [llm_deepseek.py:91]    模式: local
+2026-04-02 10:57:03,251 - INFO -    模式: local
+[2026-04-02 10:57:03] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+2026-04-02 10:57:03,251 - INFO -    Base URL: http://localhost:9839/v1
+[2026-04-02 10:57:03] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+2026-04-02 10:57:03,251 - INFO -    Model: Qwen3-32B
+[2026-04-02 10:57:03] INFO     [rag_service.py:187] LLM初始化完成
+2026-04-02 10:57:03,251 - INFO - LLM初始化完成
+[2026-04-02 10:57:03] INFO     [rag_service.py:222] 价格推荐模板加载成功
+2026-04-02 10:57:03,251 - INFO - 价格推荐模板加载成功
+[2026-04-02 10:57:03] INFO     [rag_service.py:192] 价格推荐模板初始化完成
+2026-04-02 10:57:03,251 - INFO - 价格推荐模板初始化完成
+[2026-04-02 10:57:03] INFO     [rag_service.py:206] RAG服务初始化完成！（双缓冲切换成功）
+2026-04-02 10:57:03,251 - INFO - RAG服务初始化完成！（双缓冲切换成功）
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53470 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53478 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42560 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42564 - "POST /api/v1/upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42576 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50990 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36918 - "POST /api/v1/upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36920 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38548 - "POST /api/v1/upload HTTP/1.1" 200 OK

@@ -1,0 +1,8 @@
+{
+  "python.defaultInterpreterPath": "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/bin/python",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}"
+  ],
+  "python.envFile": "${workspaceFolder}/.env",
+  "debug.internalConsoleOptions": "openOnSessionStart"
+}

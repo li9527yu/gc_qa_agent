@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "🚀 Debug FastAPI (uvicorn)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.api_server:app",
+        "--host", "0.0.0.0",
+        "--port", "8001",
+        "--reload",
+        "--reload-dir", "./app"
+      ],
+      "jinja": true,
+      "justMyCode": false
+    },
+    {
+      "name": "🐛 Debug Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "python": "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/bin/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}",
+        "HF_ENDPOINT": "https://hf-mirror.com"
+      }
+    },
+    {
+      "name": "🧪 Debug Tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "${file}",
+        "-v",
+        "--tb=short"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "python": "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/bin/python",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  ]
+}

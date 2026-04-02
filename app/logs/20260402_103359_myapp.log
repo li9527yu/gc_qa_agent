@@ -1,0 +1,37 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+INFO:     Started server process [3029584]
+INFO:     Waiting for application startup.
+[2026-04-02 10:34:05] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+2026-04-02 10:34:05,787 - INFO - 启动Easy-RAG API服务...
+[2026-04-02 10:34:05] INFO     [rag_service.py:97] 开始初始化RAG服务...
+2026-04-02 10:34:05,787 - INFO - 开始初始化RAG服务...
+[2026-04-02 10:34:05] ERROR    [rag_service.py:194] RAG服务初始化失败: 
+2026-04-02 10:34:05,787 - ERROR - RAG服务初始化失败: 
+ERROR:    Traceback (most recent call last):
+  File "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/starlette/routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/contextlib.py", line 199, in __aenter__
+    return await anext(self.gen)
+  File "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/fastapi/routing.py", line 211, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+  File "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/starlette/routing.py", line 571, in __aenter__
+    await self._router.startup()
+  File "/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/starlette/routing.py", line 671, in startup
+    await handler()
+  File "/home/tpc/suda/rag/easy-rag/app/api_server.py", line 28, in startup_event
+    await rag_service.initialize()
+  File "/home/tpc/suda/rag/easy-rag/app/services/rag_service.py", line 106, in initialize
+    new_reader = Reader(RELATED_DATA_PATH)
+  File "/home/tpc/suda/rag/easy-rag/app/read_corpus.py", line 70, in __init__
+    self._process_corpus(corpus_path)
+  File "/home/tpc/suda/rag/easy-rag/app/read_corpus.py", line 131, in _process_corpus
+    self.corpus = self.extract_my_file(corpus_path)
+  File "/home/tpc/suda/rag/easy-rag/app/read_corpus.py", line 203, in extract_my_file
+    raise NotImplementedError
+NotImplementedError
+
+ERROR:    Application startup failed. Exiting.

@@ -1,0 +1,430 @@
+{
+  "apifoxProject": {
+    "info": {
+      "name": "Easy-RAG 价格查询 Mock API",
+      "description": "用于开发测试的价格查询 API Mock 服务\n包含三个主要接口：信息价、厂商报价、智诚信息价"
+    }
+  },
+  "apis": [
+    {
+      "name": "信息价查询",
+      "method": "POST",
+      "path": "/infor/getInforMaterial",
+      "folder": "价格查询",
+      "description": "查询材料信息价数据",
+      "requestBody": {
+        "type": "application/json",
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "description": "账户ID"
+            },
+            "matchMethod": {
+              "type": "integer",
+              "description": "匹配方式 1-模糊 2-精确"
+            },
+            "materialName": {
+              "type": "string",
+              "description": "材料名称"
+            },
+            "materialModelSpec": {
+              "type": "string",
+              "description": "规格型号"
+            },
+            "province": {
+              "type": "string",
+              "description": "省份"
+            },
+            "city": {
+              "type": "string",
+              "description": "城市"
+            },
+            "minPrice": {
+              "type": "number",
+              "description": "最低价格"
+            },
+            "maxPrice": {
+              "type": "number",
+              "description": "最高价格"
+            },
+            "startReleaseDate": {
+              "type": "string",
+              "description": "开始日期 YYYY-MM-DD"
+            },
+            "endReleaseDate": {
+              "type": "string",
+              "description": "结束日期 YYYY-MM-DD"
+            },
+            "returnNumber": {
+              "type": "integer",
+              "description": "返回数量 0表示只返回总数"
+            },
+            "returnTotalCount": {
+              "type": "integer",
+              "description": "是否返回总数 1-是"
+            }
+          }
+        }
+      },
+      "responses": [
+        {
+          "name": "成功响应 - 数据量可控",
+          "code": 200,
+          "contentType": "application/json",
+          "description": "当筛选条件较多时，返回适量数据",
+          "jsonSchema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "mock": {
+                  "mock": "200"
+                }
+              },
+              "message": {
+                "type": "string",
+                "mock": {
+                  "mock": "查询成功"
+                }
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "totalCount": {
+                    "type": "integer",
+                    "mock": {
+                      "mock": "@integer(100, 800)"
+                    }
+                  },
+                  "list": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@guid"
+                          }
+                        },
+                        "materialName": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@pick(['水泥', '钢筋', '混凝土', '砂浆', '石子', '砖', '木材', '玻璃', '防水材料', '保温材料'])"
+                          }
+                        },
+                        "materialModelSpec": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@pick(['P.O 42.5', 'P.O 52.5', 'HRB400', 'HRB500', 'C30', 'C40', 'M5', 'M10'])"
+                          }
+                        },
+                        "price": {
+                          "type": "number",
+                          "mock": {
+                            "mock": "@float(100, 1000, 2, 2)"
+                          }
+                        },
+                        "unit": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@pick(['吨', '立方米', '平方米', '千克', '米', '块', '套'])"
+                          }
+                        },
+                        "province": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@province"
+                          }
+                        },
+                        "city": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@city"
+                          }
+                        },
+                        "releaseDate": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@date('yyyy-MM-dd')"
+                          }
+                        },
+                        "releaseDepartment": {
+                          "type": "string",
+                          "mock": {
+                            "mock": "@city造价管理处"
+                          }
+                        }
+                      }
+                    },
+                    "mock": {
+                      "mock": "@array(50, 100)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "成功响应 - 数据量过大",
+          "code": 200,
+          "contentType": "application/json",
+          "description": "当筛选条件较少时，返回大量数据的提示",
+          "jsonSchema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "mock": {
+                  "mock": "200"
+                }
+              },
+              "message": {
+                "type": "string",
+                "mock": {
+                  "mock": "查询成功"
+                }
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "totalCount": {
+                    "type": "integer",
+                    "mock": {
+                      "mock": "@integer(5000, 50000)"
+                    }
+                  },
+                  "list": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "materialName": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "mock": {
+                      "mock": "@array(10, 20)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "厂商报价查询",
+      "method": "POST",
+      "path": "/factory/getFactoryMaterial",
+      "folder": "价格查询",
+      "description": "查询厂商报价数据",
+      "requestBody": {
+        "type": "application/json",
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {"type": "string"},
+            "matchMethod": {"type": "integer"},
+            "materialName": {"type": "string"},
+            "materialModelSpec": {"type": "string"},
+            "brand": {"type": "string", "description": "品牌"},
+            "supplyName": {"type": "string", "description": "供应商名称"},
+            "province": {"type": "string"},
+            "city": {"type": "string"},
+            "minPrice": {"type": "number"},
+            "maxPrice": {"type": "number"},
+            "startReleaseDate": {"type": "string"},
+            "endReleaseDate": {"type": "string"},
+            "returnNumber": {"type": "integer"},
+            "returnTotalCount": {"type": "integer"}
+          }
+        }
+      },
+      "responses": [
+        {
+          "name": "成功响应",
+          "code": 200,
+          "contentType": "application/json",
+          "jsonSchema": {
+            "type": "object",
+            "properties": {
+              "code": {"type": "integer", "mock": {"mock": "200"}},
+              "message": {"type": "string", "mock": {"mock": "查询成功"}},
+              "data": {
+                "type": "object",
+                "properties": {
+                  "totalCount": {
+                    "type": "integer",
+                    "mock": {"mock": "@integer(100, 800)"}
+                  },
+                  "list": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {"type": "string", "mock": {"mock": "@guid"}},
+                        "materialName": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['水泥', '钢筋', '混凝土', '砂浆', '防水材料'])"}
+                        },
+                        "materialModelSpec": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['P.O 42.5', 'HRB400', 'C30'])"}
+                        },
+                        "brand": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['海螺', '中联', '华润', '台泥', '冀东', '金隅'])"}
+                        },
+                        "supplyName": {
+                          "type": "string",
+                          "mock": {"mock": "@ctitle(5, 10)有限公司"}
+                        },
+                        "price": {
+                          "type": "number",
+                          "mock": {"mock": "@float(100, 1000, 2, 2)"}
+                        },
+                        "unit": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['吨', '立方米', '平方米'])"}
+                        },
+                        "province": {
+                          "type": "string",
+                          "mock": {"mock": "@province"}
+                        },
+                        "city": {
+                          "type": "string",
+                          "mock": {"mock": "@city"}
+                        },
+                        "releaseDate": {
+                          "type": "string",
+                          "mock": {"mock": "@date('yyyy-MM-dd')"}
+                        },
+                        "releaseDepartment": {
+                          "type": "string",
+                          "mock": {"mock": "@city招投标中心"}
+                        }
+                      }
+                    },
+                    "mock": {"mock": "@array(30, 80)"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "智诚信息价查询",
+      "method": "POST",
+      "path": "/zhichengInfo/getZhichengInfoMaterial",
+      "folder": "价格查询",
+      "description": "查询智诚信息价数据",
+      "requestBody": {
+        "type": "application/json",
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "accountId": {"type": "string"},
+            "matchMethod": {"type": "integer"},
+            "materialName": {"type": "string"},
+            "materialModelSpec": {"type": "string"},
+            "grade": {"type": "string", "description": "等级"},
+            "province": {"type": "string"},
+            "city": {"type": "string"},
+            "minPrice": {"type": "number"},
+            "maxPrice": {"type": "number"},
+            "startReleaseDate": {"type": "string"},
+            "endReleaseDate": {"type": "string"},
+            "returnNumber": {"type": "integer"},
+            "returnTotalCount": {"type": "integer"}
+          }
+        }
+      },
+      "responses": [
+        {
+          "name": "成功响应",
+          "code": 200,
+          "contentType": "application/json",
+          "jsonSchema": {
+            "type": "object",
+            "properties": {
+              "code": {"type": "integer", "mock": {"mock": "200"}},
+              "message": {"type": "string", "mock": {"mock": "查询成功"}},
+              "data": {
+                "type": "object",
+                "properties": {
+                  "totalCount": {
+                    "type": "integer",
+                    "mock": {"mock": "@integer(100, 800)"}
+                  },
+                  "list": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {"type": "string", "mock": {"mock": "@guid"}},
+                        "materialName": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['水泥', '钢筋', '混凝土', '砂浆'])"}
+                        },
+                        "materialModelSpec": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['P.O 42.5', 'HRB400', 'C30'])"}
+                        },
+                        "grade": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['A', 'B', 'C'])"}
+                        },
+                        "price": {
+                          "type": "number",
+                          "mock": {"mock": "@float(100, 1000, 2, 2)"}
+                        },
+                        "unit": {
+                          "type": "string",
+                          "mock": {"mock": "@pick(['吨', '立方米', '平方米'])"}
+                        },
+                        "province": {
+                          "type": "string",
+                          "mock": {"mock": "@province"}
+                        },
+                        "city": {
+                          "type": "string",
+                          "mock": {"mock": "@city"}
+                        },
+                        "releaseDate": {
+                          "type": "string",
+                          "mock": {"mock": "@date('yyyy-MM-dd')"}
+                        },
+                        "releaseDepartment": {
+                          "type": "string",
+                          "mock": {"mock": "智诚信息价"}
+                        }
+                      }
+                    },
+                    "mock": {"mock": "@array(30, 80)"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+

@@ -1,0 +1,42 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+INFO:     Started server process [3059894]
+INFO:     Waiting for application startup.
+[2026-04-02 11:18:51] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+2026-04-02 11:18:51,419 - INFO - 启动Easy-RAG API服务...
+[2026-04-02 11:18:51] INFO     [rag_service.py:97] 开始初始化RAG服务...
+2026-04-02 11:18:51,419 - INFO - 开始初始化RAG服务...
+2026-04-02 11:18:51,419 - INFO - 正在从缓存加载语料库...
+2026-04-02 11:18:51,427 - INFO - 已从缓存加载 1444 段文本
+2026-04-02 11:18:51,427 - INFO - 缓存验证通过
+[2026-04-02 11:18:51] INFO     [rag_service.py:108] 语料库加载完成，共1444个文档
+2026-04-02 11:18:51,427 - INFO - 语料库加载完成，共1444个文档
+[2026-04-02 11:18:51] INFO     [rag_service.py:122] 语料库未发生变化，使用现有缓存
+2026-04-02 11:18:51,431 - INFO - 语料库未发生变化，使用现有缓存
+[2026-04-02 11:18:51] INFO     [rag_service.py:228] 价格推荐模板加载成功
+2026-04-02 11:18:51,432 - INFO - 价格推荐模板加载成功
+[2026-04-02 11:18:51] INFO     [rag_service.py:130] 价格推荐模板初始化完成
+2026-04-02 11:18:51,432 - INFO - 价格推荐模板初始化完成
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:39076 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+[2026-04-02 11:18:58] ERROR    [rag_service.py:275] 意图识别失败: 'NoneType' object has no attribute 'predict_prompt'，默认使用 price_recommendation
+2026-04-02 11:18:58,999 - ERROR - 意图识别失败: 'NoneType' object has no attribute 'predict_prompt'，默认使用 price_recommendation
+2026-04-02 11:18:59,000 - INFO - 识别到类型: price_recommendation
+INFO:     127.0.0.1:39080 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39090 - "POST /api/v1/query/price HTTP/1.1" 200 OK
+[2026-04-02 11:18:59] ERROR    [rag_service.py:523] 实体抽取失败: 'NoneType' object has no attribute 'predict_prompt'
+2026-04-02 11:18:59,016 - ERROR - 实体抽取失败: 'NoneType' object has no attribute 'predict_prompt'
+[2026-04-02 11:18:59] ERROR    [rag_service.py:340] 渠道意图识别失败: 'NoneType' object has no attribute 'predict_prompt'
+2026-04-02 11:18:59,017 - ERROR - 渠道意图识别失败: 'NoneType' object has no attribute 'predict_prompt'
+[2026-04-02 11:18:59] INFO     [rag_service.py:531] 阶段1: 快速检查数据总数...
+2026-04-02 11:18:59,017 - INFO - 阶段1: 快速检查数据总数...
+[2026-04-02 11:18:59] INFO     [rag_service.py:991] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+2026-04-02 11:18:59,019 - INFO - 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-02 11:18:59] INFO     [rag_service.py:1025] 生成签名并添加到 header: bNeqCEuu/7ogTBM3IcGci3hlP/YIftoDYuEMhh/HWho=
+2026-04-02 11:18:59,020 - INFO - 生成签名并添加到 header: bNeqCEuu/7ogTBM3IcGci3hlP/YIftoDYuEMhh/HWho=
+[2026-04-02 11:18:59] INFO     [rag_service.py:1026] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '', 'city': '', 'materialModelSpec': '', 'materialName': '', 'returnNumber': 10000, 'returnTotalCount': 1}
+2026-04-02 11:18:59,024 - INFO - 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '', 'city': '', 'materialModelSpec': '', 'materialName': '', 'returnNumber': 10000, 'returnTotalCount': 1}
