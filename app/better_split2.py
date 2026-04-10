@@ -1,5 +1,7 @@
 from langchain.schema import Document
 import re
+import os
+from datetime import datetime
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from typing import List, Optional
 from app.config import ROOT_PATH
@@ -17,7 +19,14 @@ class MarkdownTableWithSmartTextSplitterV2:
         documents = []
         buffer = []
         i = 0
-        chunk_id = 0
+        chunk_index = 0
+        
+        # 提取文件类型
+        source = source or "unknown"
+        file_ext = os.path.splitext(source)[1].lower().lstrip('.')
+        if file_ext not in ['md', 'txt', 'pdf']:
+            file_ext = 'unknown'
+        upload_time = datetime.now().isoformat()
 
         while i < len(lines):
             line = lines[i]
@@ -28,23 +37,21 @@ class MarkdownTableWithSmartTextSplitterV2:
                     if plain_text:
                         text_chunks = self.text_splitter.split_text(plain_text)
                         for chunk in text_chunks:
-                            chunk_id += 1
                             documents.append({
-                                'page_content':chunk,
+                                'page_content': chunk,
                                 'metadata': {
-                                    "type": "text",
-                                    "chunk_id": chunk_id,
-                                    "source": source or "unknown"
+                                    # 临时 chunk_index，会被 _assign_global_chunk_ids 覆盖
+                                    'chunk_index': chunk_index,
+                                    'source': source,
+                                    'file_type': file_ext,
+                                    'upload_time': upload_time,
+                                    'content_type': 'text',
+                                    # 保留旧字段兼容性
+                                    'type': 'text',
+                                    'chunk_id': chunk_index,
                                 }
                             })
-                            # documents.append(Document(
-                            #     page_content=chunk,
-                            #     metadata={
-                            #         "type": "text",
-                            #         "chunk_id": chunk_id,
-                            #         "source": source or "unknown"
-                            #     }
-                            # ))
+                            chunk_index += 1
                     buffer = []
 
                 # collect table block
@@ -60,23 +67,20 @@ class MarkdownTableWithSmartTextSplitterV2:
                 next_text = self._find_context_line(lines, i, 1)
                 full_chunk = "\n".join(filter(None, [prev_text, table_text, next_text]))
 
-                chunk_id += 1
-                # documents.append(Document(
-                #     page_content=full_chunk,
-                #     metadata={
-                #         "type": "table",
-                #         "chunk_id": chunk_id,
-                #         "source": source or "unknown"
-                #     }
-                # ))
                 documents.append({
-                                'page_content':full_chunk,
-                                'metadata': {
-                                    "type": "table",
-                                    "chunk_id": chunk_id,
-                                    "source": source or "unknown"
-                                }
-                            })
+                    'page_content': full_chunk,
+                    'metadata': {
+                        'chunk_index': chunk_index,
+                        'source': source,
+                        'file_type': file_ext,
+                        'upload_time': upload_time,
+                        'content_type': 'table',
+                        # 保留旧字段兼容性
+                        'type': 'table',
+                        'chunk_id': chunk_index,
+                    }
+                })
+                chunk_index += 1
             else:
                 buffer.append(line)
                 i += 1
@@ -87,23 +91,20 @@ class MarkdownTableWithSmartTextSplitterV2:
             if plain_text:
                 text_chunks = self.text_splitter.split_text(plain_text)
                 for chunk in text_chunks:
-                    chunk_id += 1
-                    # documents.append(Document(
-                    #     page_content=chunk,
-                    #     metadata={
-                    #         "type": "text",
-                    #         "chunk_id": chunk_id,
-                    #         "source": source or "unknown"
-                    #     }
-                    # ))
                     documents.append({
-                        'page_content':chunk,
+                        'page_content': chunk,
                         'metadata': {
-                            "type": "text",
-                            "chunk_id": chunk_id,
-                            "source": source or "unknown"
+                            'chunk_index': chunk_index,
+                            'source': source,
+                            'file_type': file_ext,
+                            'upload_time': upload_time,
+                            'content_type': 'text',
+                            # 保留旧字段兼容性
+                            'type': 'text',
+                            'chunk_id': chunk_index,
                         }
                     })
+                    chunk_index += 1
 
         return documents
 
@@ -151,5 +152,7 @@ if __name__ == '__main__':
     # 打印每个 Document 内容及其元数据
     for i, doc in enumerate(documents):
         print(f"\n--- Chunk {i+1} ---")
-        print(f"[类型] {doc.metadata.get('type')} | [chunk_id] {doc.metadata.get('chunk_id')} | [来源] {doc.metadata.get('source')}")
+        meta = doc.metadata
+        print(f"[内容类型] {meta.get('content_type')} | [文件类型] {meta.get('file_type')} | "
+              f"[序号] {meta.get('chunk_index')} | [来源] {meta.get('source')}")
         print(doc.page_content)

@@ -1,0 +1,112 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-04-08 14:39:34,181 - INFO - 索引文件不存在，将创建新索引
+INFO:     Started server process [667932]
+INFO:     Waiting for application startup.
+[2026-04-08 14:39:34] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+2026-04-08 14:39:34,203 - INFO - 启动Easy-RAG API服务...
+[2026-04-08 14:39:34] INFO     [rag_service.py:98] 开始初始化RAG服务...
+2026-04-08 14:39:34,203 - INFO - 开始初始化RAG服务...
+2026-04-08 14:39:34,203 - INFO - 正在从缓存加载语料库...
+2026-04-08 14:39:34,216 - INFO - 已从缓存加载 1544 段文本
+2026-04-08 14:39:34,216 - INFO - 缓存验证通过
+[2026-04-08 14:39:34] INFO     [rag_service.py:109] 语料库加载完成，共1544个文档
+2026-04-08 14:39:34,216 - INFO - 语料库加载完成，共1544个文档
+[2026-04-08 14:39:34] INFO     [rag_service.py:119] 检测到语料库变化，当前哈希: 62146372e9e3aeb5e99654157f8e9ffb, 缓存哈希: 975eabe660f124347c212cc317756eb5
+2026-04-08 14:39:34,222 - INFO - 检测到语料库变化，当前哈希: 62146372e9e3aeb5e99654157f8e9ffb, 缓存哈希: 975eabe660f124347c212cc317756eb5
+[2026-04-08 14:39:34] INFO     [rag_service.py:120] 将自动重建向量库以同步最新语料库
+2026-04-08 14:39:34,222 - INFO - 将自动重建向量库以同步最新语料库
+[2026-04-08 14:39:34] INFO     [rag_service.py:149]    GPU 1 可用显存: 94.97 GB
+2026-04-08 14:39:34,315 - INFO -    GPU 1 可用显存: 94.97 GB
+2026-04-08 14:39:35,318 - INFO - Use pytorch device_name: cuda:0
+2026-04-08 14:39:35,318 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-08 14:39:36,938 - INFO - 1 prompt is loaded, with the key: query
+2026-04-08 14:39:37,099 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-08 14:39:37,099 - INFO - Rebuilding vector database...
+2026-04-08 14:39:37,099 - INFO - 语料库哈希值发生变化，需要重建缓存
+2026-04-08 14:39:37,099 - INFO - 当前哈希: 62146372e9e3aeb5e99654157f8e9ffb, 缓存哈希: 975eabe660f124347c212cc317756eb5
+2026-04-08 14:39:37,099 - INFO - 强制重建模式，删除所有缓存
+2026-04-08 14:39:37,099 - INFO - 未找到缓存文件，开始预处理语料...
+2026-04-08 14:39:37,099 - WARNING - 停用词文件 /home/tpc/suda/rag/easy-rag/rag_cache/stopwords/stopwords_hit.txt 不存在，跳过停用词过滤。
+分词处理中:   0%|          | 0/1544 [00:00<?, ?it/s]Building prefix dict from the default dictionary ...
+2026-04-08 14:39:37,100 - DEBUG - Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+2026-04-08 14:39:37,100 - DEBUG - Loading model from cache /tmp/jieba.cache
+Loading model cost 0.732 seconds.
+2026-04-08 14:39:37,833 - DEBUG - Loading model cost 0.732 seconds.
+Prefix dict has been built successfully.
+2026-04-08 14:39:37,833 - DEBUG - Prefix dict has been built successfully.
+分词处理中:   0%|          | 1/1544 [00:00<18:52,  1.36it/s]分词处理中:   6%|▌         | 95/1544 [00:00<00:09, 153.48it/s]分词处理中:  16%|█▌        | 241/1544 [00:00<00:03, 398.73it/s]分词处理中:  29%|██▉       | 452/1544 [00:01<00:01, 760.50it/s]分词处理中:  43%|████▎     | 671/1544 [00:01<00:00, 1091.66it/s]分词处理中:  58%|█████▊    | 893/1544 [00:01<00:00, 1370.90it/s]分词处理中:  72%|███████▏  | 1107/1544 [00:01<00:00, 1572.10it/s]分词处理中:  86%|████████▌ | 1325/1544 [00:01<00:00, 1736.83it/s]分词处理中: 100%|██████████| 1544/1544 [00:01<00:00, 1007.05it/s]
+2026-04-08 14:39:38,634 - INFO - 正在将分词结果缓存到 tokenized_docs.pkl ...
+2026-04-08 14:39:38,692 - INFO - 重建向量数据库...
+2026-04-08 14:39:38,723 - INFO - 已删除旧集合: easy_rag_milvus
+2026-04-08 14:40:13,794 - INFO - 向量数据库构建完成，共 1544 个文档
+[2026-04-08 14:40:13] INFO     [rag_service.py:181] 检索器初始化完成
+2026-04-08 14:40:13,806 - INFO - 检索器初始化完成
+[2026-04-08 14:40:13] INFO     [rag_service.py:187] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-08 14:40:13,807 - INFO - 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+[2026-04-08 14:40:13] INFO     [rag_service.py:188]    设备: cpu
+2026-04-08 14:40:13,807 - INFO -    设备: cpu
+2026-04-08 14:40:13,807 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-08 14:40:13,810 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-08 14:40:13,810 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
+2026-04-08 14:40:13,810 - INFO - Instruction: Given a query and a passage, determine whether the...
+2026-04-08 14:40:14,337 - INFO - Using existing pad_token: <|endoftext|>
+Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-04-08 14:40:15,899 - INFO - Set model.config.pad_token_id to: 151643
+2026-04-08 14:40:15,904 - INFO - Qwen3-Reranker model loaded successfully
+2026-04-08 14:40:15,904 - INFO - Qwen3 Reranker loaded successfully
+[2026-04-08 14:40:15] INFO     [rag_service.py:193] 重排器初始化完成
+2026-04-08 14:40:15,904 - INFO - 重排器初始化完成
+[2026-04-08 14:40:15] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+2026-04-08 14:40:15,963 - INFO - 🤖 初始化 LLM 客户端
+[2026-04-08 14:40:15] INFO     [llm_deepseek.py:91]    模式: local
+2026-04-08 14:40:15,963 - INFO -    模式: local
+[2026-04-08 14:40:15] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+2026-04-08 14:40:15,963 - INFO -    Base URL: http://localhost:9839/v1
+[2026-04-08 14:40:15] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+2026-04-08 14:40:15,963 - INFO -    Model: Qwen3-32B
+[2026-04-08 14:40:15] INFO     [rag_service.py:199] LLM初始化完成
+2026-04-08 14:40:15,963 - INFO - LLM初始化完成
+[2026-04-08 14:40:15] INFO     [rag_service.py:234] 价格推荐模板加载成功
+2026-04-08 14:40:15,963 - INFO - 价格推荐模板加载成功
+[2026-04-08 14:40:15] INFO     [rag_service.py:204] 价格推荐模板初始化完成
+2026-04-08 14:40:15,963 - INFO - 价格推荐模板初始化完成
+[2026-04-08 14:40:15] INFO     [rag_service.py:218] RAG服务初始化完成！（双缓冲切换成功）
+2026-04-08 14:40:15,963 - INFO - RAG服务初始化完成！（双缓冲切换成功）
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52094 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52106 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53802 - "DELETE /api/v1/delete/batch HTTP/1.1" 200 OK
+2026-04-08 14:40:41,524 - INFO - 开始增量更新，任务ID: 64835f7a-f505-475c-b2b7-61d5c5d6bd73, 变更: {'added': [], 'deleted': ['广诚智能问答项目逻辑和技术_12b0aff8.md'], 'modified': []}
+2026-04-08 14:40:41,525 - INFO - 开始增量更新，变更情况: {'added': [], 'deleted': ['广诚智能问答项目逻辑和技术_12b0aff8.md'], 'modified': []}
+2026-04-08 14:40:41,525 - INFO - 增量更新完成: {'added': 0, 'deleted': 1, 'modified': 0, 'failed': []}
+2026-04-08 14:40:41,525 - INFO - 增量更新完成: {'added': 0, 'deleted': 1, 'modified': 0, 'failed': []}
+INFO:     127.0.0.1:53818 - "GET /api/v1/task_status?task_id=64835f7a-f505-475c-b2b7-61d5c5d6bd73 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53832 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39026 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39034 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39042 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54308 - "DELETE /api/v1/delete/batch HTTP/1.1" 200 OK
+2026-04-08 14:40:59,658 - INFO - 开始增量更新，任务ID: 46e75f40-7495-4f61-84d1-5107a89fd7b7, 变更: {'added': [], 'deleted': ['ICMS3_bfc39483.md'], 'modified': []}
+2026-04-08 14:40:59,658 - INFO - 开始增量更新，变更情况: {'added': [], 'deleted': ['ICMS3_bfc39483.md'], 'modified': []}
+2026-04-08 14:40:59,659 - INFO - 增量更新完成: {'added': 0, 'deleted': 1, 'modified': 0, 'failed': []}
+2026-04-08 14:40:59,659 - INFO - 增量更新完成: {'added': 0, 'deleted': 1, 'modified': 0, 'failed': []}
+INFO:     127.0.0.1:54310 - "GET /api/v1/task_status?task_id=46e75f40-7495-4f61-84d1-5107a89fd7b7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54330 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54332 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44604 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+解析PDF文件...:   0%|          | 0/64 [00:00<?, ?it/s]解析PDF文件...:   9%|▉         | 6/64 [00:00<00:01, 53.62it/s]解析PDF文件...:  22%|██▏       | 14/64 [00:00<00:00, 64.00it/s]解析PDF文件...:  33%|███▎      | 21/64 [00:00<00:00, 60.44it/s]解析PDF文件...:  44%|████▍     | 28/64 [00:00<00:01, 29.10it/s]解析PDF文件...:  55%|█████▍    | 35/64 [00:00<00:00, 36.38it/s]解析PDF文件...:  67%|██████▋   | 43/64 [00:00<00:00, 44.89it/s]解析PDF文件...:  77%|███████▋  | 49/64 [00:01<00:00, 41.84it/s]解析PDF文件...:  91%|█████████ | 58/64 [00:01<00:00, 39.88it/s]解析PDF文件...: 100%|██████████| 64/64 [00:01<00:00, 43.35it/s]
+cleaned_chunks 416
+INFO:     127.0.0.1:44616 - "POST /api/v1/upload HTTP/1.1" 200 OK
+解析PDF文件...:   0%|          | 0/64 [00:00<?, ?it/s]解析PDF文件...:   9%|▉         | 6/64 [00:00<00:01, 52.38it/s]解析PDF文件...:  22%|██▏       | 14/64 [00:00<00:00, 63.90it/s]解析PDF文件...:  33%|███▎      | 21/64 [00:00<00:00, 60.48it/s]解析PDF文件...:  44%|████▍     | 28/64 [00:00<00:00, 62.21it/s]解析PDF文件...:  55%|█████▍    | 35/64 [00:00<00:00, 37.50it/s]解析PDF文件...:  67%|██████▋   | 43/64 [00:00<00:00, 46.52it/s]解析PDF文件...:  77%|███████▋  | 49/64 [00:01<00:00, 42.76it/s]解析PDF文件...:  91%|█████████ | 58/64 [00:01<00:00, 40.52it/s]解析PDF文件...: 100%|██████████| 64/64 [00:01<00:00, 47.18it/s]
+cleaned_chunks 416
+INFO:     127.0.0.1:52930 - "POST /api/v1/upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52936 - "GET /api/v1/service/status HTTP/1.1" 200 OK

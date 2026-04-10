@@ -1,52 +1,0 @@
-nohup: ignoring input
-/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
-  import pynvml  # type: ignore[import]
-/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
-  import pkg_resources
-INFO:     Started server process [2056623]
-INFO:     Waiting for application startup.
-[2026-03-05 21:46:01] INFO     [api_server.py:27] 启动Easy-RAG API服务...
-2026-03-05 21:46:01,937 - INFO - 启动Easy-RAG API服务...
-[2026-03-05 21:46:01] INFO     [rag_service.py:58] 开始初始化RAG服务...
-2026-03-05 21:46:01,937 - INFO - 开始初始化RAG服务...
-2026-03-05 21:46:01,937 - INFO - 正在从缓存加载语料库...
-2026-03-05 21:46:01,939 - INFO - 已从缓存加载 180 段文本
-2026-03-05 21:46:01,939 - INFO - 缓存验证通过
-[2026-03-05 21:46:01] INFO     [rag_service.py:62] 语料库加载完成，共180个文档
-2026-03-05 21:46:01,939 - INFO - 语料库加载完成，共180个文档
-[2026-03-05 21:46:01] INFO     [rag_service.py:76] 语料库未发生变化，使用现有缓存
-2026-03-05 21:46:01,940 - INFO - 语料库未发生变化，使用现有缓存
-2026-03-05 21:46:02,958 - INFO - Use pytorch device_name: cuda:0
-2026-03-05 21:46:02,958 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/model/bge-large-zh-v1.5
-2026-03-05 21:46:04,679 - INFO - Successfully loaded SentenceTransformer embedding model
-2026-03-05 21:46:04,680 - INFO - Rebuilding vector database...
-2026-03-05 21:46:04,680 - INFO - 发现缓存文件 tokenized_docs.pkl，正在加载...
-Batches:   0%|          | 0/6 [00:00<?, ?it/s]Batches:  17%|█▋        | 1/6 [00:00<00:03,  1.48it/s]Batches:  33%|███▎      | 2/6 [00:00<00:01,  2.39it/s]Batches:  50%|█████     | 3/6 [00:01<00:00,  3.01it/s]Batches:  67%|██████▋   | 4/6 [00:01<00:00,  2.99it/s]Batches:  83%|████████▎ | 5/6 [00:01<00:00,  3.70it/s]Batches: 100%|██████████| 6/6 [00:01<00:00,  4.37it/s]Batches: 100%|██████████| 6/6 [00:01<00:00,  3.36it/s]
-2026-03-05 21:46:19,972 - INFO - 向量数据库构建完成，共 180 个文档
-[2026-03-05 21:46:19] INFO     [rag_service.py:90] 检索器初始化完成
-2026-03-05 21:46:19,976 - INFO - 检索器初始化完成
-[2026-03-05 21:46:22] INFO     [rag_service.py:96] 重排器初始化完成
-2026-03-05 21:46:22,759 - INFO - 重排器初始化完成
-[2026-03-05 21:46:22] INFO     [llm_deepseek.py:55] 🤖 初始化 LLM 客户端
-2026-03-05 21:46:22,815 - INFO - 🤖 初始化 LLM 客户端
-[2026-03-05 21:46:22] INFO     [llm_deepseek.py:56]    模式: local
-2026-03-05 21:46:22,815 - INFO -    模式: local
-[2026-03-05 21:46:22] INFO     [llm_deepseek.py:57]    Base URL: http://localhost:9839/v1
-2026-03-05 21:46:22,815 - INFO -    Base URL: http://localhost:9839/v1
-[2026-03-05 21:46:22] INFO     [llm_deepseek.py:58]    Model: Qwen3-30B-A3B-Instruct-2507
-2026-03-05 21:46:22,816 - INFO -    Model: Qwen3-30B-A3B-Instruct-2507
-[2026-03-05 21:46:22] INFO     [rag_service.py:101] LLM初始化完成
-2026-03-05 21:46:22,816 - INFO - LLM初始化完成
-[2026-03-05 21:46:22] INFO     [rag_service.py:119] 价格推荐模板加载成功
-2026-03-05 21:46:22,816 - INFO - 价格推荐模板加载成功
-[2026-03-05 21:46:22] INFO     [rag_service.py:104] 价格推荐模板初始化完成
-2026-03-05 21:46:22,816 - INFO - 价格推荐模板初始化完成
-[2026-03-05 21:46:22] INFO     [rag_service.py:106] RAG服务初始化完成！
-2026-03-05 21:46:22,816 - INFO - RAG服务初始化完成！
-INFO:     Application startup complete.
-ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8001): address already in use
-INFO:     Waiting for application shutdown.
-[2026-03-05 21:46:22] INFO     [api_server.py:35] 关闭Easy-RAG API服务...
-2026-03-05 21:46:22,817 - INFO - 关闭Easy-RAG API服务...
-INFO:     Application shutdown complete.
-successful load rerank model

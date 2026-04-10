@@ -5,6 +5,8 @@ import pandas as pd
 import os
 import json
 import hashlib
+from datetime import datetime
+from typing import List
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from .better_split import MarkdownTableWithSmartTextSplitter
 from .better_split2 import MarkdownTableWithSmartTextSplitterV2
@@ -110,25 +112,116 @@ class Reader:
         if os.path.isdir(corpus_path):
             self.corpus = self.read_folder(corpus_path)
         elif corpus_path.endswith('.pdf'):
-            self.corpus = self.extract_pdf_page_text(corpus_path)
+            self.corpus = self._normalize_chunks(
+                self.extract_pdf_page_text(corpus_path),
+                os.path.basename(corpus_path)
+            )
         elif corpus_path.endswith('.md'):
             with open(corpus_path, 'r', encoding='utf-8') as file:
                 text = file.read()
-            source = corpus_path.split('/')[-1]
-            if source is None:
-                source = "unknown"
-            self.corpus = self.split_by_markdown_tableV2(text, source)
+            source = os.path.basename(corpus_path)
+            chunks = self.split_by_markdown_tableV2(text, source)
+            self.corpus = self._assign_global_chunk_ids(chunks, source)
         elif corpus_path.endswith('.txt'):
             with open(corpus_path, 'r', encoding='utf-8') as file:
                 text = file.read()
             source = os.path.basename(corpus_path)
-            self.corpus = self.split_by_recursive_character_splitter(text)
+            chunks = self.split_by_recursive_character_splitter(text)
+            self.corpus = self._normalize_chunks(chunks, source)
         elif 'Multi-CPR' in corpus_path:
-            self.corpus = self.extract_multiCPR_text(corpus_path)
+            self.corpus = self._normalize_chunks(
+                self.extract_multiCPR_text(corpus_path),
+                os.path.basename(corpus_path)
+            )
         elif 'train_data_chunk' in corpus_path:
-            self.corpus = self.extract_text0328(corpus_path)
+            self.corpus = self._normalize_chunks(
+                self.extract_text0328(corpus_path),
+                os.path.basename(corpus_path)
+            )
         else:
             self.corpus = self.extract_my_file(corpus_path)
+    
+    def _normalize_chunks(self, chunks: List[str], source_file: str) -> List[dict]:
+        """将纯文本列表转换为统一格式的chunk字典列表"""
+        result = []
+        # 提取文件类型
+        file_ext = os.path.splitext(source_file)[1].lower().lstrip('.')
+        if file_ext not in ['md', 'txt', 'pdf']:
+            file_ext = 'unknown'
+        
+        for i, content in enumerate(chunks):
+            chunk_hash = hashlib.md5(
+                f"{source_file}:{i}:{content[:100]}".encode()
+            ).hexdigest()[:16]
+            
+            # 生成 chunk_id（仅用于内部索引，不入 Milvus）
+            chunk_id = f"{source_file}_{chunk_hash}"
+            
+            result.append({
+                'page_content': content if isinstance(content, str) else str(content),
+                'metadata': {
+                    # === 内部使用字段（不入 Milvus）===
+                    'chunk_id': chunk_id,
+                    'source_file': source_file,  # kb_manager 依赖
+                    
+                    # === 存入 Milvus 的字段 ===
+                    'source': source_file,       # 文件名（前端展示）
+                    'file_type': file_ext,       # 文件类型 (md/pdf/txt)
+                    'chunk_index': i,            # 文件内 chunk 序号
+                    'upload_time': datetime.now().isoformat(),  # 上传时间
+                    'content_type': 'text',      # 内容类型
+                }
+            })
+        return result
+    
+    def _assign_global_chunk_ids(self, chunks: List[dict], source_file: str) -> List[dict]:
+        """为已有的chunk字典分配全局唯一的chunk_id"""
+        result = []
+        # 提取文件类型
+        file_ext = os.path.splitext(source_file)[1].lower().lstrip('.')
+        if file_ext not in ['md', 'txt', 'pdf']:
+            file_ext = 'unknown'
+        
+        # 获取内容类型（如果已有）
+        first_chunk_meta = chunks[0].get('metadata', {}) if chunks and isinstance(chunks[0], dict) else {}
+        inherited_content_type = first_chunk_meta.get('content_type', 'text')
+        
+        for i, chunk in enumerate(chunks):
+            if isinstance(chunk, dict):
+                content = chunk.get('page_content', '')
+                metadata = chunk.get('metadata', {})
+                # 保留原始内容类型（text/table）
+                content_type = metadata.get('content_type', inherited_content_type)
+            else:
+                content = str(chunk)
+                metadata = {}
+                content_type = inherited_content_type
+            
+            # 生成全局唯一ID
+            chunk_hash = hashlib.md5(
+                f"{source_file}:{i}:{content[:100]}".encode()
+            ).hexdigest()[:16]
+            
+            chunk_id = f"{source_file}_{chunk_hash}"
+            
+            metadata.update({
+                # === 内部使用字段（不入 Milvus）===
+                'chunk_id': chunk_id,
+                'source_file': source_file,  # kb_manager 依赖
+                
+                # === 存入 Milvus 的字段 ===
+                'source': source_file,       # 文件名
+                'file_type': file_ext,       # 文件类型
+                'chunk_index': i,            # 文件内 chunk 序号
+                'upload_time': datetime.now().isoformat(),
+                'content_type': content_type,  # 保留原始内容类型
+            })
+            
+            result.append({
+                'page_content': content,
+                'metadata': metadata
+            })
+        return result
 
     def read_folder(self, folder_path, verbose=False):
         all_chunks = []
@@ -143,16 +236,18 @@ class Reader:
             file = os.path.basename(filepath)
             chunks = []  # 默认空列表
             if file.endswith('.pdf'):
-                chunks = self.extract_pdf_page_text(filepath)
+                raw_chunks = self.extract_pdf_page_text(filepath)
+                chunks = self._normalize_chunks(raw_chunks, file)
             elif file.endswith('.md'):
                 with open(filepath, 'r', encoding='utf-8') as f:
                     text = f.read()
-                # chunks = self.split_by_markdown_table(text)
-                chunks = self.split_by_markdown_tableV2(text,file)
+                raw_chunks = self.split_by_markdown_tableV2(text, file)
+                chunks = self._assign_global_chunk_ids(raw_chunks, file)
             elif file.endswith('.txt'):
                 with open(filepath, 'r', encoding='utf-8') as f:
                     text = f.read()
-                chunks = self.split_by_recursive_character_splitter(text)
+                raw_chunks = self.split_by_recursive_character_splitter(text)
+                chunks = self._normalize_chunks(raw_chunks, file)
             else:
                 if verbose:
                     logger.info(f"[跳过] 不支持的文件格式: {file}")

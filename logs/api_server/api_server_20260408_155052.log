@@ -1,0 +1,7 @@
+[2026-04-08 15:50:52] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+[2026-04-08 15:50:52] INFO     [rag_service.py:99] 开始初始化RAG服务...
+[2026-04-08 15:50:52] INFO     [rag_service.py:110] 语料库加载完成，共1544个文档
+[2026-04-08 15:50:52] INFO     [rag_service.py:120] 检测到语料库变化，当前哈希: 62146372e9e3aeb5e99654157f8e9ffb, 缓存哈希: 
+[2026-04-08 15:50:52] INFO     [rag_service.py:121] 将自动重建向量库以同步最新语料库
+[2026-04-08 15:50:52] INFO     [rag_service.py:200]    GPU 1 可用显存: 94.97 GB
+[2026-04-08 15:51:03] ERROR    [rag_service.py:274] RAG服务初始化失败: langchain_community.vectorstores.milvus.Milvus() got multiple values for keyword argument 'auto_id'

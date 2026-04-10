@@ -340,6 +340,20 @@ def web():
     # ---------- 侧边栏 ----------
     with st.sidebar:
         st.markdown("---")
+        
+        # ========== 功能模式选择（硬核分离两种功能）==========
+        st.subheader("🔧 功能选择")
+        if "query_mode" not in st.session_state:
+            st.session_state.query_mode = "knowledge_qa"
+        st.session_state.query_mode = st.radio(
+            "选择功能",
+            options=["knowledge_qa", "price_query"],
+            format_func=lambda x: "🔍 知识问答" if x == "knowledge_qa" else "💰 价格查询",
+            index=0 if st.session_state.query_mode == "knowledge_qa" else 1,
+            help="明确选择要使用的功能：知识问答基于文档语料库，价格查询基于材料价格数据库"
+        )
+        
+        st.markdown("---")
         st.subheader("📈 图表设置")
         st.session_state.data_threshold = st.number_input("设置数据量阈值（小于等于该值时不绘制图表）", min_value=0, value=10, step=1)
         st.subheader("📤 上传知识库文件")
@@ -624,116 +638,71 @@ def web():
                 meta = None
 
                 try:
-                    # ========== 修改：优先检查是否处于对话模式 ==========
-                    if st.session_state.dialogue_status in ["collecting", "ready"]:
-                        # 继续对话式查询
-                        handle_dialogue_step(api, prompt, assistant_container)
-                    else:
-                        # 正常意图识别流程
+                    # ========== 硬核分离：根据用户选择的模式直接分流（去除意图识别）==========
+                    if st.session_state.query_mode == "knowledge_qa":
+                        # 知识问答模式：调用知识库查询接口
                         try:
-                            # 第一步：意图识别
-                            intent_resp = requests.post(
-                                f"{api.base_url}/api/v1/query/intent",
+                            endpoint = f"{api.base_url}/api/v1/query/stream"
+                            r = requests.post(
+                                endpoint,
                                 json={"question": prompt},
-                                timeout=10
+                                stream=True,
+                                timeout=120,
                             )
-                            intent_resp.raise_for_status()
-                            intent = intent_resp.json().get("intent", "knowledge_qa")
+                            r.raise_for_status()
                         except Exception as e:
-                            assistant_container.error(f"意图识别调用失败{e}")
-                            intent = "knowledge_qa"  # 默认知识问答
-
-                        if intent == "dangerous_sql":
-                            st.info("❌ 用户该意图存在一定风险，请重新提问")
+                            assistant_container.error(f"请求接口调用失败{e}")
                             return
-                        
-                        elif intent == "price_recommendation":
-                            # ========== 修改：使用对话式查询替代直接流式查询 ==========
+
+                        buffer = ""
+                        meta = None
+                        for chunk in r.iter_lines(decode_unicode=True):
+                            if not chunk:
+                                continue
+                            if chunk.strip() == "[END]":
+                                continue
+                            if chunk.strip().startswith("{") and chunk.strip().endswith("}"):
+                                try:
+                                    meta = json.loads(chunk.strip())
+                                    if meta and "text" in meta:
+                                        final_text = meta["text"].replace("\n", "  \n")
+                                        assistant_container.markdown(final_text, unsafe_allow_html=True)
+                                        st.session_state.messages.append({"role": "assistant", "context": final_text})
+                                except Exception as e:
+                                    print("Meta JSON 解析失败:", e)
+                                continue
+                            buffer += chunk
+                            assistant_container.markdown(buffer + "▌", unsafe_allow_html=True)
+
+                        if not (meta and "text" in meta):
+                            final_text = buffer.replace("\n", "  \n")
+                            assistant_container.markdown(final_text, unsafe_allow_html=True)
+                            st.session_state.messages.append({"role": "assistant", "context": final_text})
+
+                        # 处理参考文档
+                        try:
+                            if meta:
+                                st.session_state.last_docs = [
+                                    {
+                                        "filename": ctx.get("metadata", {}).get("source", f"文档片段 {i+1}"),
+                                        "context": ctx.get("page_content", ""),
+                                        "similarity_score": 1.0,
+                                        "retriever_name": "RAG检索",
+                                    }
+                                    for i, ctx in enumerate(meta.get("contexts", []))
+                                ]
+                        except Exception as e:
+                            assistant_container.error(f"处理参考文档失败{e}")
+                    
+                    else:  # price_query 模式
+                        # 检查是否处于对话模式
+                        if st.session_state.dialogue_status in ["collecting", "ready"]:
+                            # 继续对话式查询
+                            handle_dialogue_step(api, prompt, assistant_container)
+                        else:
                             # 启动对话式收集流程
                             st.session_state.dialogue_message_added = False
                             handle_dialogue_step(api, prompt, assistant_container)
-                        
-                        elif intent == "knowledge_qa":
-                            # 知识问答保持原有逻辑
-                            try:
-                                endpoint = f"{api.base_url}/api/v1/query/stream"
-                                r = requests.post(
-                                    endpoint,
-                                    json={"question": prompt},
-                                    stream=True,
-                                    timeout=120,
-                                )
-                                r.raise_for_status()
-                            except Exception as e:
-                                assistant_container.error(f"请求接口调用失败{e}")
-                                return
-
-                            buffer = ""
-                            for chunk in r.iter_lines(decode_unicode=True):
-                                if not chunk:
-                                    continue
-                                if chunk.strip() == "[END]":
-                                    continue
-                                if chunk.strip().startswith("{") and chunk.strip().endswith("}"):
-                                    try:
-                                        meta = json.loads(chunk.strip())
-                                        if meta and "text" in meta:
-                                            final_text = meta["text"].replace("\n", "  \n")
-                                            assistant_container.markdown(final_text, unsafe_allow_html=True)
-                                            st.session_state.messages.append({"role": "assistant", "context": final_text})
-                                    except Exception as e:
-                                        print("Meta JSON 解析失败:", e)
-                                    continue
-                                buffer += chunk
-                                assistant_container.markdown(buffer + "▌", unsafe_allow_html=True)
-
-                            if not (meta and "text" in meta):
-                                final_text = buffer.replace("\n", "  \n")
-                                assistant_container.markdown(final_text, unsafe_allow_html=True)
-                                st.session_state.messages.append({"role": "assistant", "context": final_text})
-
-                            # 处理参考文档
-                            try:
-                                if meta:
-                                    st.session_state.last_docs = [
-                                        {
-                                            "filename": ctx.get("metadata", {}).get("source", f"文档片段 {i+1}"),
-                                            "context": ctx.get("page_content", ""),
-                                            "similarity_score": 1.0,
-                                            "retriever_name": "RAG检索",
-                                        }
-                                        for i, ctx in enumerate(meta.get("contexts", []))
-                                    ]
-                            except Exception as e:
-                                assistant_container.error(f"处理参考文档失败{e}")
-                        
-                        else:
-                            # 其他意图，尝试使用流式接口
-                            try:
-                                endpoint = f"{api.base_url}/api/v1/query/stream"
-                                r = requests.post(
-                                    endpoint,
-                                    json={"question": prompt},
-                                    stream=True,
-                                    timeout=120,
-                                )
-                                r.raise_for_status()
-                                
-                                buffer = ""
-                                for chunk in r.iter_lines(decode_unicode=True):
-                                    if not chunk:
-                                        continue
-                                    if chunk.strip() == "[END]":
-                                        continue
-                                    buffer += chunk
-                                    assistant_container.markdown(buffer + "▌", unsafe_allow_html=True)
-                                
-                                final_text = buffer.replace("\n", "  \n")
-                                assistant_container.markdown(final_text, unsafe_allow_html=True)
-                                st.session_state.messages.append({"role": "assistant", "context": final_text})
-                                
-                            except Exception as e:
-                                assistant_container.error(f"服务调用失败：{e}")
                                 
                 except Exception as e:
                     assistant_container.error(f"服务调用失败：{e}")

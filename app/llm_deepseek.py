@@ -358,23 +358,6 @@ class LLMPredictor:
             self.logger.warning(f"输出标签 '{result}' 不在允许的列表中，使用默认标签 '{default_token}'")
             return default_token
     
-    def predict_intent(self, query):
-        """
-        预测用户意图，使用guided decoding和后处理验证确保输出为预定义的意图标签
-        :param query: 用户查询
-        :return: 意图标签
-        """
-        # 定义允许的意图标签
-        allowed_intents = ["price_recommendation", "knowledge_qa", "other", "dangerous_sql"]
-        
-        # 使用后处理验证的预测方法
-        return self.predict_with_validation(
-            Intent_TEMPLATE, 
-            query, 
-            allowed_intents, 
-            default_token="knowledge_qa"
-        )
-    
     def predict_channel(self, query):
         """
         预测价格渠道，使用guided decoding和后处理验证确保输出为预定义的渠道标签

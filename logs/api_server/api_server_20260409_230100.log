@@ -1,0 +1,132 @@
+[2026-04-09 23:01:00] INFO     [api_server.py:29] 启动Easy-RAG API服务...
+[2026-04-09 23:01:00] INFO     [rag_service.py:106] 开始初始化RAG服务...
+[2026-04-09 23:01:00] INFO     [rag_service.py:117] 语料库加载完成，共1327个文档
+[2026-04-09 23:01:00] INFO     [rag_service.py:131] 语料库未发生变化，使用现有缓存
+[2026-04-09 23:01:01] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-09 23:01:01] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-09 23:01:01] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-09 23:01:01] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-09 23:01:01] INFO     [rag_service.py:139] LLM初始化完成
+[2026-04-09 23:01:01] INFO     [rag_service.py:291] 价格推荐模板加载成功
+[2026-04-09 23:01:01] INFO     [rag_service.py:144] 价格推荐模板初始化完成
+[2026-04-09 23:01:01] INFO     [rag_service.py:148] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-09 23:01:06] INFO     [rag_service.py:194] Retriever加载完成
+[2026-04-09 23:01:06] INFO     [mcp_endpoints.py:322] MCP端点初始化完成
+[2026-04-09 23:01:06] INFO     [api_server.py:37] MCP和Agent服务初始化完成
+[2026-04-09 23:02:31] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "钢筋", "province": "广东省", "city": "深圳市"}
+[2026-04-09 23:02:31] INFO     [conversation_manager.py:459] 创建新会话: 80c4f9e5-314 (类型: price_query)
+[2026-04-09 23:02:31] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: unknown
+[2026-04-09 23:02:31] INFO     [rag_service.py:324] LLM 渠道识别原始结果: unknown
+[2026-04-09 23:02:31] INFO     [rag_service.py:341] LLM 识别为 unknown，启用智能推断...
+[2026-04-09 23:02:31] INFO     [rag_service.py:348] 智能推断结果: channel=information_price, confidence=0.50, reason=未明确指定渠道，默认查询信息价（政府指导价）
+[2026-04-09 23:02:31] INFO     [rag_service.py:548] 阶段1: 快速检查数据总数...
+[2026-04-09 23:02:31] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:02:31] INFO     [rag_service.py:1042] 生成签名并添加到 header: nqPZfNtVbgYyWiGZ2YDH97aVBWY2YAEe98F3m3pwAbA=
+[2026-04-09 23:02:31] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '广东省', 'city': '深圳市', 'materialModelSpec': '', 'materialName': '钢筋', 'returnNumber': 10000, 'returnTotalCount': 1}
+[2026-04-09 23:02:31] WARNING  [rag_service.py:960] 快速检查返回非200状态码: 1102, token缺失
+[2026-04-09 23:02:31] INFO     [rag_service.py:550] 数据总数: 0 条
+[2026-04-09 23:02:31] INFO     [rag_service.py:559] 数据量评估: 0 条记录, 预计 0 tokens, 可处理: True
+[2026-04-09 23:02:31] INFO     [rag_service.py:602] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-09 23:02:31] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:02:31] INFO     [rag_service.py:1042] 生成签名并添加到 header: nqPZfNtVbgYyWiGZ2YDH97aVBWY2YAEe98F3m3pwAbA=
+[2026-04-09 23:02:31] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '广东省', 'city': '深圳市', 'materialModelSpec': '', 'materialName': '钢筋', 'returnNumber': 10000, 'returnTotalCount': 1}
+[2026-04-09 23:02:31] ERROR    [rag_service.py:759] ================================================================================
+[2026-04-09 23:02:31] ERROR    [rag_service.py:760] ❌ 价格推荐处理失败
+[2026-04-09 23:02:31] ERROR    [rag_service.py:761] ================================================================================
+[2026-04-09 23:02:31] ERROR    [rag_service.py:762] 🔍 查询条件: {'materialName': '钢筋', 'province': '广东省', 'city': '深圳市'}
+[2026-04-09 23:02:31] ERROR    [rag_service.py:763] ❌ 错误信息: 价格查询失败: token缺失
+[2026-04-09 23:02:31] ERROR    [rag_service.py:764] ⏱️  已耗时: 0.208s
+[2026-04-09 23:02:31] ERROR    [rag_service.py:765] ================================================================================
+[2026-04-09 23:02:40] INFO     [conversation_manager.py:459] 创建新会话: 1a37fee2-147 (类型: knowledge_qa)
+[2026-04-09 23:02:41] INFO     [rag_service.py:1176] 检索完成，返回 20 个文档
+[2026-04-09 23:02:41] ERROR    [rag_service.py:1233] 查询处理失败: 'NoneType' object has no attribute 'rerank'
+[2026-04-09 23:02:41] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 0, query: 什么是工程造价
+[2026-04-09 23:02:41] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 446
+[2026-04-09 23:02:41] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+[2026-04-09 23:02:46] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 92 个 chunk
+[2026-04-09 23:06:25] INFO     [mcp_endpoints.py:93] [Agent API] 收到消息: session=xxx, message=广东省深圳市
+[2026-04-09 23:06:25] INFO     [agent.py:97] [Agent] 处理消息: session=xxx, turn=1, state=idle
+[2026-04-09 23:06:25] INFO     [agent.py:133] [Agent] 首次查询处理: 广东省深圳市
+[2026-04-09 23:06:26] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"province": "广东省", "city": "深圳市"}
+[2026-04-09 23:06:26] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: unknown
+[2026-04-09 23:06:26] INFO     [rag_service.py:324] LLM 渠道识别原始结果: unknown
+[2026-04-09 23:06:26] INFO     [rag_service.py:341] LLM 识别为 unknown，启用智能推断...
+[2026-04-09 23:06:26] INFO     [rag_service.py:348] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-09 23:06:26] INFO     [tools.py:255] [MCP Tool] quick_search_materials: keyword=, limit=10
+[2026-04-09 23:06:27] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: ```json
+{}
+```
+[2026-04-09 23:06:27] ERROR    [rag_service.py:540] 实体抽取失败: 实体解析失败
+[2026-04-09 23:06:27] INFO     [rag_service.py:548] 阶段1: 快速检查数据总数...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:06:27] INFO     [rag_service.py:1042] 生成签名并添加到 header: EnAipP5vLt6kPbRWl+sikuoukbcWi6Z1sSKJJI5Dnkc=
+[2026-04-09 23:06:27] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '', 'city': '', 'materialModelSpec': '', 'materialName': '', 'returnNumber': 50, 'returnTotalCount': 1}
+[2026-04-09 23:06:27] WARNING  [rag_service.py:960] 快速检查返回非200状态码: 1102, token缺失
+[2026-04-09 23:06:27] INFO     [rag_service.py:550] 数据总数: 0 条
+[2026-04-09 23:06:27] INFO     [rag_service.py:559] 数据量评估: 0 条记录, 预计 0 tokens, 可处理: True
+[2026-04-09 23:06:27] INFO     [rag_service.py:602] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:06:27] INFO     [rag_service.py:1042] 生成签名并添加到 header: EnAipP5vLt6kPbRWl+sikuoukbcWi6Z1sSKJJI5Dnkc=
+[2026-04-09 23:06:27] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '', 'city': '', 'materialModelSpec': '', 'materialName': '', 'returnNumber': 50, 'returnTotalCount': 1}
+[2026-04-09 23:06:27] ERROR    [rag_service.py:759] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:760] ❌ 价格推荐处理失败
+[2026-04-09 23:06:27] ERROR    [rag_service.py:761] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:762] 🔍 查询条件: {'materialName': '', 'returnNumber': 50}
+[2026-04-09 23:06:27] ERROR    [rag_service.py:763] ❌ 错误信息: 价格查询失败: token缺失
+[2026-04-09 23:06:27] ERROR    [rag_service.py:764] ⏱️  已耗时: 0.207s
+[2026-04-09 23:06:27] ERROR    [rag_service.py:765] ================================================================================
+[2026-04-09 23:06:27] INFO     [rag_service.py:548] 阶段1: 快速检查数据总数...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1056] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/factory/getFactoryMaterial
+[2026-04-09 23:06:27] WARNING  [rag_service.py:960] 快速检查返回非200状态码: 1102, token缺失
+[2026-04-09 23:06:27] INFO     [rag_service.py:550] 数据总数: 0 条
+[2026-04-09 23:06:27] INFO     [rag_service.py:559] 数据量评估: 0 条记录, 预计 0 tokens, 可处理: True
+[2026-04-09 23:06:27] INFO     [rag_service.py:602] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1056] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/factory/getFactoryMaterial
+[2026-04-09 23:06:27] ERROR    [rag_service.py:759] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:760] ❌ 价格推荐处理失败
+[2026-04-09 23:06:27] ERROR    [rag_service.py:761] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:762] 🔍 查询条件: {'materialName': '', 'returnNumber': 50}
+[2026-04-09 23:06:27] ERROR    [rag_service.py:763] ❌ 错误信息: 价格查询失败: token缺失
+[2026-04-09 23:06:27] ERROR    [rag_service.py:764] ⏱️  已耗时: 0.200s
+[2026-04-09 23:06:27] ERROR    [rag_service.py:765] ================================================================================
+[2026-04-09 23:06:27] INFO     [rag_service.py:548] 阶段1: 快速检查数据总数...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1103] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/zhichengInfo/getZhichengInfoMaterial
+[2026-04-09 23:06:27] WARNING  [rag_service.py:960] 快速检查返回非200状态码: 1102, token缺失
+[2026-04-09 23:06:27] INFO     [rag_service.py:550] 数据总数: 0 条
+[2026-04-09 23:06:27] INFO     [rag_service.py:559] 数据量评估: 0 条记录, 预计 0 tokens, 可处理: True
+[2026-04-09 23:06:27] INFO     [rag_service.py:602] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-09 23:06:27] INFO     [rag_service.py:1103] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/zhichengInfo/getZhichengInfoMaterial
+[2026-04-09 23:06:27] ERROR    [rag_service.py:759] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:760] ❌ 价格推荐处理失败
+[2026-04-09 23:06:27] ERROR    [rag_service.py:761] ================================================================================
+[2026-04-09 23:06:27] ERROR    [rag_service.py:762] 🔍 查询条件: {'materialName': '', 'returnNumber': 50}
+[2026-04-09 23:06:27] ERROR    [rag_service.py:763] ❌ 错误信息: 价格查询失败: token缺失
+[2026-04-09 23:06:27] ERROR    [rag_service.py:764] ⏱️  已耗时: 0.198s
+[2026-04-09 23:06:27] ERROR    [rag_service.py:765] ================================================================================
+[2026-04-09 23:12:09] INFO     [mcp_endpoints.py:93] [Agent API] 收到消息: session=xxx, message=查一下钢筋的价格
+[2026-04-09 23:12:09] INFO     [agent.py:97] [Agent] 处理消息: session=xxx, turn=2, state=collecting_entities
+[2026-04-09 23:12:09] INFO     [agent.py:234] [Agent] 实体补充处理: 查一下钢筋的价格
+[2026-04-09 23:12:10] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "钢筋"}
+[2026-04-09 23:12:36] INFO     [mcp_endpoints.py:93] [Agent API] 收到消息: session=xxx, message=确认查询
+[2026-04-09 23:12:36] INFO     [agent.py:97] [Agent] 处理消息: session=xxx, turn=3, state=ready_to_query
+[2026-04-09 23:12:36] INFO     [agent.py:260] [Agent] 准备查询状态处理: 确认查询
+[2026-04-09 23:12:36] INFO     [agent.py:327] [Agent] 执行价格查询: {'province': '广东省', 'city': '深圳市', 'materialName': '钢筋'}
+[2026-04-09 23:12:36] INFO     [tools.py:318] [MCP Tool] query_price_data: channel=unknown, material=钢筋
+[2026-04-09 23:12:36] INFO     [rag_service.py:548] 阶段1: 快速检查数据总数...
+[2026-04-09 23:12:36] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:12:36] INFO     [rag_service.py:1042] 生成签名并添加到 header: nqPZfNtVbgYyWiGZ2YDH97aVBWY2YAEe98F3m3pwAbA=
+[2026-04-09 23:12:36] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '广东省', 'city': '深圳市', 'materialModelSpec': '', 'materialName': '钢筋', 'returnNumber': 10000, 'returnTotalCount': 1}
+[2026-04-09 23:12:36] WARNING  [rag_service.py:960] 快速检查返回非200状态码: 1102, token缺失
+[2026-04-09 23:12:36] INFO     [rag_service.py:550] 数据总数: 0 条
+[2026-04-09 23:12:36] INFO     [rag_service.py:559] 数据量评估: 0 条记录, 预计 0 tokens, 可处理: True
+[2026-04-09 23:12:36] INFO     [rag_service.py:602] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-09 23:12:36] INFO     [rag_service.py:1008] 使用真实 API: http://113.31.103.48:8801/backend/largeModelMaterial/infor/getInforMaterial
+[2026-04-09 23:12:36] INFO     [rag_service.py:1042] 生成签名并添加到 header: nqPZfNtVbgYyWiGZ2YDH97aVBWY2YAEe98F3m3pwAbA=
+[2026-04-09 23:12:36] INFO     [rag_service.py:1043] 请求参数: {'accountId': 'testoxidmwedxdkseucdnvksfnzmdfnzd', 'matchMethod': 1, 'categoryOneLevelName': '', 'categoryTwoLevelName': '', 'categoryThreeLevelName': '', 'minPrice': '', 'maxPrice': '', 'releaseDepartment': '', 'startReleaseDate': '', 'endReleaseDate': '', 'province': '广东省', 'city': '深圳市', 'materialModelSpec': '', 'materialName': '钢筋', 'returnNumber': 10000, 'returnTotalCount': 1}
+[2026-04-09 23:12:36] ERROR    [rag_service.py:759] ================================================================================
+[2026-04-09 23:12:36] ERROR    [rag_service.py:760] ❌ 价格推荐处理失败
+[2026-04-09 23:12:36] ERROR    [rag_service.py:761] ================================================================================
+[2026-04-09 23:12:36] ERROR    [rag_service.py:762] 🔍 查询条件: {'materialName': '钢筋', 'province': '广东省', 'city': '深圳市', 'materialModelSpec': '', 'brand': ''}
+[2026-04-09 23:12:36] ERROR    [rag_service.py:763] ❌ 错误信息: 价格查询失败: token缺失
+[2026-04-09 23:12:36] ERROR    [rag_service.py:764] ⏱️  已耗时: 0.211s
+[2026-04-09 23:12:36] ERROR    [rag_service.py:765] ================================================================================

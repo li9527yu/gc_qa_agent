@@ -1,336 +1,0 @@
-nohup: ignoring input
-/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
-  import pynvml  # type: ignore[import]
-/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
-  import pkg_resources
-INFO:     Started server process [3030329]
-INFO:     Waiting for application startup.
-[2026-04-02 10:35:14] INFO     [api_server.py:27] 启动Easy-RAG API服务...
-2026-04-02 10:35:14,221 - INFO - 启动Easy-RAG API服务...
-[2026-04-02 10:35:14] INFO     [rag_service.py:97] 开始初始化RAG服务...
-2026-04-02 10:35:14,222 - INFO - 开始初始化RAG服务...
-2026-04-02 10:35:14,222 - INFO - 正在从缓存加载语料库...
-2026-04-02 10:35:14,223 - INFO - 已从缓存加载 180 段文本
-2026-04-02 10:35:14,223 - INFO - 缓存验证通过
-[2026-04-02 10:35:14] INFO     [rag_service.py:108] 语料库加载完成，共180个文档
-2026-04-02 10:35:14,223 - INFO - 语料库加载完成，共180个文档
-[2026-04-02 10:35:14] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: 975eabe660f124347c212cc317756eb5, 缓存哈希: 9c476bcbd0ebdb1c0194503801b8d63c
-2026-04-02 10:35:14,225 - INFO - 检测到语料库变化，当前哈希: 975eabe660f124347c212cc317756eb5, 缓存哈希: 9c476bcbd0ebdb1c0194503801b8d63c
-[2026-04-02 10:35:14] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
-2026-04-02 10:35:14,225 - INFO - 将自动重建向量库以同步最新语料库
-[2026-04-02 10:35:14] INFO     [rag_service.py:137]    GPU 1 可用显存: 94.97 GB
-2026-04-02 10:35:14,325 - INFO -    GPU 1 可用显存: 94.97 GB
-2026-04-02 10:35:15,326 - INFO - Use pytorch device_name: cuda:0
-2026-04-02 10:35:15,326 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
-2026-04-02 10:35:16,889 - INFO - 1 prompt is loaded, with the key: query
-2026-04-02 10:35:17,040 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
-2026-04-02 10:35:17,040 - INFO - Rebuilding vector database...
-2026-04-02 10:35:17,040 - INFO - 语料库哈希值发生变化，需要重建缓存
-2026-04-02 10:35:17,040 - INFO - 当前哈希: 975eabe660f124347c212cc317756eb5, 缓存哈希: 9c476bcbd0ebdb1c0194503801b8d63c
-2026-04-02 10:35:17,040 - INFO - 强制重建模式，删除所有缓存
-2026-04-02 10:35:17,040 - INFO - 删除分词缓存文件: tokenized_docs.pkl
-2026-04-02 10:35:17,045 - INFO - 未找到缓存文件，开始预处理语料...
-2026-04-02 10:35:17,045 - WARNING - 停用词文件 /home/tpc/suda/rag/easy-rag/rag_cache/stopwords/stopwords_hit.txt 不存在，跳过停用词过滤。
-分词处理中:   0%|          | 0/180 [00:00<?, ?it/s]Building prefix dict from the default dictionary ...
-2026-04-02 10:35:17,046 - DEBUG - Building prefix dict from the default dictionary ...
-Loading model from cache /tmp/jieba.cache
-2026-04-02 10:35:17,047 - DEBUG - Loading model from cache /tmp/jieba.cache
-Loading model cost 0.735 seconds.
-2026-04-02 10:35:17,781 - DEBUG - Loading model cost 0.735 seconds.
-Prefix dict has been built successfully.
-2026-04-02 10:35:17,781 - DEBUG - Prefix dict has been built successfully.
-分词处理中:   1%|          | 1/180 [00:00<02:11,  1.36it/s]分词处理中:  54%|█████▍    | 97/180 [00:00<00:00, 157.06it/s]分词处理中: 100%|██████████| 180/180 [00:00<00:00, 196.38it/s]
-2026-04-02 10:35:17,963 - INFO - 正在将分词结果缓存到 tokenized_docs.pkl ...
-2026-04-02 10:35:17,981 - INFO - 重建向量数据库...
-2026-04-02 10:35:18,089 - INFO - 已删除旧集合: easy_rag_milvus
-2026-04-02 10:35:25,911 - INFO - 向量数据库构建完成，共 180 个文档
-[2026-04-02 10:35:25] INFO     [rag_service.py:152] 检索器初始化完成
-2026-04-02 10:35:25,913 - INFO - 检索器初始化完成
-[2026-04-02 10:35:25] INFO     [rag_service.py:158] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:35:25,913 - INFO - 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-[2026-04-02 10:35:25] INFO     [rag_service.py:159]    设备: cpu
-2026-04-02 10:35:25,913 - INFO -    设备: cpu
-2026-04-02 10:35:25,914 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:35:25,915 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:35:25,915 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
-2026-04-02 10:35:25,915 - INFO - Instruction: Given a query and a passage, determine whether the...
-2026-04-02 10:35:26,458 - INFO - Using existing pad_token: <|endoftext|>
-Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
-You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
-2026-04-02 10:35:27,059 - INFO - Set model.config.pad_token_id to: 151643
-2026-04-02 10:35:27,063 - INFO - Qwen3-Reranker model loaded successfully
-2026-04-02 10:35:27,063 - INFO - Qwen3 Reranker loaded successfully
-[2026-04-02 10:35:27] INFO     [rag_service.py:164] 重排器初始化完成
-2026-04-02 10:35:27,063 - INFO - 重排器初始化完成
-[2026-04-02 10:35:27] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
-2026-04-02 10:35:27,115 - INFO - 🤖 初始化 LLM 客户端
-[2026-04-02 10:35:27] INFO     [llm_deepseek.py:91]    模式: local
-2026-04-02 10:35:27,115 - INFO -    模式: local
-[2026-04-02 10:35:27] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
-2026-04-02 10:35:27,115 - INFO -    Base URL: http://localhost:9839/v1
-[2026-04-02 10:35:27] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
-2026-04-02 10:35:27,115 - INFO -    Model: Qwen3-32B
-[2026-04-02 10:35:27] INFO     [rag_service.py:170] LLM初始化完成
-2026-04-02 10:35:27,115 - INFO - LLM初始化完成
-[2026-04-02 10:35:27] INFO     [rag_service.py:205] 价格推荐模板加载成功
-2026-04-02 10:35:27,115 - INFO - 价格推荐模板加载成功
-[2026-04-02 10:35:27] INFO     [rag_service.py:175] 价格推荐模板初始化完成
-2026-04-02 10:35:27,115 - INFO - 价格推荐模板初始化完成
-[2026-04-02 10:35:27] INFO     [rag_service.py:189] RAG服务初始化完成！（双缓冲切换成功）
-2026-04-02 10:35:27,115 - INFO - RAG服务初始化完成！（双缓冲切换成功）
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-INFO:     127.0.0.1:37328 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:37338 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:37340 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46780 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46790 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38110 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:45894 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:45906 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:45908 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46936 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46940 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59596 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59612 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60992 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:40:10,543 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '你是一个工程造价领域的智能助手，负责判断用户的意图属于哪一类。意图仅限以下四个选项：\n\n- price_recommendation：用户在咨询或请求某种材料的价格信息。【兜底与优先规则】：如果用户输入的内容仅包含材料名称或规格型号（如“混凝土C30”、“钢筋HRB400”等），且没有明确询问“是什么”、“怎么做”、“有什么要求”等知识性问题，必须优先判定为 price_recommendation。\n- knowledge_qa：用户询问工程造价领域的明确的知识概念、定义、规范标准或操作流程（通常包含“是什么”、“怎么做”、“有什么要求”、“如何计算”等提问词）。\n- other：用户的问题与材料价格或工程造价专业知识无关；\n- dangerous_sql：用户的问题可能涉及删除、修改、插入或影响数据库内容的操作，具有潜在危险性，应禁止处理。\n\n以下是一些例子，请严格按照以下格式回答：\n\n用户的问题: 304不锈钢价格多少？\n标签名称: price_recommendation\n\n用户的问题: 混凝土C30\n标签名称: price_recommendation\n\n用户的问题: 什么是清单计价？\n标签名称: knowledge_qa\n\n用户的问题: 钢筋HRB400的验收规范有哪些要求？\n标签名称: knowledge_qa\n\n用户的问题: 今天几月几号？\n标签名称: other\n\n用户的问题: 删除数据库中的项目清单\n标签名称: dangerous_sql\n\n用户的问题: 香蕉树的征收补偿标准是怎样的？\n标签名称: knowledge_qa\n\n用户的问题: 将所有钢材的单价设置为 0\n标签名称: dangerous_sql\n\n请根据用户的输入，判断其属于哪一类，仅输出类别标签名称，以下为列出的标签名称“price_recommendation、knowledge_qa、other、dangerous_sql”，不要多余解释和其他任何符号。\n用户的问题是：哪些项目必须招标\n仅输出类别标签名称，不要返回其他任何多余的文字和符号。\n'}], 'temperature': 0}
-2026-04-02 10:40:11,050 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:40:11] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: knowledge_qa
-2026-04-02 10:40:11,071 - INFO - LLM API 同步调用响应: knowledge_qa
-2026-04-02 10:40:11,071 - INFO - 识别到类型: knowledge_qa
-INFO:     127.0.0.1:60994 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
-INFO:     127.0.0.1:32768 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
-2026-04-02 10:40:11,092 - INFO - === 开始流式查询，问题: 哪些项目必须招标
-method: bm25
-INFO:     127.0.0.1:36018 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:36028 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:36036 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56966 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56978 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38884 - "POST /api/v1/upload HTTP/1.1" 200 OK
-[2026-04-02 10:45:06] INFO     [rag_service.py:97] 开始初始化RAG服务...
-2026-04-02 10:45:06,332 - INFO - 开始初始化RAG服务...
-2026-04-02 10:45:06,333 - INFO - 未找到缓存或缓存无效，开始处理文档...
-Processing files:   0%|          | 0/2 [00:00<?, ?it/s]Processing files: 100%|██████████| 2/2 [00:00<00:00, 231.70it/s]
-2026-04-02 10:45:06,350 - INFO - 已将 185 段文本缓存到 /home/tpc/.easy_rag_cache/corpus_cache_5f0f255f33483d5bd79ec1da164f272e.json
-[2026-04-02 10:45:06] INFO     [rag_service.py:108] 语料库加载完成，共185个文档
-2026-04-02 10:45:06,350 - INFO - 语料库加载完成，共185个文档
-[2026-04-02 10:45:06] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: c672376e065df597aafa5543c8205286, 缓存哈希: 975eabe660f124347c212cc317756eb5
-2026-04-02 10:45:06,353 - INFO - 检测到语料库变化，当前哈希: c672376e065df597aafa5543c8205286, 缓存哈希: 975eabe660f124347c212cc317756eb5
-[2026-04-02 10:45:06] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
-2026-04-02 10:45:06,354 - INFO - 将自动重建向量库以同步最新语料库
-[2026-04-02 10:45:06] INFO     [rag_service.py:137]    GPU 1 可用显存: 92.74 GB
-2026-04-02 10:45:06,354 - INFO -    GPU 1 可用显存: 92.74 GB
-2026-04-02 10:45:06,366 - INFO - Use pytorch device_name: cuda:0
-2026-04-02 10:45:06,366 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
-2026-04-02 10:45:07,573 - INFO - 1 prompt is loaded, with the key: query
-2026-04-02 10:45:07,606 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
-2026-04-02 10:45:07,606 - INFO - Rebuilding vector database...
-2026-04-02 10:45:07,606 - INFO - 语料库哈希值发生变化，需要重建缓存
-2026-04-02 10:45:07,606 - INFO - 当前哈希: c672376e065df597aafa5543c8205286, 缓存哈希: 975eabe660f124347c212cc317756eb5
-2026-04-02 10:45:07,606 - INFO - 强制重建模式，删除所有缓存
-2026-04-02 10:45:07,606 - INFO - 删除分词缓存文件: tokenized_docs.pkl
-2026-04-02 10:45:07,606 - INFO - 未找到缓存文件，开始预处理语料...
-2026-04-02 10:45:07,606 - WARNING - 停用词文件 /home/tpc/suda/rag/easy-rag/rag_cache/stopwords/stopwords_hit.txt 不存在，跳过停用词过滤。
-分词处理中:   0%|          | 0/185 [00:00<?, ?it/s]分词处理中:  53%|█████▎    | 98/185 [00:00<00:00, 975.57it/s]分词处理中: 100%|██████████| 185/185 [00:00<00:00, 1006.83it/s]
-2026-04-02 10:45:07,790 - INFO - 正在将分词结果缓存到 tokenized_docs.pkl ...
-2026-04-02 10:45:07,807 - INFO - 重建向量数据库...
-2026-04-02 10:45:07,824 - INFO - 已删除旧集合: easy_rag_milvus
-INFO:     127.0.0.1:38894 - "POST /api/v1/upload HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38898 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38912 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41030 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41042 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41052 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41068 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41072 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41086 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:45:15,849 - INFO - 向量数据库构建完成，共 185 个文档
-[2026-04-02 10:45:15] INFO     [rag_service.py:152] 检索器初始化完成
-2026-04-02 10:45:15,850 - INFO - 检索器初始化完成
-[2026-04-02 10:45:15] INFO     [rag_service.py:158] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:45:15,851 - INFO - 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-[2026-04-02 10:45:15] INFO     [rag_service.py:159]    设备: cpu
-2026-04-02 10:45:15,851 - INFO -    设备: cpu
-2026-04-02 10:45:15,851 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:45:15,851 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
-2026-04-02 10:45:15,851 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
-2026-04-02 10:45:15,851 - INFO - Instruction: Given a query and a passage, determine whether the...
-2026-04-02 10:45:16,301 - INFO - Using existing pad_token: <|endoftext|>
-INFO:     127.0.0.1:41100 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41112 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
-You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
-2026-04-02 10:45:17,172 - INFO - Set model.config.pad_token_id to: 151643
-2026-04-02 10:45:17,176 - INFO - Qwen3-Reranker model loaded successfully
-2026-04-02 10:45:17,176 - INFO - Qwen3 Reranker loaded successfully
-[2026-04-02 10:45:17] INFO     [rag_service.py:164] 重排器初始化完成
-2026-04-02 10:45:17,176 - INFO - 重排器初始化完成
-[2026-04-02 10:45:17] INFO     [rag_service.py:189] RAG服务初始化完成！（双缓冲切换成功）
-2026-04-02 10:45:17,313 - INFO - RAG服务初始化完成！（双缓冲切换成功）
-[2026-04-02 10:45:17] INFO     [rag_service.py:97] 开始初始化RAG服务...
-2026-04-02 10:45:17,314 - INFO - 开始初始化RAG服务...
-2026-04-02 10:45:17,315 - INFO - 未找到缓存或缓存无效，开始处理文档...
-Processing files:   0%|          | 0/3 [00:00<?, ?it/s]Processing files: 100%|██████████| 3/3 [00:00<00:00, 412.26it/s]
-2026-04-02 10:45:17,331 - INFO - 已将 190 段文本缓存到 /home/tpc/.easy_rag_cache/corpus_cache_9a3e8a80e4523030118e66b102b42a91.json
-[2026-04-02 10:45:17] INFO     [rag_service.py:108] 语料库加载完成，共190个文档
-2026-04-02 10:45:17,331 - INFO - 语料库加载完成，共190个文档
-[2026-04-02 10:45:17] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: 810788529805b46bfe5bfa8b548e2df6, 缓存哈希: c672376e065df597aafa5543c8205286
-2026-04-02 10:45:17,334 - INFO - 检测到语料库变化，当前哈希: 810788529805b46bfe5bfa8b548e2df6, 缓存哈希: c672376e065df597aafa5543c8205286
-[2026-04-02 10:45:17] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
-2026-04-02 10:45:17,334 - INFO - 将自动重建向量库以同步最新语料库
-[2026-04-02 10:45:17] INFO     [rag_service.py:137]    GPU 1 可用显存: 90.52 GB
-2026-04-02 10:45:17,335 - INFO -    GPU 1 可用显存: 90.52 GB
-2026-04-02 10:45:17,348 - INFO - Use pytorch device_name: cuda:0
-2026-04-02 10:45:17,348 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
-INFO:     127.0.0.1:41114 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41120 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:45:19,209 - INFO - 1 prompt is loaded, with the key: query
-[2026-04-02 10:45:19] ERROR    [rag_service.py:194] RAG服务初始化失败: CUDA out of memory. Tried to allocate 12.00 MiB. GPU 1 has a total capacity of 94.97 GiB of which 768.00 KiB is free. Process 2576607 has 87.76 GiB memory in use. Including non-PyTorch memory, this process has 7.20 GiB memory in use. Of the allocated memory 6.52 GiB is allocated by PyTorch, and 13.66 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-2026-04-02 10:45:19,297 - ERROR - RAG服务初始化失败: CUDA out of memory. Tried to allocate 12.00 MiB. GPU 1 has a total capacity of 94.97 GiB of which 768.00 KiB is free. Process 2576607 has 87.76 GiB memory in use. Including non-PyTorch memory, this process has 7.20 GiB memory in use. Of the allocated memory 6.52 GiB is allocated by PyTorch, and 13.66 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-INFO:     127.0.0.1:58938 - "GET /api/v1/task_status?task_id=52cd9d40-5109-443d-9a5b-5e0ff95d137e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58950 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:45:21,190 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '你是一个工程造价领域的智能助手，负责判断用户的意图属于哪一类。意图仅限以下四个选项：\n\n- price_recommendation：用户在咨询或请求某种材料的价格信息。【兜底与优先规则】：如果用户输入的内容仅包含材料名称或规格型号（如“混凝土C30”、“钢筋HRB400”等），且没有明确询问“是什么”、“怎么做”、“有什么要求”等知识性问题，必须优先判定为 price_recommendation。\n- knowledge_qa：用户询问工程造价领域的明确的知识概念、定义、规范标准或操作流程（通常包含“是什么”、“怎么做”、“有什么要求”、“如何计算”等提问词）。\n- other：用户的问题与材料价格或工程造价专业知识无关；\n- dangerous_sql：用户的问题可能涉及删除、修改、插入或影响数据库内容的操作，具有潜在危险性，应禁止处理。\n\n以下是一些例子，请严格按照以下格式回答：\n\n用户的问题: 304不锈钢价格多少？\n标签名称: price_recommendation\n\n用户的问题: 混凝土C30\n标签名称: price_recommendation\n\n用户的问题: 什么是清单计价？\n标签名称: knowledge_qa\n\n用户的问题: 钢筋HRB400的验收规范有哪些要求？\n标签名称: knowledge_qa\n\n用户的问题: 今天几月几号？\n标签名称: other\n\n用户的问题: 删除数据库中的项目清单\n标签名称: dangerous_sql\n\n用户的问题: 香蕉树的征收补偿标准是怎样的？\n标签名称: knowledge_qa\n\n用户的问题: 将所有钢材的单价设置为 0\n标签名称: dangerous_sql\n\n请根据用户的输入，判断其属于哪一类，仅输出类别标签名称，以下为列出的标签名称“price_recommendation、knowledge_qa、other、dangerous_sql”，不要多余解释和其他任何符号。\n用户的问题是：混凝土c30\n仅输出类别标签名称，不要返回其他任何多余的文字和符号。\n'}], 'temperature': 0}
-2026-04-02 10:45:21,427 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:45:21] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: price_recommendation
-2026-04-02 10:45:21,428 - INFO - LLM API 同步调用响应: price_recommendation
-2026-04-02 10:45:21,429 - INFO - 识别到类型: price_recommendation
-INFO:     127.0.0.1:58952 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58964 - "POST /api/v1/query/price HTTP/1.1" 200 OK
-2026-04-02 10:45:21,444 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:混凝土c30\n输出:'}], 'temperature': 0}
-2026-04-02 10:45:22,327 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:45:22] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "混凝土", "materialModelSpec": "C30"}
-2026-04-02 10:45:22,328 - INFO - LLM API 同步调用响应: {"materialName": "混凝土", "materialModelSpec": "C30"}
-INFO:     127.0.0.1:36850 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:36862 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46996 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47008 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47018 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47034 - "DELETE /api/v1/delete/batch HTTP/1.1" 200 OK
-[2026-04-02 10:46:18] INFO     [rag_service.py:97] 开始初始化RAG服务...
-2026-04-02 10:46:18,191 - INFO - 开始初始化RAG服务...
-2026-04-02 10:46:18,192 - INFO - 正在从缓存加载语料库...
-2026-04-02 10:46:18,197 - INFO - 已从缓存加载 180 段文本
-2026-04-02 10:46:18,197 - INFO - 缓存验证通过
-[2026-04-02 10:46:18] INFO     [rag_service.py:108] 语料库加载完成，共180个文档
-2026-04-02 10:46:18,197 - INFO - 语料库加载完成，共180个文档
-[2026-04-02 10:46:18] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: 975eabe660f124347c212cc317756eb5, 缓存哈希: c672376e065df597aafa5543c8205286
-2026-04-02 10:46:18,202 - INFO - 检测到语料库变化，当前哈希: 975eabe660f124347c212cc317756eb5, 缓存哈希: c672376e065df597aafa5543c8205286
-[2026-04-02 10:46:18] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
-2026-04-02 10:46:18,202 - INFO - 将自动重建向量库以同步最新语料库
-[2026-04-02 10:46:18] INFO     [rag_service.py:137]    GPU 1 可用显存: 88.45 GB
-2026-04-02 10:46:18,203 - INFO -    GPU 1 可用显存: 88.45 GB
-2026-04-02 10:46:18,217 - INFO - Use pytorch device_name: cuda:0
-2026-04-02 10:46:18,217 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
-INFO:     127.0.0.1:47046 - "GET /api/v1/task_status?task_id=147d21a9-fee3-440c-946f-9d1bfe181c5e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47048 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:46:20,007 - INFO - 1 prompt is loaded, with the key: query
-[2026-04-02 10:46:20] ERROR    [rag_service.py:194] RAG服务初始化失败: CUDA out of memory. Tried to allocate 594.00 MiB. GPU 1 has a total capacity of 94.97 GiB of which 768.00 KiB is free. Process 2576607 has 87.76 GiB memory in use. Including non-PyTorch memory, this process has 7.20 GiB memory in use. Of the allocated memory 6.52 GiB is allocated by PyTorch, and 13.66 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-2026-04-02 10:46:20,012 - ERROR - RAG服务初始化失败: CUDA out of memory. Tried to allocate 594.00 MiB. GPU 1 has a total capacity of 94.97 GiB of which 768.00 KiB is free. Process 2576607 has 87.76 GiB memory in use. Including non-PyTorch memory, this process has 7.20 GiB memory in use. Of the allocated memory 6.52 GiB is allocated by PyTorch, and 13.66 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-INFO:     127.0.0.1:60678 - "GET /api/v1/task_status?task_id=147d21a9-fee3-440c-946f-9d1bfe181c5e HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60684 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60686 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60694 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:36400 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:48156 - "POST /api/v1/upload HTTP/1.1" 200 OK
-INFO:     127.0.0.1:48168 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54290 - "POST /api/v1/upload HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54300 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54308 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54654 - "POST /api/v1/upload HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41854 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41862 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41878 - "POST /api/v1/upload HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47678 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47692 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49666 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:53:57,906 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '你是一个工程造价领域的智能助手，负责判断用户的意图属于哪一类。意图仅限以下四个选项：\n\n- price_recommendation：用户在咨询或请求某种材料的价格信息。【兜底与优先规则】：如果用户输入的内容仅包含材料名称或规格型号（如“混凝土C30”、“钢筋HRB400”等），且没有明确询问“是什么”、“怎么做”、“有什么要求”等知识性问题，必须优先判定为 price_recommendation。\n- knowledge_qa：用户询问工程造价领域的明确的知识概念、定义、规范标准或操作流程（通常包含“是什么”、“怎么做”、“有什么要求”、“如何计算”等提问词）。\n- other：用户的问题与材料价格或工程造价专业知识无关；\n- dangerous_sql：用户的问题可能涉及删除、修改、插入或影响数据库内容的操作，具有潜在危险性，应禁止处理。\n\n以下是一些例子，请严格按照以下格式回答：\n\n用户的问题: 304不锈钢价格多少？\n标签名称: price_recommendation\n\n用户的问题: 混凝土C30\n标签名称: price_recommendation\n\n用户的问题: 什么是清单计价？\n标签名称: knowledge_qa\n\n用户的问题: 钢筋HRB400的验收规范有哪些要求？\n标签名称: knowledge_qa\n\n用户的问题: 今天几月几号？\n标签名称: other\n\n用户的问题: 删除数据库中的项目清单\n标签名称: dangerous_sql\n\n用户的问题: 香蕉树的征收补偿标准是怎样的？\n标签名称: knowledge_qa\n\n用户的问题: 将所有钢材的单价设置为 0\n标签名称: dangerous_sql\n\n请根据用户的输入，判断其属于哪一类，仅输出类别标签名称，以下为列出的标签名称“price_recommendation、knowledge_qa、other、dangerous_sql”，不要多余解释和其他任何符号。\n用户的问题是：您有什么能力\n仅输出类别标签名称，不要返回其他任何多余的文字和符号。\n'}], 'temperature': 0}
-2026-04-02 10:53:58,057 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:53:58] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: other
-2026-04-02 10:53:58,060 - INFO - LLM API 同步调用响应: other
-[2026-04-02 10:53:58] INFO     [rag_service.py:246] 识别意图为 other，转为默认 price_recommendation
-2026-04-02 10:53:58,060 - INFO - 识别意图为 other，转为默认 price_recommendation
-2026-04-02 10:53:58,061 - INFO - 识别到类型: price_recommendation
-INFO:     127.0.0.1:49678 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49690 - "POST /api/v1/query/price HTTP/1.1" 200 OK
-2026-04-02 10:53:58,074 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:您有什么能力\n输出:'}], 'temperature': 0}
-2026-04-02 10:53:58,205 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:53:58] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {}
-2026-04-02 10:53:58,206 - INFO - LLM API 同步调用响应: {}
-INFO:     127.0.0.1:38436 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38438 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38440 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38446 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38458 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38468 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57194 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57202 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:54:58,136 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '你是一个工程造价领域的智能助手，负责判断用户的意图属于哪一类。意图仅限以下四个选项：\n\n- price_recommendation：用户在咨询或请求某种材料的价格信息。【兜底与优先规则】：如果用户输入的内容仅包含材料名称或规格型号（如“混凝土C30”、“钢筋HRB400”等），且没有明确询问“是什么”、“怎么做”、“有什么要求”等知识性问题，必须优先判定为 price_recommendation。\n- knowledge_qa：用户询问工程造价领域的明确的知识概念、定义、规范标准或操作流程（通常包含“是什么”、“怎么做”、“有什么要求”、“如何计算”等提问词）。\n- other：用户的问题与材料价格或工程造价专业知识无关；\n- dangerous_sql：用户的问题可能涉及删除、修改、插入或影响数据库内容的操作，具有潜在危险性，应禁止处理。\n\n以下是一些例子，请严格按照以下格式回答：\n\n用户的问题: 304不锈钢价格多少？\n标签名称: price_recommendation\n\n用户的问题: 混凝土C30\n标签名称: price_recommendation\n\n用户的问题: 什么是清单计价？\n标签名称: knowledge_qa\n\n用户的问题: 钢筋HRB400的验收规范有哪些要求？\n标签名称: knowledge_qa\n\n用户的问题: 今天几月几号？\n标签名称: other\n\n用户的问题: 删除数据库中的项目清单\n标签名称: dangerous_sql\n\n用户的问题: 香蕉树的征收补偿标准是怎样的？\n标签名称: knowledge_qa\n\n用户的问题: 将所有钢材的单价设置为 0\n标签名称: dangerous_sql\n\n请根据用户的输入，判断其属于哪一类，仅输出类别标签名称，以下为列出的标签名称“price_recommendation、knowledge_qa、other、dangerous_sql”，不要多余解释和其他任何符号。\n用户的问题是：你的大模型参数量是多少\n仅输出类别标签名称，不要返回其他任何多余的文字和符号。\n'}], 'temperature': 0}
-2026-04-02 10:54:58,270 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:54:58] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: other
-2026-04-02 10:54:58,271 - INFO - LLM API 同步调用响应: other
-[2026-04-02 10:54:58] INFO     [rag_service.py:246] 识别意图为 other，转为默认 price_recommendation
-2026-04-02 10:54:58,272 - INFO - 识别意图为 other，转为默认 price_recommendation
-2026-04-02 10:54:58,272 - INFO - 识别到类型: price_recommendation
-INFO:     127.0.0.1:57206 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57216 - "POST /api/v1/query/price HTTP/1.1" 200 OK
-2026-04-02 10:54:58,284 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:你的大模型参数量是多少\n输出:'}], 'temperature': 0}
-2026-04-02 10:54:58,414 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:54:58] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {}
-2026-04-02 10:54:58,415 - INFO - LLM API 同步调用响应: {}
-INFO:     127.0.0.1:43442 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:43446 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:55:01,795 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '你是一个工程造价领域的智能助手，负责判断用户的意图属于哪一类。意图仅限以下四个选项：\n\n- price_recommendation：用户在咨询或请求某种材料的价格信息。【兜底与优先规则】：如果用户输入的内容仅包含材料名称或规格型号（如“混凝土C30”、“钢筋HRB400”等），且没有明确询问“是什么”、“怎么做”、“有什么要求”等知识性问题，必须优先判定为 price_recommendation。\n- knowledge_qa：用户询问工程造价领域的明确的知识概念、定义、规范标准或操作流程（通常包含“是什么”、“怎么做”、“有什么要求”、“如何计算”等提问词）。\n- other：用户的问题与材料价格或工程造价专业知识无关；\n- dangerous_sql：用户的问题可能涉及删除、修改、插入或影响数据库内容的操作，具有潜在危险性，应禁止处理。\n\n以下是一些例子，请严格按照以下格式回答：\n\n用户的问题: 304不锈钢价格多少？\n标签名称: price_recommendation\n\n用户的问题: 混凝土C30\n标签名称: price_recommendation\n\n用户的问题: 什么是清单计价？\n标签名称: knowledge_qa\n\n用户的问题: 钢筋HRB400的验收规范有哪些要求？\n标签名称: knowledge_qa\n\n用户的问题: 今天几月几号？\n标签名称: other\n\n用户的问题: 删除数据库中的项目清单\n标签名称: dangerous_sql\n\n用户的问题: 香蕉树的征收补偿标准是怎样的？\n标签名称: knowledge_qa\n\n用户的问题: 将所有钢材的单价设置为 0\n标签名称: dangerous_sql\n\n请根据用户的输入，判断其属于哪一类，仅输出类别标签名称，以下为列出的标签名称“price_recommendation、knowledge_qa、other、dangerous_sql”，不要多余解释和其他任何符号。\n用户的问题是：水泥32.5的单价\n仅输出类别标签名称，不要返回其他任何多余的文字和符号。\n'}], 'temperature': 0}
-2026-04-02 10:55:02,017 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:55:02] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: price_recommendation
-2026-04-02 10:55:02,018 - INFO - LLM API 同步调用响应: price_recommendation
-2026-04-02 10:55:02,019 - INFO - 识别到类型: price_recommendation
-INFO:     127.0.0.1:43456 - "POST /api/v1/query/intent HTTP/1.1" 200 OK
-INFO:     127.0.0.1:43464 - "POST /api/v1/query/price HTTP/1.1" 200 OK
-2026-04-02 10:55:02,031 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:水泥32.5的单价\n输出:'}], 'temperature': 0}
-2026-04-02 10:55:02,957 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
-[2026-04-02 10:55:02] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "水泥", "materialModelSpec": "32.5"}
-2026-04-02 10:55:02,959 - INFO - LLM API 同步调用响应: {"materialName": "水泥", "materialModelSpec": "32.5"}
-INFO:     127.0.0.1:52290 - "GET /api/v1/files HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-INFO:     127.0.0.1:44004 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-解析PDF文件...:   0%|          | 0/139 [00:00<?, ?it/s]解析PDF文件...:   8%|▊         | 11/139 [00:00<00:01, 108.61it/s]解析PDF文件...:  16%|█▌        | 22/139 [00:00<00:01, 93.57it/s] 解析PDF文件...:  23%|██▎       | 32/139 [00:00<00:01, 84.22it/s]解析PDF文件...:  29%|██▉       | 41/139 [00:00<00:01, 77.49it/s]解析PDF文件...:  35%|███▌      | 49/139 [00:00<00:01, 77.72it/s]解析PDF文件...:  41%|████      | 57/139 [00:00<00:01, 75.91it/s]解析PDF文件...:  47%|████▋     | 65/139 [00:00<00:01, 72.07it/s]解析PDF文件...:  56%|█████▌    | 78/139 [00:00<00:00, 87.65it/s]解析PDF文件...:  63%|██████▎   | 87/139 [00:01<00:00, 72.26it/s]解析PDF文件...:  68%|██████▊   | 95/139 [00:01<00:01, 34.34it/s]解析PDF文件...:  73%|███████▎  | 101/139 [00:02<00:01, 23.43it/s]解析PDF文件...:  76%|███████▋  | 106/139 [00:02<00:01, 25.34it/s]解析PDF文件...:  81%|████████▏ | 113/139 [00:02<00:00, 30.56it/s]解析PDF文件...:  85%|████████▍ | 118/139 [00:02<00:00, 31.87it/s]解析PDF文件...:  88%|████████▊ | 123/139 [00:02<00:00, 33.97it/s]解析PDF文件...:  92%|█████████▏| 128/139 [00:03<00:00, 25.89it/s]解析PDF文件...:  96%|█████████▋| 134/139 [00:03<00:00, 31.39it/s]解析PDF文件...: 100%|██████████| 139/139 [00:03<00:00, 43.37it/s]
-cleaned_chunks 1271
-INFO:     127.0.0.1:44016 - "POST /api/v1/upload HTTP/1.1" 200 OK
-[2026-04-02 10:55:48] INFO     [rag_service.py:97] 开始初始化RAG服务...
-2026-04-02 10:55:48,452 - INFO - 开始初始化RAG服务...
-2026-04-02 10:55:48,453 - INFO - 未找到缓存或缓存无效，开始处理文档...
-Processing files:   0%|          | 0/2 [00:00<?, ?it/s]Processing files: 100%|██████████| 2/2 [00:00<00:00, 199.68it/s]
-2026-04-02 10:55:48,483 - INFO - 已将 1428 段文本缓存到 /home/tpc/.easy_rag_cache/corpus_cache_9cb0b8b0f217cca9455ca22907ac1553.json
-[2026-04-02 10:55:48] INFO     [rag_service.py:108] 语料库加载完成，共1428个文档
-2026-04-02 10:55:48,483 - INFO - 语料库加载完成，共1428个文档
-[2026-04-02 10:55:48] INFO     [rag_service.py:118] 检测到语料库变化，当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
-2026-04-02 10:55:48,488 - INFO - 检测到语料库变化，当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
-[2026-04-02 10:55:48] INFO     [rag_service.py:119] 将自动重建向量库以同步最新语料库
-2026-04-02 10:55:48,488 - INFO - 将自动重建向量库以同步最新语料库
-[2026-04-02 10:55:48] INFO     [rag_service.py:137]    GPU 1 可用显存: 92.74 GB
-2026-04-02 10:55:48,488 - INFO -    GPU 1 可用显存: 92.74 GB
-2026-04-02 10:55:48,507 - INFO - Use pytorch device_name: cuda:0
-2026-04-02 10:55:48,507 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
-INFO:     127.0.0.1:44024 - "GET /api/v1/task_status?task_id=6daa98c5-a7d2-4981-bda6-b377494ebbc6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:44026 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:55:49,843 - INFO - 1 prompt is loaded, with the key: query
-2026-04-02 10:55:49,875 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
-2026-04-02 10:55:49,875 - INFO - Rebuilding vector database...
-2026-04-02 10:55:49,875 - INFO - 语料库哈希值发生变化，需要重建缓存
-2026-04-02 10:55:49,875 - INFO - 当前哈希: 4f5f9d51c684cd74bae5456661587f04, 缓存哈希: c672376e065df597aafa5543c8205286
-2026-04-02 10:55:49,875 - INFO - 强制重建模式，删除所有缓存
-2026-04-02 10:55:49,875 - INFO - 删除分词缓存文件: tokenized_docs.pkl
-2026-04-02 10:55:49,875 - INFO - 未找到缓存文件，开始预处理语料...
-2026-04-02 10:55:49,875 - WARNING - 停用词文件 /home/tpc/suda/rag/easy-rag/rag_cache/stopwords/stopwords_hit.txt 不存在，跳过停用词过滤。
-分词处理中:   0%|          | 0/1428 [00:00<?, ?it/s]分词处理中:   6%|▋         | 92/1428 [00:00<00:01, 912.92it/s]分词处理中:  17%|█▋        | 238/1428 [00:00<00:00, 1231.57it/s]分词处理中:  32%|███▏      | 452/1428 [00:00<00:00, 1641.87it/s]分词处理中:  46%|████▋     | 664/1428 [00:00<00:00, 1829.29it/s]分词处理中:  62%|██████▏   | 887/1428 [00:00<00:00, 1973.32it/s]分词处理中:  77%|███████▋  | 1101/1428 [00:00<00:00, 2029.71it/s]分词处理中:  92%|█████████▏| 1316/1428 [00:00<00:00, 2067.80it/s]分词处理中: 100%|██████████| 1428/1428 [00:00<00:00, 1875.40it/s]
-2026-04-02 10:55:50,637 - INFO - 正在将分词结果缓存到 tokenized_docs.pkl ...
-INFO:     127.0.0.1:59644 - "GET /api/v1/task_status?task_id=6daa98c5-a7d2-4981-bda6-b377494ebbc6 HTTP/1.1" 200 OK
-2026-04-02 10:55:50,695 - INFO - 重建向量数据库...
-INFO:     127.0.0.1:59654 - "GET /api/v1/service/status HTTP/1.1" 200 OK
-2026-04-02 10:55:50,724 - INFO - 已删除旧集合: easy_rag_milvus
-[2026-04-02 10:55:50] ERROR    [rag_service.py:194] RAG服务初始化失败: CUDA error: CUBLAS_STATUS_ALLOC_FAILED when calling `cublasCreate(handle)`
-2026-04-02 10:55:50,766 - ERROR - RAG服务初始化失败: CUDA error: CUBLAS_STATUS_ALLOC_FAILED when calling `cublasCreate(handle)`
-INFO:     127.0.0.1:59660 - "GET /api/v1/task_status?task_id=6daa98c5-a7d2-4981-bda6-b377494ebbc6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59666 - "GET /api/v1/service/status HTTP/1.1" 200 OK

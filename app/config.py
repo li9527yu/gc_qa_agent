@@ -70,7 +70,7 @@ API_SECRET_KEY = "uwRbSmxx9-X5NEFPTkjpqhj6GBaVVI6V5ulxtczgY5I"
 
 # 测试数据： data
 RELATED_DATA_PATH = "app/dataset/data/"
-DATA_PATH = "/home/tpc/suda/rag/easy-rag/app/dataset/data/"
+DATA_PATH = "/home/tpc/suda/rag/rag_agent/app/dataset/data"
 
 # 根目录
-ROOT_PATH = "/home/tpc/suda/rag/easy-rag"     
+ROOT_PATH = "/home/tpc/suda/rag/rag_agent"     

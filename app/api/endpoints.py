@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, File, UploadFile, Form, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from datetime import datetime
-from typing import AsyncGenerator, List, Optional
+from typing import AsyncGenerator, List, Optional, Dict
 import os
 from pathlib import Path
 import shutil
@@ -15,13 +15,21 @@ import logging
 import threading
 
 from app.schemas.files import DeleteResponse, DeleteRequest, UploadResponse
-from app.schemas.rag import QueryRequest, QueryResponse, IntentRequest, PriceRequest
+from app.schemas.rag import QueryRequest, QueryResponse, PriceRequest
 from app.schemas.price import DirectPriceQueryRequest, DirectPriceQueryResponse
 from app.services.rag_service import RAGService
 from app.services.file_processor import process_uploaded_files
 from app.services.rag_service import ChannelType
+from app.services.kb_manager import get_kb_manager
+from app.utils.conversation_manager import get_conversation_manager, ConversationType
 from pydantic import BaseModel, Field
 from app.config import DATA_PATH,RELATED_DATA_PATH
+
+# 获取知识库管理器
+kb_manager = get_kb_manager()
+
+# 获取对话管理器
+conversation_manager = get_conversation_manager()
 
 router = APIRouter()
 rag_service: RAGService = None  # 全局服务实例，由 main.py 注入
@@ -77,9 +85,6 @@ def log_total_request_performance(logger, total_time: float, llm_time: float, tt
     logger.info("=" * 80)
 
 
-# ✅ 全局对话历史（存储最近 6 条消息：user/assistant）
-messages: list[dict] = []
-
 # 全局线程池（进程启动时初始化，避免反复创建）
 executor = ThreadPoolExecutor(max_workers=2)
 
@@ -133,22 +138,102 @@ async def upload_files(
     if success and rag_service:
         task_id = str(uuid.uuid4())
         task_status_dict[task_id] = "pending"
-        background_tasks.add_task(executor.submit, _sync_initialize, task_id)
-        return {"results": results, "task_id": task_id}
+        
+        # 检测变更（新增的文件）
+        changes = kb_manager.detect_changes()
+        
+        # 使用增量更新而不是全量重建
+        # 注意：_sync_incremental_update内部已经使用了initialize_lock
+        background_tasks.add_task(
+            _sync_incremental_update, task_id, changes
+        )
+        
+        return {
+            "results": results, 
+            "task_id": task_id,
+            "message": f"文件上传成功，知识库正在后台增量更新（新增 {len(changes.get('added', []))} 个文件）"
+        }
 
     return {"results": results}
 
 def _sync_initialize(task_id: str):
     """
-    真正耗时的初始化逻辑，跑在独立线程里。
-    使用全局锁保证同时只有一个初始化任务在执行，防止并发冲突。
+    全量重建知识库（保留用于首次初始化或强制重建）
     """
     with initialize_lock:
         try:
-            # 如果你的 rag_service.initialize 是 async，需要启动一次事件循环
             asyncio.run(rag_service.initialize())
             task_status_dict[task_id] = "success"
         except Exception as e:
+            task_status_dict[task_id] = f"failed: {e}"
+
+
+def _sync_incremental_update(task_id: str, changes: dict = None):
+    """
+    增量更新知识库（仅处理变更的文件）
+    
+    Args:
+        task_id: 任务ID
+        changes: 变更信息，如果为None则自动检测
+    """
+    with initialize_lock:
+        try:
+            task_status_dict[task_id] = "processing"
+            
+            # 检测变更（如果未提供）
+            if changes is None:
+                changes = kb_manager.detect_changes()
+            
+            logger = logging.getLogger(__name__)
+            logger.info(f"开始增量更新，任务ID: {task_id}, 变更: {changes}")
+            
+            # 检查是否有变更
+            total_changes = len(changes.get('added', [])) + len(changes.get('deleted', [])) + len(changes.get('modified', []))
+            
+            if total_changes == 0:
+                logger.info("没有检测到变更，跳过更新")
+                task_status_dict[task_id] = "success (no changes)"
+                return
+            
+            # 执行增量更新
+            if hasattr(rag_service, 'retriever') and rag_service.retriever is not None:
+                from app.incremental_retriever import IncrementalRetriever
+                
+                # 如果当前不是IncrementalRetriever，需要转换
+                if not isinstance(rag_service.retriever, IncrementalRetriever):
+                    logger.warning("当前Retriever不支持增量更新，执行全量重建")
+                    asyncio.run(rag_service.initialize())
+                else:
+                    # 执行真正的增量更新
+                    stats = rag_service.retriever.incremental_update(changes)
+                    logger.info(f"增量更新完成: {stats}")
+                    
+                    # 更新rag_service的corpus引用
+                    rag_service.corpus = rag_service.retriever.corpus_dicts
+            else:
+                # 如果retriever未初始化，需要处理新增文件的情况
+                # 因为有新增文件，必须重建语料库（Reader缓存不会包含新文件）
+                if changes.get('added') or changes.get('modified'):
+                    logger.info("Retriever未初始化且有新增文件，清除缓存后执行全量初始化")
+                    # 清除Reader缓存，强制重新读取所有文件（包括新上传的）
+                    import glob
+                    cache_dir = os.path.expanduser("~/.easy_rag_cache")
+                    for cache_file in glob.glob(f"{cache_dir}/corpus_cache_*.json"):
+                        try:
+                            os.remove(cache_file)
+                            logger.info(f"清除Reader缓存: {cache_file}")
+                        except Exception as e:
+                            logger.warning(f"清除缓存失败: {e}")
+                else:
+                    logger.info("Retriever未初始化但无新增文件，执行全量初始化")
+                
+                asyncio.run(rag_service.initialize())
+            
+            task_status_dict[task_id] = "success"
+            
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"增量更新失败: {e}")
             task_status_dict[task_id] = f"failed: {e}"
 
 @router.get(
@@ -298,6 +383,35 @@ async def delete_files(
         failed_files = []
         total_deleted_size = 0
         
+        # 预先从知识库中删除（立即生效，用户感知更快）
+        # 使用批量删除优化性能（只重建一次BM25）
+        deleted_chunks_count = 0
+        pre_deleted_files = []  # 记录预删除的文件，避免后台任务重复删除
+        delete_logger = logging.getLogger(__name__)
+        
+        if rag_service and hasattr(rag_service, 'retriever'):
+            try:
+                from app.incremental_retriever import IncrementalRetriever
+                if isinstance(rag_service.retriever, IncrementalRetriever):
+                    # 收集所有需要删除的文件及其 chunk_ids
+                    file_chunk_map = {}
+                    for filename in filenames:
+                        chunk_ids = kb_manager.get_chunk_ids_by_file(filename)
+                        if chunk_ids:
+                            file_chunk_map[filename] = chunk_ids
+                    
+                    # 批量删除（只重建一次BM25）
+                    if file_chunk_map:
+                        result = rag_service.retriever.delete_documents_batch(file_chunk_map)
+                        deleted_chunks_count = result["deleted_chunks"]
+                        pre_deleted_files = list(file_chunk_map.keys())
+                        # 从索引中移除文件记录
+                        for filename in file_chunk_map.keys():
+                            kb_manager.remove_file_record(filename)
+                        delete_logger.info(f"批量从知识库移除完成，删除了 {result['deleted_files']} 个文件")
+            except Exception as e:
+                delete_logger.warning(f"批量从知识库移除失败: {e}")
+        
         for filename in filenames:
             try:
                 file_path = os.path.join(corpus_path, filename)
@@ -341,20 +455,27 @@ async def delete_files(
                     "error": str(e)
                 })
         
-        # 如果有文件被成功删除，则更新RAG服务
+        # 如果有文件被成功删除，触发增量更新来同步状态
         if deleted_files and rag_service:
             task_id = str(uuid.uuid4())
             task_status_dict[task_id] = "pending"
-            background_tasks.add_task(executor.submit, _sync_initialize, task_id)
+            # 使用增量更新（只处理未预删除的文件，以及同步状态）
+            # 注意：pre_deleted_files 已经从知识库移除，后台任务主要做状态同步
+            files_to_process = [f["filename"] for f in deleted_files if f["filename"] not in pre_deleted_files]
+            changes = {"added": [], "deleted": files_to_process, "modified": []}
+            background_tasks.add_task(
+                _sync_incremental_update, task_id, changes
+            )
         else:
             task_id = None
         
         return {
             "status": "success",
-            "message": f"批量删除完成，成功删除 {len(deleted_files)} 个文件，失败 {len(failed_files)} 个文件，知识库正在后台更新",
+            "message": f"批量删除完成，成功删除 {len(deleted_files)} 个文件，失败 {len(failed_files)} 个文件，已移除 {deleted_chunks_count} 个知识库片段",
             "deleted_files": deleted_files,
             "failed_files": failed_files,
             "total_deleted_size_mb": round(total_deleted_size / (1024 * 1024), 2),
+            "removed_chunks": deleted_chunks_count,
             "timestamp": datetime.now().isoformat(),
             "task_id": task_id
         }
@@ -405,12 +526,14 @@ async def query_stream(
         ...,
         example={
             "question": "什么是工程造价",
-            "num_docs": 2
+            "num_docs": 2,
+            "session_id": "abc123",
+            "force_new": False
         }
     )
 ) -> StreamingResponse:
     """
-    流式查询接口
+    流式查询接口（支持会话隔离）
 
     Args:
         request (QueryRequest): 查询请求
@@ -419,14 +542,28 @@ async def query_stream(
         StreamingResponse: 流式响应
 
     example: 
-        {"question": "什么是工程造价", "num_docs": 10}
+        {"question": "什么是工程造价", "num_docs": 10, "session_id": "abc123", "force_new": False}
     """
     if not rag_service:
         raise HTTPException(status_code=503, detail="RAG服务未初始化")
 
+    session = await conversation_manager.get_or_create_session(
+        request.session_id, 
+        ConversationType.KNOWLEDGE_QA,
+        request.force_new,
+        request.question,
+        rag_service.llm
+    )
+    
+    if request.force_new:
+        logging.info(f"🔄 用户强制创建新会话: {session.session_id}")
+
     async def answer_generator() -> AsyncGenerator[str, None]:
         try:
-            logging.info(f"=== 开始流式查询，问题: {request.question}")
+            logging.info(f"=== 开始流式查询，问题: {request.question}, 会话: {session.session_id}, force_new: {request.force_new}")
+            
+            # 添加用户消息到会话
+            session.add_message("user", request.question)
             
             result = await rag_service.process_single_query(
                 question=request.question,
@@ -447,6 +584,9 @@ async def query_stream(
             context_text = '\n'.join([get_page_content(c) for c in contexts])
             logging.info(f"上下文文本长度: {len(context_text)} 字符")
             
+            # 获取会话历史作为上下文
+            messages = session.get_context_for_llm(max_turns=5)
+            
             logging.info("开始调用 LLM stream_predict...")
             chunk_count = 0
             async for chunk in rag_service.llm.stream_predict(
@@ -459,65 +599,25 @@ async def query_stream(
             logging.info(f"LLM stream_predict 完成，共收到 {chunk_count} 个 chunk")
 
             yield "\n[END]\n"
-            messages.append({"role": "assistant", "content": full_text})
-
-            # ✅ 限制最多 10 条（即最近 5 轮对话）
-            if len(messages) > 10:
-                del messages[:len(messages) - 6]
+            
+            # 保存助手回复到会话
+            session.add_message("assistant", full_text)
 
             meta = {
                 "text": full_text,
-                "contexts": contexts
+                "contexts": contexts,
+                "session_id": session.session_id,
+                "conversation_type": "knowledge_qa"
             }
             yield json.dumps(meta, ensure_ascii=False) + "\n"
             logging.info("流式查询完成")
 
         except Exception as e:
             logging.error(f"流式查询异常: {e}", exc_info=True)
-            yield json.dumps({"error": str(e)}, ensure_ascii=False) + "\n"
+            yield json.dumps({"error": str(e), "session_id": session.session_id}, ensure_ascii=False) + "\n"
 
     return StreamingResponse(answer_generator(), media_type="text/plain")
 
-@router.post(
-    "/api/v1/query/intent",
-    summary="意图识别接口",
-    description="""
-    对用户输入的问题进行意图分类，判断问题属于哪种意图类别。
-    
-    - `knowledge_qa`：知识问答类型，使用 `/api/v1/query/stream` 接口
-    - `price_recommendation`：从数据库查询，使用 `/api/v1/query/price` 接口
-    """,
-    responses={
-        200: {
-            "description": "意图识别成功",
-            "content": {
-                "application/json": {
-                    "example": {
-                        "intent": "knowledge_qa",
-                        "question": "什么是工程造价"
-                    }
-                }
-            }
-        }
-    }
-)
-async def classify_intent(
-    request: IntentRequest = Body(
-        ...,
-        example={
-            "question": "什么是工程造价"
-        }
-    )
-):
-    if not rag_service:
-        raise HTTPException(status_code=503, detail="RAG服务未初始化")
-    
-    try:
-        intent = await rag_service.classify_intent(request.question)
-        logging.info(f"识别到类型: {intent}")
-        return {"intent": intent, "question": request.question}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post(
     "/api/v1/query/price",
@@ -528,6 +628,7 @@ async def classify_intent(
     - 仅需要 `question` 字段，注意这里提问时需要明确从什么渠道查询
     - 流式返回包括渠道识别、实体解析、价格推荐结果和元数据
     - 响应类型：text/plain
+    - 支持话题切换检测：查询不同材料时自动创建新会话
     """,
     responses={
         200: {
@@ -572,31 +673,60 @@ async def query_price(
     request: PriceRequest = Body(
         ...,
         example={
-            "question": "从信息价查铝合金幕墙型材的价格"
+            "question": "从信息价查铝合金幕墙型材的价格",
+            "session_id": "abc123",
+            "force_new": False
         }
     )
 ) -> StreamingResponse:
+    """价格推荐接口（支持会话隔离和话题切换检测）"""
     if not rag_service:
         raise HTTPException(status_code=503, detail="RAG服务未初始化")
+    
+    # ========== 话题切换检测：先提取实体 ==========
+    # 先提取实体，用于话题切换检测（判断是否是新材料查询）
+    parsed_entities = await rag_service.extract_entities(request.question)
+    logging.info(f"预提取实体用于话题检测: {parsed_entities}")
+    
+    # 获取或创建会话（传入提取的实体用于话题切换检测）
+    session = await conversation_manager.get_or_create_session(
+        request.session_id, 
+        ConversationType.PRICE_QUERY,
+        request.force_new,
+        new_question=request.question,
+        llm_predictor=rag_service.llm,
+        extracted_entities=parsed_entities
+    )
+    
+    if request.force_new:
+        logging.info(f"🔄 用户强制创建新会话: {session.session_id}")
 
     async def price_answer_generator() -> AsyncGenerator[str, None]:
         import time
         try:
-            # ✅ 初始化所有时间变量
+            logging.info(f"=== 开始价格查询，问题: {request.question}, 会话: {session.session_id}, force_new: {request.force_new}")
+            
             total_start_time = time.time()
             llm_start_time = None
             first_token_time = None
             llm_end_time = None
-            ttft = 0.0  # ← 初始化 ttft
-            input_tokens = 0  # ← 初始化 input_tokens
-            token_count = 0  # ← 初始化 token_count
-            llm_total_time = 0.0  # ← 初始化 llm_total_time
+            ttft = 0.0
+            input_tokens = 0
+            token_count = 0
+            llm_total_time = 0.0
             
             full_text = ""
             
+            # 添加用户消息（包含实体信息到metadata，用于后续话题切换检测）
+            session.add_message("user", request.question, metadata={
+                "materialName": parsed_entities.get("materialName"),
+                "province": parsed_entities.get("province"),
+                "city": parsed_entities.get("city")
+            })
+            
             # ========== 修改开始：智能渠道推断 ==========
-            # 先进行实体抽取（用于辅助渠道推断）
-            parsed_entities = await rag_service.extract_entities(request.question)
+            # 实体已在前文提取，直接使用即可
+            logging.info(f"使用预提取实体进行渠道推断: {parsed_entities}")
             
             # 渠道识别（传入已解析的实体辅助推断）
             channel_result, inference_detail = await rag_service.identify_channel(
@@ -658,6 +788,8 @@ async def query_price(
                 input_tokens = len(input_text) // 2  # 重新赋值
                 
                 token_count = 0  # 重置计数
+                # 获取会话历史作为上下文
+                messages = session.get_context_for_llm(max_turns=5)
                 async for chunk in rag_service.llm.stream_price_predict(
                     parsed_entities_str, detail_answer, request.question, messages
                 ):
@@ -677,7 +809,8 @@ async def query_price(
                 
                 yield "\n[END]\n"
 
-                messages.append({"role": "assistant", "content": full_text})
+                # 保存助手回复到会话
+                session.add_message("assistant", full_text)
                 
                 # 打印 LLM 性能统计（只有成功生成内容时才打印）
                 if first_token_time is not None and token_count > 0:
@@ -692,9 +825,6 @@ async def query_price(
                     rag_service.logger.warning("⚠️  LLM 未返回任何 token，跳过性能统计")
             # 获取流式处理的元数据
             metadata = rag_service.get_last_price_metadata()
-            # 限制最多 10 条（即最近 5 轮对话）
-            if len(messages) > 10:
-                del messages[:len(messages) - 6]
 
             # 计算总耗时（仅用于日志）
             total_end_time = time.time()
@@ -714,7 +844,9 @@ async def query_price(
                 "intent": "price_recommendation",
                 "channel": channel_result.value,
                 "metadata": metadata,
-                "success": metadata.get("success", False)
+                "success": metadata.get("success", False),
+                "session_id": session.session_id,
+                "conversation_type": "price_query"
             }
             
             # 如果有价格数据，添加到响应中
@@ -724,7 +856,7 @@ async def query_price(
             yield json.dumps(meta, ensure_ascii=False) + "\n"
             
         except Exception as e:
-            yield json.dumps({"error": str(e)}, ensure_ascii=False) + "\n"
+            yield json.dumps({"error": str(e), "session_id": session.session_id}, ensure_ascii=False) + "\n"
 
     return StreamingResponse(price_answer_generator(), media_type="text/plain")
 

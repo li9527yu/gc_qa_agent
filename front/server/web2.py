@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
-from enum import Enum
+
 
 # 导入图表组件
 try:
@@ -19,14 +19,6 @@ except ImportError:
         st.write("价格分布图表（需要安装 streamlit_echarts）")
     def price_scatter_chart(price_data):
         st.write("价格散点图表（需要安装 streamlit_echarts）")
-
-
-class IntentType(Enum):
-    """意图类型枚举"""
-    KNOWLEDGE_QA = "knowledge_qa"
-    PRICE_RECOMMENDATION = "price_recommendation"
-    DANGEROUS_SQL = "dangerous_sql"
-    UNKNOWN = "unknown"
 
 
 @dataclass
@@ -109,17 +101,6 @@ class RagApiClient:
             return {"error": str(e), "status": "error"}
     
     # ========== 查询接口 ==========
-    
-    def classify_intent(self, question: str) -> IntentType:
-        """意图识别"""
-        try:
-            resp = self._post("/api/v1/query/intent", 
-                            json_data={"question": question})
-            resp.raise_for_status()
-            intent_str = resp.json().get("intent", "knowledge_qa")
-            return IntentType(intent_str)
-        except Exception:
-            return IntentType.KNOWLEDGE_QA
     
     def query_stream(self, question: str, num_docs: int = 10):
         """流式知识问答"""
@@ -219,11 +200,22 @@ def render_sidebar(api: RagApiClient) -> None:
         
         # 查询模式设置
         st.subheader("🔧 查询模式")
-        st.session_state.use_dialogue_mode = st.toggle(
-            "使用对话式价格查询",
-            value=True,
-            help="启用后，价格查询会采用渐进式实体补全模式"
+        
+        # 功能模式选择（硬核分离两种功能）
+        st.session_state.query_mode = st.radio(
+            "选择功能",
+            options=["knowledge_qa", "price_query"],
+            format_func=lambda x: "🔍 知识问答" if x == "knowledge_qa" else "💰 价格查询",
+            help="明确选择要使用的功能：知识问答基于文档语料库，价格查询基于材料价格数据库"
         )
+        
+        # 只有在价格查询模式下才显示对话式查询选项
+        if st.session_state.query_mode == "price_query":
+            st.session_state.use_dialogue_mode = st.toggle(
+                "使用对话式价格查询",
+                value=True,
+                help="启用后，价格查询会采用渐进式实体补全模式"
+            )
         
         # 对话状态显示
         if st.session_state.get("dialogue_session_id"):
@@ -566,7 +558,7 @@ def handle_dialogue_step(api: RagApiClient, user_input: str) -> None:
         reset_dialogue_state()
 
 
-def process_streaming_response(resp: requests.Response, placeholder, intent: IntentType) -> Dict[str, Any]:
+def process_streaming_response(resp: requests.Response, placeholder) -> Dict[str, Any]:
     """处理流式响应"""
     buffer = ""
     meta = None
@@ -605,7 +597,7 @@ def handle_knowledge_qa(api: RagApiClient, question: str, placeholder) -> None:
     """处理知识问答"""
     try:
         resp = api.query_stream(question)
-        meta = process_streaming_response(resp, placeholder, IntentType.KNOWLEDGE_QA)
+        meta = process_streaming_response(resp, placeholder)
         
         # 处理参考文档
         if meta and "contexts" in meta:
@@ -626,7 +618,7 @@ def handle_price_query(api: RagApiClient, question: str, placeholder) -> None:
     """处理价格查询（传统流式模式）"""
     try:
         resp = api.query_price_stream(question)
-        meta = process_streaming_response(resp, placeholder, IntentType.PRICE_RECOMMENDATION)
+        meta = process_streaming_response(resp, placeholder)
         
         if not meta:
             return
@@ -767,31 +759,20 @@ def render_chat_interface(api: RagApiClient) -> None:
                                unsafe_allow_html=True)
             
             try:
-                # 检查是否处于对话模式
-                if st.session_state.dialogue_status in ["collecting", "ready"]:
+                # 检查是否处于对话模式（仅在价格查询模式下）
+                if st.session_state.query_mode == "price_query" and st.session_state.dialogue_status in ["collecting", "ready"]:
                     handle_dialogue_step(api, prompt)
                     return
                 
-                # 意图识别
-                intent = api.classify_intent(prompt)
-                
-                if intent == IntentType.DANGEROUS_SQL:
-                    st.error("❌ 检测到该意图存在一定风险，请重新提问")
-                    return
-                
-                elif intent == IntentType.PRICE_RECOMMENDATION:
+                # 根据用户选择的模式直接分流（去除意图识别）
+                if st.session_state.query_mode == "knowledge_qa":
+                    handle_knowledge_qa(api, prompt, placeholder)
+                else:  # price_query
                     # 根据设置选择查询模式
                     if st.session_state.get("use_dialogue_mode", True):
                         handle_price_query_dialogue(api, prompt)
                     else:
                         handle_price_query(api, prompt, placeholder)
-                
-                elif intent == IntentType.KNOWLEDGE_QA:
-                    handle_knowledge_qa(api, prompt, placeholder)
-                
-                else:
-                    # 其他意图，尝试使用知识问答接口
-                    handle_knowledge_qa(api, prompt, placeholder)
             
             except Exception as e:
                 placeholder.error(f"服务调用失败：{e}")

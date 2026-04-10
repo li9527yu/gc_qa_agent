@@ -1,0 +1,71 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-04-08 14:52:32,719 - INFO - 索引文件不存在，将创建新索引
+INFO:     Started server process [686102]
+INFO:     Waiting for application startup.
+[2026-04-08 14:52:32] INFO     [api_server.py:27] 启动Easy-RAG API服务...
+2026-04-08 14:52:32,746 - INFO - 启动Easy-RAG API服务...
+[2026-04-08 14:52:32] INFO     [rag_service.py:98] 开始初始化RAG服务...
+2026-04-08 14:52:32,746 - INFO - 开始初始化RAG服务...
+2026-04-08 14:52:32,747 - INFO - 正在从缓存加载语料库...
+2026-04-08 14:52:32,759 - INFO - 已从缓存加载 1544 段文本
+2026-04-08 14:52:32,759 - INFO - 缓存验证通过
+[2026-04-08 14:52:32] INFO     [rag_service.py:109] 语料库加载完成，共1544个文档
+2026-04-08 14:52:32,760 - INFO - 语料库加载完成，共1544个文档
+[2026-04-08 14:52:32] INFO     [rag_service.py:123] 语料库未发生变化，使用现有缓存
+2026-04-08 14:52:32,765 - INFO - 语料库未发生变化，使用现有缓存
+[2026-04-08 14:52:32] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+2026-04-08 14:52:32,818 - INFO - 🤖 初始化 LLM 客户端
+[2026-04-08 14:52:32] INFO     [llm_deepseek.py:91]    模式: local
+2026-04-08 14:52:32,818 - INFO -    模式: local
+[2026-04-08 14:52:32] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+2026-04-08 14:52:32,818 - INFO -    Base URL: http://localhost:9839/v1
+[2026-04-08 14:52:32] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+2026-04-08 14:52:32,819 - INFO -    Model: Qwen3-32B
+[2026-04-08 14:52:32] INFO     [rag_service.py:131] LLM初始化完成
+2026-04-08 14:52:32,819 - INFO - LLM初始化完成
+[2026-04-08 14:52:32] INFO     [rag_service.py:234] 价格推荐模板加载成功
+2026-04-08 14:52:32,819 - INFO - 价格推荐模板加载成功
+[2026-04-08 14:52:32] INFO     [rag_service.py:136] 价格推荐模板初始化完成
+2026-04-08 14:52:32,819 - INFO - 价格推荐模板初始化完成
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:43742 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43746 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45976 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45982 - "POST /api/v1/upload HTTP/1.1" 200 OK
+2026-04-08 14:53:06,613 - INFO - 开始增量更新，任务ID: 05d780cf-0275-471b-820d-47843e814b24, 变更: {'added': ['SKILL_39c427ce.md', 'USER_MANUAL_e22d2be4.md', 'output_piclegend.md'], 'deleted': [], 'modified': [], 'unchanged': []}
+2026-04-08 14:53:06,614 - INFO - Retriever未初始化，执行全量初始化
+[2026-04-08 14:53:06] INFO     [rag_service.py:98] 开始初始化RAG服务...
+2026-04-08 14:53:06,615 - INFO - 开始初始化RAG服务...
+2026-04-08 14:53:06,616 - INFO - 正在从缓存加载语料库...
+2026-04-08 14:53:06,644 - INFO - 已从缓存加载 1544 段文本
+2026-04-08 14:53:06,644 - INFO - 缓存验证通过
+[2026-04-08 14:53:06] INFO     [rag_service.py:109] 语料库加载完成，共1544个文档
+2026-04-08 14:53:06,644 - INFO - 语料库加载完成，共1544个文档
+[2026-04-08 14:53:06] INFO     [rag_service.py:123] 语料库未发生变化，使用现有缓存
+2026-04-08 14:53:06,656 - INFO - 语料库未发生变化，使用现有缓存
+INFO:     127.0.0.1:45998 - "GET /api/v1/task_status?task_id=05d780cf-0275-471b-820d-47843e814b24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46006 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40202 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40212 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40214 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43624 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43636 - "POST /api/v1/upload HTTP/1.1" 200 OK
+2026-04-08 14:53:45,199 - INFO - 开始增量更新，任务ID: eaac3921-5ced-4d26-8e02-30f3419a4881, 变更: {'added': ['USER_MANUAL_e22d2be4.md', 'PROJECT_ARCHITECTURE_6ff43c84.md', 'output_piclegend.md', 'SKILL_39c427ce.md', 'MODEL_SWITCHING_GUIDE_1edd6b89.md'], 'deleted': [], 'modified': [], 'unchanged': []}
+2026-04-08 14:53:45,199 - INFO - Retriever未初始化，执行全量初始化
+[2026-04-08 14:53:45] INFO     [rag_service.py:98] 开始初始化RAG服务...
+2026-04-08 14:53:45,199 - INFO - 开始初始化RAG服务...
+2026-04-08 14:53:45,200 - INFO - 正在从缓存加载语料库...
+2026-04-08 14:53:45,225 - INFO - 已从缓存加载 1544 段文本
+2026-04-08 14:53:45,225 - INFO - 缓存验证通过
+[2026-04-08 14:53:45] INFO     [rag_service.py:109] 语料库加载完成，共1544个文档
+2026-04-08 14:53:45,225 - INFO - 语料库加载完成，共1544个文档
+[2026-04-08 14:53:45] INFO     [rag_service.py:123] 语料库未发生变化，使用现有缓存
+2026-04-08 14:53:45,238 - INFO - 语料库未发生变化，使用现有缓存
+INFO:     127.0.0.1:43648 - "GET /api/v1/task_status?task_id=eaac3921-5ced-4d26-8e02-30f3419a4881 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43654 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43660 - "GET /api/v1/service/status HTTP/1.1" 200 OK

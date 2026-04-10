@@ -1,0 +1,16 @@
+[2026-04-09 22:56:24] INFO     [api_server.py:29] 启动Easy-RAG API服务...
+[2026-04-09 22:56:24] INFO     [rag_service.py:105] 开始初始化RAG服务...
+[2026-04-09 22:56:25] INFO     [rag_service.py:116] 语料库加载完成，共1327个文档
+[2026-04-09 22:56:25] INFO     [rag_service.py:126] 检测到语料库变化，当前哈希: 9c7f13fdab6808a54fc2cd6711699e2e, 缓存哈希: 4f5f9d51c684cd74bae5456661587f04
+[2026-04-09 22:56:25] INFO     [rag_service.py:127] 将自动重建向量库以同步最新语料库
+[2026-04-09 22:56:25] INFO     [rag_service.py:206]    GPU 1 可用显存: 94.97 GB
+[2026-04-09 22:57:24] INFO     [rag_service.py:238] 检索器初始化完成
+[2026-04-09 22:57:24] INFO     [rag_service.py:244] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+[2026-04-09 22:57:24] INFO     [rag_service.py:245]    设备: cpu
+[2026-04-09 22:57:25] INFO     [rag_service.py:250] 重排器初始化完成
+[2026-04-09 22:57:25] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-09 22:57:25] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-09 22:57:25] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-09 22:57:25] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-09 22:57:25] INFO     [rag_service.py:256] LLM初始化完成
+[2026-04-09 22:57:25] ERROR    [rag_service.py:280] RAG服务初始化失败: 'RAGService' object has no attribute 'intent_template'

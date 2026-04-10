@@ -362,13 +362,28 @@ class Retriever:
             except Exception as e:
                 logger.warning(f"删除旧集合时出错: {e}")
             
+            # 过滤内部字段（仅用于知识库管理，不入 Milvus）
+            internal_meta_keys = {'chunk_id', 'source_file'}
+            cleaned_corpus = []
+            for doc in self.langchain_corpus:
+                cleaned_metadata = {
+                    k: v for k, v in doc.metadata.items() 
+                    if k not in internal_meta_keys
+                }
+                cleaned_corpus.append(Document(
+                    page_content=doc.page_content,
+                    metadata=cleaned_metadata
+                ))
+            
             self.db = Milvus.from_documents(
-                documents=self.langchain_corpus,
+                documents=cleaned_corpus,
                 embedding=self.emb_model,
                 collection_name=collection_name,
                 connection_args=self.connection_args,
                 drop_old=True,
                 index_params=self.index_params
+                # 注意：不传ids，让Milvus自动生成
+                # 删除时通过重建Milvus实现（因为无法通过metadata删除）
             )
             
             # 保存新的哈希值

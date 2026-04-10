@@ -10,10 +10,12 @@ import json
 
 from app.llm_deepseek import LLMPredictor
 from app.retriever import Retriever
+from app.incremental_retriever import IncrementalRetriever
 from app.reranker import Reranker
 from app.read_corpus import Reader
 from app.config import RELATED_DATA_PATH
 from app.config import DATA_PATH
+from app.config import ROOT_PATH
 from app.config import USE_MOCK_API, MOCK_API_BASE_URL, REAL_API_BASE_URL, API_SECRET_KEY
 from app.embedding_config import (
     EMBEDDING_MODEL_PATH,
@@ -25,7 +27,7 @@ from app.embedding_config import (
     RERANKER_DEVICE
 )
 from app.utils.generate_signature import generate_signature
-from app.utils.prompt_template import Intent_TEMPLATE, Price_Channel_TEMPLATE, Entity_Extract_TEMPLATE, DIRECT_QUERY_EXTRACTION_TEMPLATE, better_template
+from app.utils.prompt_template import Price_Channel_TEMPLATE, Entity_Extract_TEMPLATE, DIRECT_QUERY_EXTRACTION_TEMPLATE, better_template
 from app.utils.price_tools import remove_outliers, analyze_prices, analyze_by_unit
 from app.utils.fillter_tools import filter_items
 from app.utils.data_filter_helper import check_data_volume_and_guide, TokenEstimator
@@ -39,6 +41,11 @@ from app.utils.dialogue_manager import (
     DialogueManager,
     get_dialogue_manager,
     DialogueSession
+)
+from app.utils.conversation_manager import (
+    get_conversation_manager,
+    ConversationManager,
+    ConversationType
 )
 # 画图函数：区间频数分布图
 # from app.tools import plot_price_distribution
@@ -66,16 +73,18 @@ class RAGService:
         self.corpus = None
         self.semaphore = asyncio.Semaphore(10)
         self.analyze_by_unit = analyze_by_unit
-        self.intent_template = None
         self.better_template = None
         self.price_channel_template = None  
         self.entity_extract_template = None
+        self.intent_template = None
         self.fillter_items = filter_items
         self._last_price_metadata = {}
         # 新增：渠道推断器
         self.channel_inferencer = get_channel_inferencer()
         # 新增：对话管理器
         self.dialogue_manager = get_dialogue_manager()
+        # 新增：统一会话管理器
+        self.conversation_manager = get_conversation_manager()
         # 新增：知识库重建状态管理
         self._is_rebuilding = False
         self._rebuild_lock = asyncio.Lock()
@@ -134,6 +143,56 @@ class RAGService:
                         await self._initialize_price_templates()
                         self.logger.info("价格推荐模板初始化完成")
                     
+                    # 关键：如果retriever未初始化，需要加载它（不重建，只加载）
+                    if self.retriever is None:
+                        self.logger.info("语料库未变化，但Retriever未初始化，正在加载...")
+                        self._rebuild_progress = {"stage": "loading", "message": "正在加载检索器...", "percent": 30}
+                        
+                        # 加载嵌入模型（复用现有向量库）
+                        if EMBEDDING_TYPE == 'modelscope':
+                            from app.retriever import TextEmbedding
+                            emb_model = TextEmbedding(
+                                emb_model_name_or_path=EMBEDDING_MODEL_PATH,
+                                device=EMBEDDING_DEVICE
+                            )
+                        elif EMBEDDING_TYPE == 'sentence_transformer':
+                            from app.retriever import SentenceTransformerEmbedding
+                            emb_model = SentenceTransformerEmbedding(
+                                emb_model_name_or_path=EMBEDDING_MODEL_PATH,
+                                device=EMBEDDING_DEVICE
+                            )
+                        else:
+                            from app.qwen3_embedding import Qwen3Embedding
+                            from app.embedding_config import EMBEDDING_DIMENSION, QWEN3_EMBEDDING_DIM
+                            use_full_dim = EMBEDDING_DIMENSION >= 2048
+                            emb_model = Qwen3Embedding(
+                                model_path=EMBEDDING_MODEL_PATH,
+                                device=EMBEDDING_DEVICE,
+                                embedding_dim=QWEN3_EMBEDDING_DIM if use_full_dim else EMBEDDING_DIMENSION,
+                                use_fp16=True,
+                                batch_size=8 if '0.6b' in EMBEDDING_MODEL_PATH.lower() else 4
+                            )
+                        
+                        # 连接Milvus（不重建）
+                        from langchain_community.vectorstores import Milvus
+                        if "lite" in str(self.__dict__.get('milvus_mode', 'standalone')):
+                            connection_args = {"uri": ROOT_PATH+"/milvus_rag.db"}
+                        else:
+                            connection_args = {"host": "127.0.0.1", "port": "19530"}
+                        
+                        self.retriever = IncrementalRetriever(
+                            emb_model_name_or_path=EMBEDDING_MODEL_PATH,
+                            corpus=self.corpus,
+                            tokenized_path="tokenized_docs.pkl",
+                            device=EMBEDDING_DEVICE,
+                            lan="zh",
+                            collection_name="easy_rag_milvus",
+                            milvus_mode="standalone",
+                            embedding_type=EMBEDDING_TYPE,
+                            force_rebuild=False  # 关键：不重建，只加载
+                        )
+                        self.logger.info("Retriever加载完成")
+                    
                     self._is_rebuilding = False
                     self._rebuild_progress = {"stage": "idle", "message": "就绪", "percent": 100}
                     return
@@ -164,9 +223,9 @@ class RAGService:
                         free_mem_gb = free_mem / 1024**3
                         self.logger.info(f"   释放后 GPU {gpu_id} 可用显存: {free_mem_gb:.2f} GB")
 
-                # 5. 构建新的 Retriever（在新变量上）
+                # 5. 构建新的 Retriever（使用增量检索器）
                 self._rebuild_progress = {"stage": "building", "message": "正在构建向量库...", "percent": 40}
-                new_retriever = Retriever(
+                new_retriever = IncrementalRetriever(
                     emb_model_name_or_path=EMBEDDING_MODEL_PATH,
                     corpus=new_corpus,
                     tokenized_path="tokenized_docs.pkl",
@@ -226,7 +285,6 @@ class RAGService:
     async def _initialize_price_templates(self):
         """初始化价格推荐相关的模板"""
         try:
-            self.intent_template = Intent_TEMPLATE
             self.price_channel_template = Price_Channel_TEMPLATE
             self.entity_extract_template = Entity_Extract_TEMPLATE
             self.better_template = better_template
@@ -235,52 +293,6 @@ class RAGService:
             self.logger.warning(f"价格推荐模板加载失败: {e}")
             self.logger.warning("将使用默认模板或跳过价格推荐功能")
 
-    # 用户初步问题处理入口：意图识别
-    async def classify_intent(self, question: str) -> str:
-        """意图识别
-        
-        默认情况下返回 price_recommendation（价格推荐），
-        除非明确识别为 knowledge_qa、other 或 dangerous_sql
-        """
-        try:
-            if not self.intent_template:
-                # 如果模板未初始化，返回默认意图：价格推荐
-                self.logger.warning("意图识别模板未初始化，默认返回 price_recommendation")
-                return "price_recommendation"
-                
-            intent = await asyncio.to_thread(
-                self.llm.predict_prompt, 
-                self.intent_template,
-                {"user_question": question},
-            )
-            
-            intent = intent.strip() if intent else ""
-            
-            # 如果LLM返回空值或无效值，默认使用价格推荐
-            if not intent:
-                self.logger.info("意图识别返回空值，默认使用 price_recommendation")
-                return "price_recommendation"
-            
-            # 定义有效的意图类别
-            valid_intents = ["price_recommendation", "knowledge_qa", "other", "dangerous_sql"]
-            
-            # 如果返回的意图不在有效列表中，默认使用价格推荐
-            if intent not in valid_intents:
-                self.logger.info(f"识别到未知意图: {intent}，默认使用 price_recommendation")
-                return "price_recommendation"
-            
-            # 如果识别为 other，也转为价格推荐（因为默认行为是价格查询）
-            if intent == "other":
-                self.logger.info(f"识别意图为 other，转为默认 price_recommendation")
-                return "price_recommendation"
-            
-            return intent
-            
-        except Exception as e:
-            self.logger.error(f"意图识别失败: {e}，默认使用 price_recommendation")
-            # 发生异常时默认返回价格推荐
-            return "price_recommendation"
-    
     
     # 渠道意图识别入口（增强版）
     async def identify_channel(self, question: str, parsed_entities: Optional[dict] = None) -> Tuple[ChannelType, ChannelInferenceResult]:
