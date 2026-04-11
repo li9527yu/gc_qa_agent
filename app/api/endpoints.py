@@ -565,11 +565,22 @@ async def query_stream(
             # 添加用户消息到会话
             session.add_message("user", request.question)
             
-            result = await rag_service.process_single_query(
+            # 使用多轮查询处理（支持查询重写）
+            result = await rag_service.process_multi_turn_query(
                 question=request.question,
+                session=session,
                 num_docs=request.num_docs
             )
-            logging.info(f"process_single_query 返回结果: success={result.get('success')}, num_contexts={len(result.get('contexts', []))}")
+            
+            # 记录查询重写信息
+            rewrite_info = result.get("rewrite_info", {})
+            if rewrite_info.get("was_rewritten"):
+                logging.info(
+                    f"查询已重写: '{rewrite_info['original_question'][:50]}...' → "
+                    f"'{rewrite_info['rewritten_question'][:50]}...'"
+                )
+            
+            logging.info(f"process_multi_turn_query 返回结果: success={result.get('success')}, num_contexts={len(result.get('contexts', []))}")
             
             contexts = result.get("contexts", [])
             question = request.question
@@ -609,6 +620,12 @@ async def query_stream(
                 "session_id": session.session_id,
                 "conversation_type": "knowledge_qa"
             }
+            
+            # 添加查询重写信息（如果有）
+            rewrite_info = result.get("rewrite_info")
+            if rewrite_info:
+                meta["rewrite_info"] = rewrite_info
+            
             yield json.dumps(meta, ensure_ascii=False) + "\n"
             logging.info("流式查询完成")
 

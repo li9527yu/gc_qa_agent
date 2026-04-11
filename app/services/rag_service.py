@@ -47,6 +47,7 @@ from app.utils.conversation_manager import (
     ConversationManager,
     ConversationType
 )
+from app.utils.query_rewriter import QueryRewriter, create_query_rewriter, RewriteResult
 # 画图函数：区间频数分布图
 # from app.tools import plot_price_distribution
 from datetime import datetime
@@ -89,6 +90,8 @@ class RAGService:
         self._is_rebuilding = False
         self._rebuild_lock = asyncio.Lock()
         self._rebuild_progress = {"stage": "idle", "message": "就绪", "percent": 100}
+        # 新增：查询重写器
+        self.query_rewriter = None
 
     # 获取服务状态（用于前端检查知识库重建状态）
     def get_service_status(self) -> Dict[str, Any]:
@@ -193,6 +196,16 @@ class RAGService:
                         )
                         self.logger.info("Retriever加载完成")
                     
+                    # 关键：如果reranker未初始化且启用重排，需要加载它
+                    if self.reranker is None and USE_RERANKER:
+                        self.logger.info("语料库未变化，但Reranker未初始化，正在加载...")
+                        self._rebuild_progress = {"stage": "loading", "message": "正在加载重排器...", "percent": 35}
+                        self.reranker = Reranker(
+                            rerank_model_name_or_path=RERANKER_MODEL_PATH,
+                            device=RERANKER_DEVICE
+                        )
+                        self.logger.info("Reranker加载完成")
+                    
                     self._is_rebuilding = False
                     self._rebuild_progress = {"stage": "idle", "message": "就绪", "percent": 100}
                     return
@@ -255,6 +268,11 @@ class RAGService:
                 if self.llm is None:
                     self.llm = LLMPredictor(logger=self.logger)
                     self.logger.info("LLM初始化完成")
+                
+                # 7.5 初始化查询重写器（依赖LLM）
+                if self.query_rewriter is None:
+                    self.query_rewriter = create_query_rewriter(self.llm)
+                    self.logger.info("查询重写器初始化完成")
 
                 # 8. 初始化模板（如果是首次初始化）
                 if self.intent_template is None:
@@ -1240,6 +1258,172 @@ class RAGService:
                     },
                     "success": False,
                     "error_message": str(e)
+                }
+
+    # ========== 多轮对话知识问答处理入口（支持查询重写）==========
+    async def process_multi_turn_query(
+        self, 
+        question: str, 
+        session, 
+        num_docs: int = 10
+    ) -> Dict[str, Any]:
+        """
+        多轮对话知识问答处理入口（支持查询重写）
+        
+        核心流程：
+        1. 查询重写：将依赖上下文的省略/指代问题重写为独立完整的问题
+        2. RAG检索：基于重写后的问题进行文档检索
+        3. 结果返回：返回检索结果，供后续LLM生成使用
+        
+        Args:
+            question: 用户当前问题
+            session: 对话会话对象（包含历史消息）
+            num_docs: 返回的文档数量
+            
+        Returns:
+            Dict: 包含检索结果和重写信息的字典
+        """
+        # 检查知识库状态
+        if self._is_rebuilding:
+            self.logger.warning(f"知识库正在重建中: {question[:50]}...")
+            return {
+                "success": False,
+                "error_code": "KNOWLEDGE_BASE_UPDATING",
+                "error_message": "知识库正在更新中，请稍后再试",
+                "contexts": [],
+                "rewritten": False
+            }
+        
+        if self.retriever is None:
+            self.logger.error("Retriever 未初始化")
+            return {
+                "success": False,
+                "error_code": "RETRIEVER_NOT_READY",
+                "error_message": "知识库尚未准备就绪",
+                "contexts": [],
+                "rewritten": False
+            }
+        
+        if self.query_rewriter is None:
+            self.logger.warning("查询重写器未初始化，退回到单轮查询")
+            return await self.process_single_query(question, num_docs)
+        
+        async with self.semaphore:
+            start_time = time.time()
+            rewrite_result = None
+            
+            try:
+                # ========== 步骤1: 查询重写 ==========
+                rewrite_start = time.time()
+                
+                # 从session中获取消息历史
+                messages = session.get_context_for_llm(max_turns=5) if hasattr(session, 'get_context_for_llm') else []
+                
+                # 执行查询重写
+                rewrite_result = await self.query_rewriter.rewrite(
+                    current_question=question,
+                    messages=messages
+                )
+                
+                rewrite_time = time.time() - rewrite_start
+                
+                # 使用重写后的问题进行检索
+                search_question = rewrite_result.rewritten_question if rewrite_result.was_rewritten else question
+                
+                if rewrite_result.was_rewritten:
+                    self.logger.info(
+                        f"查询已重写: '{question[:50]}...' → '{search_question[:50]}...' "
+                        f"({rewrite_result.reason}, 耗时: {rewrite_time:.3f}s)"
+                    )
+                
+                # ========== 步骤2: RAG检索（使用重写后的问题）==========
+                retrieval_start = time.time()
+                loop = asyncio.get_event_loop()
+                
+                # 使用重写后的问题进行检索
+                retrieval_res = await loop.run_in_executor(
+                    None, 
+                    self.retriever.retrieval, 
+                    search_question  # 关键：使用重写后的问题
+                )
+                retrieval_time = time.time() - retrieval_start
+                
+                self.logger.info(f"检索完成（基于重写问题），返回 {len(retrieval_res)} 个文档")
+                
+                if not retrieval_res:
+                    self.logger.warning("检索结果为空")
+                    # 如果重写后检索为空，尝试用原问题再检索一次
+                    if rewrite_result.was_rewritten:
+                        self.logger.info("尝试使用原问题重新检索...")
+                        retrieval_res = await loop.run_in_executor(
+                            None, 
+                            self.retriever.retrieval, 
+                            question
+                        )
+                        self.logger.info(f"原问题检索返回 {len(retrieval_res)} 个文档")
+                
+                # ========== 步骤3: 重排序 ==========
+                rerank_start = time.time()
+                
+                if hasattr(self.reranker, '_use_qwen3') and self.reranker._use_qwen3:
+                    rerank_res = self.reranker.rerank(retrieval_res, search_question, num_docs)
+                else:
+                    rerank_res = await loop.run_in_executor(
+                        None, 
+                        self.reranker.rerank, 
+                        retrieval_res, 
+                        search_question, 
+                        num_docs
+                    )
+                rerank_time = time.time() - rerank_start
+                
+                self.logger.info(f"rerank 完成，返回 {len(rerank_res)} 个文档")
+                
+                # ========== 步骤4: 构建上下文 ==========
+                try:
+                    context_str = '\n'.join(item["page_content"] for item in rerank_res)
+                except Exception as e:
+                    self.logger.error(f"构建上下文失败: {e}")
+                    context_str = ""
+                
+                total_time = time.time() - start_time
+                
+                # 构建返回结果
+                result = {
+                    "contexts": rerank_res,
+                    "context_text": context_str,
+                    "success": True,
+                    "metadata": {
+                        "total_time": total_time,
+                        "rewrite_time": rewrite_time if rewrite_result else 0,
+                        "retrieval_time": retrieval_time,
+                        "rerank_time": rerank_time,
+                        "num_docs": len(rerank_res)
+                    }
+                }
+                
+                # 添加重写信息
+                if rewrite_result:
+                    result["rewrite_info"] = {
+                        "original_question": rewrite_result.original_question,
+                        "rewritten_question": rewrite_result.rewritten_question,
+                        "was_rewritten": rewrite_result.was_rewritten,
+                        "reason": rewrite_result.reason
+                    }
+                
+                return result
+                
+            except Exception as e:
+                self.logger.error(f"多轮查询处理失败: {e}", exc_info=True)
+                return {
+                    "success": False,
+                    "error_message": str(e),
+                    "contexts": [],
+                    "rewritten": False,
+                    "metadata": {
+                        "total_time": time.time() - start_time,
+                        "error": str(e)
+                    }
                 }
 
     # 直接价格查询处理入口
