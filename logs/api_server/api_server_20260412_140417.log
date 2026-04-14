@@ -1,0 +1,21 @@
+[2026-04-12 14:04:17] INFO     [api_server.py:29] 启动Easy-RAG API服务...
+[2026-04-12 14:04:17] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-12 14:04:17] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-12 14:04:17] INFO     [rag_service.py:130] 检测到语料库变化，当前哈希: 9c7f13fdab6808a54fc2cd6711699e2e, 缓存哈希: 975eabe660f124347c212cc317756eb5
+[2026-04-12 14:04:17] INFO     [rag_service.py:131] 将自动重建向量库以同步最新语料库
+[2026-04-12 14:04:17] INFO     [rag_service.py:220]    GPU 1 可用显存: 94.97 GB
+[2026-04-12 14:05:18] INFO     [rag_service.py:252] 检索器初始化完成
+[2026-04-12 14:05:18] INFO     [rag_service.py:258] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+[2026-04-12 14:05:18] INFO     [rag_service.py:259]    设备: cpu
+[2026-04-12 14:05:19] INFO     [rag_service.py:264] 重排器初始化完成
+[2026-04-12 14:05:19] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-12 14:05:19] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-12 14:05:19] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-12 14:05:19] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-12 14:05:19] INFO     [rag_service.py:270] LLM初始化完成
+[2026-04-12 14:05:19] INFO     [rag_service.py:275] 查询重写器初始化完成
+[2026-04-12 14:05:19] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-12 14:05:19] INFO     [rag_service.py:280] 价格推荐模板初始化完成
+[2026-04-12 14:05:19] INFO     [rag_service.py:294] RAG服务初始化完成！（双缓冲切换成功）
+[2026-04-12 14:05:19] INFO     [mcp_endpoints.py:322] MCP端点初始化完成
+[2026-04-12 14:05:19] INFO     [api_server.py:37] MCP和Agent服务初始化完成

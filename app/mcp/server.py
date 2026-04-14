@@ -58,16 +58,27 @@ class MCPServer:
     # ============================================================================
     
     def get_available_tools(self) -> List[Dict[str, Any]]:
-        """获取所有可用工具的定义"""
-        return [
-            {
-                "name": tool.name,
-                "description": tool.description,
-                "parameters": tool.parameters,
+        """获取所有可用工具的定义（OpenAI Function Calling 标准格式）"""
+        tools = []
+        for tool in self.tools.available_tools:
+            # 构建标准 JSON Schema
+            properties = {}
+            for param_name, param_def in tool.parameters.items():
+                properties[param_name] = {k: v for k, v in param_def.items() if k != "default"}
+            
+            parameters = {
+                "type": "object",
+                "properties": properties,
                 "required": tool.required
             }
-            for tool in self.tools.available_tools
-        ]
+            
+            tools.append({
+                "name": tool.name,
+                "description": tool.description,
+                "parameters": parameters,
+                "required": tool.required
+            })
+        return tools
     
     async def call_tool(self, tool_name: str, parameters: Dict[str, Any]) -> ToolResult:
         """
@@ -190,12 +201,14 @@ class MCPServer:
         missing_fields = entity_result.metadata.get("missing_fields", [])
         
         # 生成自然语言回复
+        channel_confidence = channel_result.data.get("confidence", 1.0)
         response_text = self._generate_first_response(
             material_name=material_name,
             candidates=candidates,
             missing_fields=missing_fields,
             related_keywords=related_keywords,
-            channel=channel
+            channel=channel,
+            channel_confidence=channel_confidence
         )
         
         return self._build_response(
@@ -341,7 +354,8 @@ class MCPServer:
         candidates: List[Dict[str, Any]],
         missing_fields: List[str],
         related_keywords: List[str],
-        channel: str
+        channel: str,
+        channel_confidence: float = 1.0
     ) -> str:
         """生成首次查询的自然语言回复"""
         lines = []
@@ -356,7 +370,11 @@ class MCPServer:
             "manufacturer_price": "厂商报价",
             "zc_price": "智诚信息价"
         }
-        lines.append(f"查询渠道：{channel_names.get(channel, '信息价')}")
+        channel_display = channel_names.get(channel, '信息价')
+        if channel_confidence < 1.0:
+            lines.append(f"查询渠道：{channel_display}（系统推断，请确认）")
+        else:
+            lines.append(f"查询渠道：{channel_display}")
         
         # 3. 候选材料
         if candidates:
@@ -372,14 +390,19 @@ class MCPServer:
         if related_keywords:
             lines.append(f"\n💡 相关关键词：{', '.join(related_keywords[:3])}")
         
-        # 5. 缺失信息提示
-        if missing_fields:
+        # 5. 缺失信息提示（包含渠道确认）
+        display_missing = missing_fields.copy()
+        if channel_confidence < 1.0 and "channel" not in display_missing:
+            display_missing.insert(0, "channel")
+        
+        if display_missing:
             field_names = {
                 "province": "省份",
                 "city": "城市",
-                "materialModelSpec": "规格型号"
+                "materialModelSpec": "规格型号",
+                "channel": "查询渠道（信息价/厂商报价）"
             }
-            missing_labels = [field_names.get(f, f) for f in missing_fields]
+            missing_labels = [field_names.get(f, f) for f in display_missing]
             lines.append(f"\n📋 为了给您提供准确的价格信息，还需要：")
             for label in missing_labels:
                 lines.append(f"  • {label}")

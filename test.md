@@ -12,3 +12,8 @@ d043ae67-959
     "question": "它有什么有点？",
     "session_id": "4b1b4f03-2c1"
   }'
+
+
+  curl -X POST "http://localhost:8001/api/v1/query/price"     -H "Content-Type: application/json"     -d '{
+       "question": "从信息价查电缆的价格"
+     }'

@@ -99,6 +99,7 @@ Entity_Extract_TEMPLATE="""\
 5. city: 城市名称（如'北京市'）
 6. startReleaseDate: 开始时间 （如：2025-01-01）
 7. endReleaseDate: 结束时间  （如：2025-08-07）
+8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"
 
 # 处理原则
 1. 材料名称需提取完整名词（如'角钢_213'而非'角钢'）

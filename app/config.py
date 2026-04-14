@@ -60,9 +60,12 @@ USE_MOCK_API = False
 MOCK_API_BASE_URL = "https://m1.apifoxmock.com/m1/7437190-7170870-default/backend/largeModelMaterial"  # 替换为你的 Apifox Mock URL
 
 # 真实 API 配置
-REAL_API_BASE_URL = "http://113.31.103.48:8801/backend/largeModelMaterial"
+REAL_API_BASE_URL = "http://113.31.103.48:8801/backend"
 # API 签名密钥（用于真实 API 调用后端）
 API_SECRET_KEY = "uwRbSmxx9-X5NEFPTkjpqhj6GBaVVI6V5ulxtczgY5I"
+
+# 价格查询 API 账户 ID
+PRICE_API_ACCOUNT_ID = "dce1a70c6507f10d266385d9eec7db09"
 
 # # 真实数据： 工程造价
 # RELATED_DATA_PATH = "app/dataset/工程造价/"

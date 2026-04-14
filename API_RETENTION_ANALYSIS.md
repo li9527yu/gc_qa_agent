@@ -11,13 +11,13 @@
 
 | 功能特性 | Agent对话 `/agent/chat` | 标准查询 `/query/price` | 对话式 `/query/dialogue` | 直接查询 `/query/price/direct` |
 |---------|------------------------|------------------------|------------------------|------------------------------|
-| **多轮对话** | ✅ 智能自动 | ✅ 支持(session) | ✅ 渐进式收集 | ❌ 单次 |
-| **流式响应** | ❌ 非流式 | ✅ 流式 | ❌ 非流式 | ✅ 流式 |
-| **智能补全** | ✅ 自动提示 | ❌ 需前端处理 | ✅ 系统提示 | ❌ 需完整数据 |
-| **结构化输入** | ❌ 仅文本 | ❌ 仅文本 | ❌ 仅文本 | ✅ 支持 |
-| **性能** | 中等(多工具调用) | 快(直接查询) | 中等 | 快 |
-| **灵活性** | 高(Agent决策) | 中(固定流程) | 中(固定流程) | 低(纯数据查询) |
-| **调试便利** | 中 | 高 | 中 | 高 |
+| **多轮对话** | ✅ 智能自动 | ✅ 支持(session) | ❌ 已废弃 | ❌ 单次 |
+| **流式响应** | ❌ 非流式 | ✅ 流式 | ❌ 已废弃 | ✅ 流式 |
+| **智能补全** | ✅ 自动提示 | ❌ 需前端处理 | ❌ 已废弃 | ❌ 需完整数据 |
+| **结构化输入** | ❌ 仅文本 | ❌ 仅文本 | ❌ 已废弃 | ✅ 支持 |
+| **性能** | 中等(多工具调用) | 快(直接查询) | ❌ 已废弃 | 快 |
+| **灵活性** | 高(Agent决策) | 中(固定流程) | ❌ 已废弃 | 低(纯数据查询) |
+| **调试便利** | 中 | 高 | ❌ 已废弃 | 高 |
 
 ### 1.2 各接口适用场景
 
@@ -34,7 +34,7 @@
 │  │ 系统: 返回价格分析结果                                                │   │
 │  │                                                                      │   │
 │  │ ✅ Agent接口完美支持                                                  │   │
-│  │ ✅ 对话式接口也支持                                                   │   │
+│  │ ❌ 对话式接口已废弃                                                   │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 │  场景2: 已知完整条件，快速查询 (15%用户)                                     │
@@ -123,10 +123,10 @@ POST /api/v1/query/price
 POST /api/v1/query/price/direct
 ```
 
-#### 可以废弃
+#### 已废弃
 
 ```python
-# 对话式查询接口 - 功能被Agent完全覆盖
+# 对话式查询接口 - 已停止服务，返回 HTTP 410
 POST /api/v1/query/dialogue
 POST /api/v1/query/dialogue/execute
 GET  /api/v1/query/dialogue/{session_id}
@@ -136,19 +136,14 @@ DELETE /api/v1/query/dialogue/{session_id}
 ### 3.2 架构演进路线
 
 ```
-Phase 1: 过渡期（当前）
-├─ 保留所有接口
+Phase 1: 过渡期（已完成）
+├─ /query/dialogue/* 接口已返回 HTTP 410 停止服务
 ├─ Agent接口作为主推荐
-└─ 其他接口标记为 deprecated
+└─ 保留 Agent + 标准查询 + 直接查询
 
-Phase 2: 简化期（1-2个月后）
-├─ 移除 /query/dialogue/* 接口
-├─ 保留 Agent + 标准查询 + 直接查询
-└─ 前端逐步迁移到Agent
-
-Phase 3: 稳定期（3个月后）
-├─ 仅保留 Agent + MCP工具
-├─ 标准查询和直接查询通过Agent包装
+Phase 2: 稳定期（当前）
+├─ 保留 Agent + MCP工具 + 标准查询 + 直接查询
+├─ 标准查询和直接查询逐步通过Agent包装
 └─ 完全统一的Agent交互模式
 ```
 
@@ -220,8 +215,8 @@ POST /api/v1/agent/chat
 ├─ 直接查询 (/price/direct) - 保留，系统集成
 └─ MCP工具 (/mcp/*) - 保留，供高级使用
 
-逐步废弃:
-└─ 对话式查询 (/query/dialogue/*) - 功能重复
+已废弃:
+└─ 对话式查询 (/query/dialogue/*) - 已返回 HTTP 410，请使用 /agent/chat
 ```
 
 ### 5.2 中期策略（优化后）
@@ -255,10 +250,10 @@ class AgentQueryRequest(BaseModel):
     structured_input: Optional[PriceQueryEntities] = None
     # ...
 
-# 3. 添加接口弃用标记（低优先级）
-@router.post("/api/v1/query/dialogue", deprecated=True)
+# 3. 接口已停止服务（已完成）
+@router.post("/api/v1/query/dialogue")
 async def dialogue_query(...):
-    pass
+    raise HTTPException(410, "该接口已废弃，请使用 POST /api/v1/agent/chat")
 ```
 
 ---
@@ -276,8 +271,8 @@ async def dialogue_query(...):
 ---
 
 **建议行动**:
-1. 保留现有所有接口（除了dialogue可以标记废弃）
-2. 新增 `/agent/chat/stream` 流式接口
+1. `/query/dialogue/*` 接口已停止服务（返回 HTTP 410）
+2. 前端全面迁移到 `/agent/chat` 或 `/agent/chat/stream`
 3. 扩展Agent支持结构化输入
 4. 推动前端逐步迁移到Agent接口
 5. 3个月后评估是否可以移除标准查询接口

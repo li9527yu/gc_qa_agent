@@ -16,7 +16,7 @@ from app.read_corpus import Reader
 from app.config import RELATED_DATA_PATH
 from app.config import DATA_PATH
 from app.config import ROOT_PATH
-from app.config import USE_MOCK_API, MOCK_API_BASE_URL, REAL_API_BASE_URL, API_SECRET_KEY
+from app.config import USE_MOCK_API, MOCK_API_BASE_URL, REAL_API_BASE_URL, API_SECRET_KEY, PRICE_API_ACCOUNT_ID
 from app.embedding_config import (
     EMBEDDING_MODEL_PATH,
     EMBEDDING_TYPE,
@@ -1021,46 +1021,149 @@ class RAGService:
         if USE_MOCK_API:
             url = f"{MOCK_API_BASE_URL}/zhichengInfo/getZhichengInfoMaterial"
             self.logger.info(f"使用 Mock API: {url}")
+            # Mock模式使用旧参数
+            payload = {
+                "accountId": PRICE_API_ACCOUNT_ID,
+                "matchMethod": 1,
+                "categoryOneLevelName": "",
+                "categoryTwoLevelName": "",
+                "categoryThreeLevelName": "",
+                "minPrice": data.get("minPrice", ""),
+                "maxPrice": data.get("maxPrice", ""),
+                "releaseDepartment": data.get("releaseDepartment", ""),
+                "startReleaseDate": data.get("startReleaseDate", ""),
+                "endReleaseDate": data.get("endReleaseDate", ""),
+                "province": data.get("province", ""),
+                "city": data.get("city", ""),
+                "materialModelSpec": data.get("materialModelSpec", ""),
+                "materialName": data.get("materialName", ""),
+                "returnNumber": data.get("returnNumber", 10000),
+                "returnTotalCount": 1
+            }
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(url, headers=headers, json=payload, timeout=10)
+            return response.json()
         else:
-            url = f"{REAL_API_BASE_URL}/infor/getInforMaterial"
-            self.logger.info(f"使用真实 API: {url}")
+            # 真实 API 使用新接口，分页拉取数据
+            return self._fetch_price_data_paginated(data, channel_type="information")
+    
+    def _fetch_price_data_paginated(self, data: dict, channel_type: str = "information") -> dict:
+        """
+        分页获取价格数据，每页最多2000条
         
-        payload = {
-            "accountId": "testoxidmwedxdkseucdnvksfnzmdfnzd",
-            "matchMethod": 1,
-            "categoryOneLevelName": "",
-            "categoryTwoLevelName": "",
-            "categoryThreeLevelName": "",
-            "minPrice": data.get("minPrice", ""),
-            "maxPrice": data.get("maxPrice", ""),
-            "releaseDepartment": data.get("releaseDepartment", ""),
-            "startReleaseDate": data.get("startReleaseDate", ""),
-            "endReleaseDate": data.get("endReleaseDate", ""),
-            "province": data.get("province", ""),
-            "city": data.get("city", ""),
-            "materialModelSpec": data.get("materialModelSpec", ""),
-            "materialName": data.get("materialName", ""),
-            "returnNumber": data.get("returnNumber", 10000),  # ✅ 支持动态设置返回数量
-            "returnTotalCount": 1
-        }
+        Args:
+            data: 查询参数
+            channel_type: 渠道类型 (information/factory/zhicheng)
+        
+        Returns:
+            合并后的结果字典
+        """
+        url = f"{REAL_API_BASE_URL}/material/factoryRelatedMaterials/getRelatedMaterial"
+        self.logger.info(f"使用真实 API (分页拉取): {url}")
+        
+        page_size = 2000  # 每页最多2000条
+        all_records = []
+        total_count_from_api = 0
+        page = 1
+        max_pages = 50  # 最多拉取50页，防止无限循环
         
         headers = {"Content-Type": "application/json"}
         
-        # 调用真实 API 时生成签名并添加到 header
-        if not USE_MOCK_API:
+        while page <= max_pages:
+            payload = {
+                "accountId": PRICE_API_ACCOUNT_ID,
+                "matchMethod": 2,  # 精确查询
+                "excludeExactMatch": False,
+                "checkState": 1,
+                "belongDataPool": 2,
+                "categoryOneLevelId": None,
+                "categoryTwoLevelId": None,
+                "categoryThreeLevelId": None,
+                "categoryOneLevelName": None,
+                "categoryTwoLevelName": None,
+                "categoryThreeLevelName": None,
+                "materialName": data.get("materialName", None),
+                "materialCode": None,
+                "materialModelSpec": data.get("materialModelSpec", None) if data.get("materialModelSpec") else None,
+                "domain": None,
+                "releaseDepartment": data.get("releaseDepartment", None) if data.get("releaseDepartment") else None,
+                "startReleaseDate": data.get("startReleaseDate", None) if data.get("startReleaseDate") else None,
+                "endReleaseDate": data.get("endReleaseDate", None) if data.get("endReleaseDate") else None,
+                "minPrice": data.get("minPrice", None) if data.get("minPrice") else None,
+                "maxPrice": data.get("maxPrice", None) if data.get("maxPrice") else None,
+                "province": data.get("province", None) if data.get("province") else None,
+                "city": data.get("city", None) if data.get("city") else None,
+                "provinceId": None,
+                "cityId": None,
+                "enterpriseId": None,
+                "enterpriseName": None,
+                "queryAccountId": None,
+                "accountName": None,
+                "brand": data.get("brand", None) if data.get("brand") else None,
+                "supplyName": data.get("supplyName", None) if data.get("supplyName") else None,
+                "page": page,
+                "pageSize": page_size
+            }
+            
+            # 生成签名
             signature = generate_signature(
                 secret_key=API_SECRET_KEY,
                 params=payload,
-                module="largeModelMaterial",
-                service="infor",
-                operator="getInforMaterial",
+                module="material",
+                service="factoryRelatedMaterials",
+                operator="getRelatedMaterial",
                 debug=False
             )
             headers["signature"] = signature
-            self.logger.info(f"生成签名并添加到 header: {signature}")
-        self.logger.info(f"请求参数: {payload}")
-        response = requests.post(url, headers=headers, json=payload, timeout=10)
-        return response.json()
+            
+            try:
+                self.logger.info(f"请求第 {page} 页，每页 {page_size} 条...")
+                response = requests.post(url, headers=headers, json=payload, timeout=30)
+                response.raise_for_status()
+                result = response.json()
+                
+                if result.get("code") != 200:
+                    self.logger.error(f"API返回错误: {result.get('message', '未知错误')}")
+                    return {
+                        "code": result.get("code", 500),
+                        "message": result.get("message", "API调用失败"),
+                        "data": {"list": all_records, "totalCount": total_count_from_api}
+                    }
+                
+                response_data = result.get("data", {})
+                records = response_data.get("list", [])
+                total_count_from_api = response_data.get("totalCount", 0)
+                
+                if not records:
+                    break
+                
+                all_records.extend(records)
+                self.logger.info(f"第 {page} 页获取 {len(records)} 条数据，累计 {len(all_records)} 条")
+                
+                # 如果获取的记录数少于page_size，说明已经获取完所有数据
+                if len(records) < page_size:
+                    break
+                
+                # 如果已经达到totalCount，也停止
+                if len(all_records) >= total_count_from_api:
+                    break
+                
+                page += 1
+                
+            except Exception as e:
+                self.logger.error(f"分页获取数据失败 (第{page}页): {e}")
+                return {
+                    "code": 500,
+                    "message": str(e),
+                    "data": {"list": all_records, "totalCount": len(all_records)}
+                }
+        
+        self.logger.info(f"分页拉取完成，共 {len(all_records)} 条数据")
+        return {
+            "code": 200,
+            "message": "success",
+            "data": {"list": all_records, "totalCount": len(all_records)}
+        }
 
     #  厂商报价查询接口
     def _get_factory_material(self, data: dict) -> dict:
@@ -1069,45 +1172,30 @@ class RAGService:
         if USE_MOCK_API:
             url = f"{MOCK_API_BASE_URL}/factory/getFactoryMaterial"
             self.logger.info(f"使用 Mock API: {url}")
+            # Mock模式使用旧参数
+            payload = {
+                "accountId": PRICE_API_ACCOUNT_ID,
+                "matchMethod": 1,
+                "minPrice": data.get("minPrice", 0),
+                "maxPrice": data.get("maxPrice", 0),
+                "releaseDepartment": data.get("releaseDepartment", ""),
+                "startReleaseDate": data.get("startReleaseDate", ""),
+                "endReleaseDate": data.get("endReleaseDate", ""),
+                "province": data.get("province", ""),
+                "city": data.get("city", ""),
+                "materialModelSpec": data.get("materialModelSpec", ""),
+                "materialName": data.get("materialName", ""),
+                "brand": data.get("brand", ""),
+                "supplyName": data.get("supplyName", ""),
+                "returnNumber": data.get("returnNumber", 10000),
+                "returnTotalCount": 1
+            }
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            return response.json()
         else:
-            url = f"{REAL_API_BASE_URL}/factory/getFactoryMaterial"
-            self.logger.info(f"使用真实 API: {url}")
-        
-        payload = {
-            "accountId": "testoxidmwedxdkseucdnvksfnzmdfnzd",
-            "matchMethod": 1,
-            "minPrice": data.get("minPrice", 0),
-            "maxPrice": data.get("maxPrice", 0),
-            "releaseDepartment": data.get("releaseDepartment", ""),
-            "startReleaseDate": data.get("startReleaseDate", ""),
-            "endReleaseDate": data.get("endReleaseDate", ""),
-            "province": data.get("province", ""),
-            "city": data.get("city", ""),
-            "materialModelSpec": data.get("materialModelSpec", ""),
-            "materialName": data.get("materialName", ""),
-            "brand": data.get("brand", ""),
-            "supplyName": data.get("supplyName", ""),
-            "returnNumber": data.get("returnNumber", 10000),  # ✅ 支持动态设置返回数量
-            "returnTotalCount": 1
-        }
-        
-        headers = {"Content-Type": "application/json"}
-        
-        # 调用真实 API 时生成签名并添加到 header
-        if not USE_MOCK_API:
-            signature = generate_signature(
-                secret_key=API_SECRET_KEY,
-                params=payload,
-                module="largeModelMaterial",
-                service="factory",
-                operator="getFactoryMaterial",
-                debug=False
-            )
-            headers["signature"] = signature
-            self.logger.debug(f"生成签名并添加到 header: {signature[:20]}...")
-        
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
-        return response.json()
+            # 真实 API 使用新接口，分页拉取数据
+            return self._fetch_price_data_paginated(data, channel_type="factory")
 
     #  智诚信息价查询接口
     def _get_zhicheng_info_material(self, data: dict) -> dict:
@@ -1116,47 +1204,32 @@ class RAGService:
         if USE_MOCK_API:
             url = f"{MOCK_API_BASE_URL}/zhichengInfo/getZhichengInfoMaterial"
             self.logger.info(f"使用 Mock API: {url}")
+            # Mock模式使用旧参数
+            payload = {
+                "accountId": PRICE_API_ACCOUNT_ID,
+                "matchMethod": 1,
+                "categoryOneLevelName": "",
+                "categoryTwoLevelName": "",
+                "categoryThreeLevelName": "",
+                "minPrice": data.get("minPrice", 0),
+                "maxPrice": data.get("maxPrice", 0),
+                "releaseDepartment": data.get("releaseDepartment", ""),
+                "startReleaseDate": data.get("startReleaseDate", ""),
+                "endReleaseDate": data.get("endReleaseDate", ""),
+                "province": data.get("province", ""),
+                "city": data.get("city", ""),
+                "materialModelSpec": data.get("materialModelSpec", ""),
+                "materialName": data.get("materialName", ""),
+                "grade": data.get("grade", ""),
+                "returnNumber": data.get("returnNumber", 10000),
+                "returnTotalCount": 1
+            }
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            return response.json()
         else:
-            url = f"{REAL_API_BASE_URL}/zhichengInfo/getZhichengInfoMaterial"
-            self.logger.info(f"使用真实 API: {url}")
-        
-        payload = {
-            "accountId": "testoxidmwedxdkseucdnvksfnzmdfnzd",
-            "matchMethod": 1,
-            "categoryOneLevelName": "",
-            "categoryTwoLevelName": "",
-            "categoryThreeLevelName": "",
-            "minPrice": data.get("minPrice", 0),
-            "maxPrice": data.get("maxPrice", 0),
-            "releaseDepartment": data.get("releaseDepartment", ""),
-            "startReleaseDate": data.get("startReleaseDate", ""),
-            "endReleaseDate": data.get("endReleaseDate", ""),
-            "province": data.get("province", ""),
-            "city": data.get("city", ""),
-            "materialModelSpec": data.get("materialModelSpec", ""),
-            "materialName": data.get("materialName", ""),
-            "grade": data.get("grade", ""),
-            "returnNumber": data.get("returnNumber", 10000),  # ✅ 支持动态设置返回数量
-            "returnTotalCount": 1
-        }
-        
-        headers = {"Content-Type": "application/json"}
-        
-        # 调用真实 API 时生成签名并添加到 header
-        if not USE_MOCK_API:
-            signature = generate_signature(
-                secret_key=API_SECRET_KEY,
-                params=payload,
-                module="largeModelMaterial",
-                service="zhichengInfo",
-                operator="getZhichengInfoMaterial",
-                debug=False
-            )
-            headers["signature"] = signature
-            self.logger.debug(f"生成签名并添加到 header: {signature[:20]}...")
-        
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
-        return response.json()
+            # 真实 API 使用新接口，分页拉取数据
+            return self._fetch_price_data_paginated(data, channel_type="zhicheng")
 
     # RAG知识问答处理入口
     async def process_single_query(self, question: str, num_docs: int = 10) -> Dict[str, Any]:

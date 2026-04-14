@@ -385,8 +385,11 @@ curl -s -X POST http://localhost:8001/api/v1/query/stream \
 
 ---
 
-## 六、对话式查询接口测试（即将废弃）
+## 六、对话式查询接口测试（已废弃）
 
+> ⚠️ 以下接口已停止服务，请使用 `POST /api/v1/agent/chat` 替代。
+
+<!--
 ### 6.1 创建对话
 
 ```bash
@@ -430,6 +433,7 @@ curl -s http://localhost:8001/api/v1/query/dialogue/abc123 | jq
 ```bash
 curl -s -X DELETE http://localhost:8001/api/v1/query/dialogue/abc123 | jq
 ```
+-->
 
 ---
 

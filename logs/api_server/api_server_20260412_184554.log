@@ -1,0 +1,28 @@
+[2026-04-12 18:45:54] INFO     [api_server.py:29] 启动Easy-RAG API服务...
+[2026-04-12 18:45:54] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-12 18:45:54] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-12 18:45:54] INFO     [rag_service.py:130] 检测到语料库变化，当前哈希: 9c7f13fdab6808a54fc2cd6711699e2e, 缓存哈希: 975eabe660f124347c212cc317756eb5
+[2026-04-12 18:45:54] INFO     [rag_service.py:131] 将自动重建向量库以同步最新语料库
+[2026-04-12 18:45:54] INFO     [rag_service.py:220]    GPU 1 可用显存: 94.97 GB
+[2026-04-12 18:46:58] INFO     [rag_service.py:252] 检索器初始化完成
+[2026-04-12 18:46:58] INFO     [rag_service.py:258] 📦 加载 Reranker 模型: /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+[2026-04-12 18:46:58] INFO     [rag_service.py:259]    设备: cpu
+[2026-04-12 18:46:59] INFO     [rag_service.py:264] 重排器初始化完成
+[2026-04-12 18:46:59] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-12 18:46:59] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-12 18:46:59] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-12 18:46:59] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-12 18:46:59] INFO     [rag_service.py:270] LLM初始化完成
+[2026-04-12 18:46:59] INFO     [rag_service.py:275] 查询重写器初始化完成
+[2026-04-12 18:46:59] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-12 18:46:59] INFO     [rag_service.py:280] 价格推荐模板初始化完成
+[2026-04-12 18:46:59] INFO     [rag_service.py:294] RAG服务初始化完成！（双缓冲切换成功）
+[2026-04-12 18:46:59] INFO     [mcp_endpoints.py:324] MCP端点初始化完成
+[2026-04-12 18:46:59] INFO     [api_server.py:37] MCP和Agent服务初始化完成
+[2026-04-12 18:47:43] INFO     [conversation_manager.py:459] 创建新会话: d17cee6b-bcd (类型: knowledge_qa)
+[2026-04-12 18:47:43] INFO     [rag_service.py:1351] 检索完成（基于重写问题），返回 20 个文档
+[2026-04-12 18:47:49] INFO     [rag_service.py:1380] rerank 完成，返回 10 个文档
+[2026-04-12 18:47:49] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 4858, query: 介绍下easy_rag 系统
+[2026-04-12 18:47:49] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 5311
+[2026-04-12 18:47:49] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+[2026-04-12 18:48:32] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 858 个 chunk

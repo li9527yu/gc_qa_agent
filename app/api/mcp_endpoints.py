@@ -63,18 +63,20 @@ class ToolCallRequest(BaseModel):
             "description": "Agent响应",
             "content": {
                 "application/json": {
-                    "example": {
-                        "success": True,
-                        "session_id": "abc123",
-                        "state": "collecting_entities",
-                        "turn_count": 1,
-                        "message": "收到，您想查询「钢筋」的价格信息...",
-                        "data": {
-                            "entities": {"materialName": "钢筋"},
-                            "candidates": [...]
-                        },
-                        "suggested_actions": ["广东省", "江苏省", "北京市"]
-                    }
+                    "examples": [
+                        {
+                            "success": True,
+                            "session_id": "abc123",
+                            "state": "collecting_entities",
+                            "turn_count": 1,
+                            "message": "收到，您想查询「钢筋」的价格信息...",
+                            "data": {
+                                "entities": {"materialName": "钢筋"},
+                                "candidates": ["钢筋HRB400", "钢筋HRB500"]
+                            },
+                            "suggested_actions": ["广东省", "江苏省", "北京市"]
+                        }
+                    ]
                 }
             }
         }
@@ -110,40 +112,34 @@ async def agent_chat(request: AgentQueryRequest):
     description="""
     Agent流式对话接口，以SSE格式返回思考过程和最终结果。
     
-    - 可以观察Agent的思考过程（thoughts）
+    - 可以实时观察Agent的思考过程（thoughts）
+    - 可以看到每一步的工具调用和返回结果
     - 适合需要展示Agent推理过程的场景
+    
+    事件类型：
+    - start: 开始处理
+    - thought: LLM 当前思考内容（可能包含 tool_calls 意向）
+    - tool_call: 开始调用某个工具
+    - observation: 工具执行结果
+    - final: 最终回复和完整数据
+    - error: 处理异常
     """
 )
 async def agent_chat_stream(request: AgentQueryRequest):
-    """Agent流式对话接口"""
+    """Agent流式对话接口（SSE格式）"""
     if not material_price_agent:
         raise HTTPException(status_code=503, detail="Agent服务未初始化")
     
     async def stream_generator() -> AsyncGenerator[str, None]:
         try:
-            # 发送开始标记
-            yield json.dumps({"type": "start", "message": "开始处理"}, ensure_ascii=False) + "\n"
-            
-            # 调用Agent处理
-            result = await material_price_agent.process_message(
+            async for event in material_price_agent.process_message_stream(
                 user_message=request.message,
                 session_id=request.session_id
-            )
-            
-            # 发送思考过程（如果有）
-            # 注意：当前Agent实现没有直接暴露thoughts，后续可以扩展
-            
-            # 发送最终结果
-            yield json.dumps({
-                "type": "result",
-                "data": result
-            }, ensure_ascii=False) + "\n"
-            
-            # 发送结束标记
-            yield json.dumps({"type": "end"}, ensure_ascii=False) + "\n"
-            
+            ):
+                yield json.dumps(event, ensure_ascii=False) + "\n"
+                
         except Exception as e:
-            logger.error(f"流式处理失败: {e}")
+            logger.error(f"流式处理失败: {e}", exc_info=True)
             yield json.dumps({
                 "type": "error",
                 "message": str(e)
@@ -317,6 +313,6 @@ def init_mcp_endpoints(rag_service):
     from app.mcp.agent import MaterialPriceAgent
     
     mcp_server = MCPServer(rag_service)
-    material_price_agent = MaterialPriceAgent(mcp_server)
+    material_price_agent = MaterialPriceAgent(mcp_server, rag_service.llm)
     
     logger.info("MCP端点初始化完成")

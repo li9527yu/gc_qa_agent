@@ -7,14 +7,17 @@ class PriceRequest(BaseModel):
     session_id: Optional[str] = Field(None, description="会话ID，用于多轮对话")
     force_new: bool = Field(False, description="强制创建新会话，清空历史对话记录")
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "question": "从信息价查铝合金幕墙型材的价格",
-                "session_id": "abc123",
-                "force_new": False
-            }
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "question": "从信息价查铝合金幕墙型材的价格",
+                    "session_id": "abc123",
+                    "force_new": False
+                }
+            ]
         }
+    }
 
 class QueryRequest(BaseModel):
     question: str = Field(..., description="用户问题", min_length=1, max_length=1000)

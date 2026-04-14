@@ -34,8 +34,13 @@ def generate_signature(secret_key, params, module, service, operator, debug=Fals
                        if k not in ['signature'] and v is not None}
     sorted_params = sorted(filtered_params.items())
     
-    # 2. 拼接字符串
-    param_string = '&'.join([f'{k}={v}' for k, v in sorted_params])
+    # 2. 拼接字符串（布尔值转为小写）
+    def format_value(v):
+        if isinstance(v, bool):
+            return str(v).lower()
+        return str(v)
+    
+    param_string = '&'.join([f'{k}={format_value(v)}' for k, v in sorted_params])
     sign_string = f'{param_string}&module={module}&service={service}&operator={operator}'
     
     if debug:
@@ -59,8 +64,11 @@ def main():
     print("-" * 70)
     
     params1 = {
-        "accountId": "testoxidmwedxdkseucdnvksfnzmdfnzd",
-        "matchMethod": 1,
+        "accountId": "dce1a70c6507f10d266385d9eec7db09",
+        "matchMethod": 2,
+        "excludeExactMatch": False,
+        "checkState": 1,
+        "belongDataPool": 2,
         "categoryOneLevelName": "",
         "categoryTwoLevelName": "",
         "categoryThreeLevelName": "",

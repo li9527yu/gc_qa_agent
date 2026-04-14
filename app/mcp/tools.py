@@ -242,14 +242,14 @@ class MaterialPriceTools:
         limit: int = 10
     ) -> ToolResult:
         """
-        快速搜索材料 - 用于首次查询
+        快速搜索材料 - 用于首次查询，返回候选材料和常见统计信息
         
         Args:
             keyword: 用户输入的关键词
             limit: 返回结果数量上限
             
         Returns:
-            ToolResult: 包含匹配的材料名称和相关关键词建议
+            ToolResult: 包含匹配的材料名称、常见省份、常见规格和相关关键词建议
         """
         try:
             self.logger.info(f"[MCP Tool] quick_search_materials: keyword={keyword}, limit={limit}")
@@ -260,7 +260,20 @@ class MaterialPriceTools:
             # 2. 获取候选材料名称
             candidates = await self._get_material_name_candidates(keyword, limit)
             
-            # 3. 生成相关关键词建议
+            # 3. 基于候选获取统计数据（省份、规格等）
+            common_provinces = []
+            common_specs = []
+            if candidates:
+                # 用第一个最相关的候选去查样本数据
+                top_name = candidates[0]["name"]
+                sample_data = await self._fetch_sample_for_stats(top_name, limit=100)
+                from collections import Counter
+                provinces = [item.get("province") for item in sample_data if item.get("province")]
+                specs = [item.get("materialModelSpec") for item in sample_data if item.get("materialModelSpec")]
+                common_provinces = [p for p, _ in Counter(provinces).most_common(5)]
+                common_specs = [s for s, _ in Counter(specs).most_common(5)]
+            
+            # 4. 生成相关关键词建议
             related_keywords = self._generate_related_keywords(keyword, candidates)
             
             return ToolResult(
@@ -269,9 +282,11 @@ class MaterialPriceTools:
                     "keyword": keyword,
                     "extracted_entities": entities,
                     "candidates": candidates,
+                    "common_provinces": common_provinces,
+                    "common_specs": common_specs,
                     "related_keywords": related_keywords
                 },
-                message=f"找到 {len(candidates)} 个相关材料",
+                message=f"找到 {len(candidates)} 个相关材料，常见省份：{', '.join(common_provinces) if common_provinces else '无'}",
                 metadata={
                     "total_candidates": len(candidates),
                     "has_exact_match": keyword in [c["name"] for c in candidates]
@@ -457,10 +472,19 @@ class MaterialPriceTools:
             # 检查缺失的字段
             required_fields = ["materialName", "province", "city"]
             missing = [f for f in required_fields if not entities.get(f)]
+            # 如果用户没有明确指定渠道，也建议补充
+            if not entities.get("channel"):
+                missing.append("channel")
             
             suggested_steps = []
             if missing:
-                suggested_steps.append(f"还需要补充以下信息: {', '.join(missing)}")
+                missing_labels = []
+                for f in missing:
+                    if f == "channel":
+                        missing_labels.append("查询渠道（信息价/厂商报价）")
+                    else:
+                        missing_labels.append(f)
+                suggested_steps.append(f"还需要补充以下信息: {', '.join(missing_labels)}")
             else:
                 suggested_steps.append("实体信息完整，可以进行价格查询")
             
@@ -572,6 +596,25 @@ class MaterialPriceTools:
             self.logger.error(f"获取候选材料失败: {e}")
             return []
     
+    async def _fetch_sample_for_stats(
+        self,
+        material_name: str,
+        limit: int = 100
+    ) -> List[Dict[str, Any]]:
+        """获取样本数据用于统计分析常见省份和规格"""
+        try:
+            # 使用默认信息价渠道，只查材料名，不限制其他条件
+            entities = {"materialName": material_name, "returnNumber": limit}
+            result = await asyncio.to_thread(
+                self.rag_service._get_infor_material, entities
+            )
+            if result and result.get("code") == 200:
+                return result.get("data", {}).get("list", [])[:limit]
+            return []
+        except Exception as e:
+            self.logger.warning(f"获取样本统计失败: {e}")
+            return []
+
     async def _quick_query(
         self, 
         channel: str, 

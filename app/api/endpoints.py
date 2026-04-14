@@ -107,21 +107,23 @@ initialize_lock = threading.Lock()
             "description": "成功响应",
             "content": {
                 "application/json": {
-                    "example": {
-                        "results": [
-                            {
-                                "original_file": "/home/tpc/suda/rag/easy-rag/app/dataset/uploads/test2.txt",
-                                "markdown_file": "/home/tpc/suda/rag/easy-rag/app/dataset/data/test2_258350b6.md",
-                                "status": "success"
-                            },
-                            {
-                                "original_file": "/home/tpc/suda/rag/easy-rag/app/dataset/uploads/test1.pdf",
-                                "markdown_file": "/home/tpc/suda/rag/easy-rag/app/dataset/data/test1_9965f086.md",
-                                "status": "success"
-                            }
-                        ],
-                        "task_id": "733a0362-9db9-4ba7-8cab-6cc59cecce5c"
-                    }
+                    "examples": [
+                        {
+                            "results": [
+                                {
+                                    "original_file": "/home/tpc/suda/rag/easy-rag/app/dataset/uploads/test2.txt",
+                                    "markdown_file": "/home/tpc/suda/rag/easy-rag/app/dataset/data/test2_258350b6.md",
+                                    "status": "success"
+                                },
+                                {
+                                    "original_file": "/home/tpc/suda/rag/easy-rag/app/dataset/uploads/test1.pdf",
+                                    "markdown_file": "/home/tpc/suda/rag/easy-rag/app/dataset/data/test1_9965f086.md",
+                                    "status": "success"
+                                }
+                            ],
+                            "task_id": "733a0362-9db9-4ba7-8cab-6cc59cecce5c"
+                        }
+                    ]
                 }
             }
         }
@@ -247,29 +249,31 @@ def _sync_incremental_update(task_id: str, changes: dict = None):
             "description": "成功响应",
             "content": {
                 "application/json": {
-                    "example": {
-                        "status": "success",
-                        "corpus_path": "app/dataset/data/",
-                        "total_files": 2,
-                        "total_size_mb": 0.26,
-                        "files": [
-                            {
-                                "filename": "test2_f0e57789.md",
-                                "size": 110167,
-                                "size_mb": 0.11,
-                                "modified_time": "2025-12-19T08:34:49.028561",
-                                "path": "app/dataset/data/test2_f0e57789.md"
-                            },
-                            {
-                                "filename": "output_piclegend.md",
-                                "size": 165112,
-                                "size_mb": 0.16,
-                                "modified_time": "2025-11-17T05:01:19.252978",
-                                "path": "app/dataset/data/output_piclegend.md"
-                            }
-                        ],
-                        "timestamp": "2025-12-19T08:36:47.929076"
-                    }
+                    "examples": [
+                        {
+                            "status": "success",
+                            "corpus_path": "app/dataset/data/",
+                            "total_files": 2,
+                            "total_size_mb": 0.26,
+                            "files": [
+                                {
+                                    "filename": "test2_f0e57789.md",
+                                    "size": 110167,
+                                    "size_mb": 0.11,
+                                    "modified_time": "2025-12-19T08:34:49.028561",
+                                    "path": "app/dataset/data/test2_f0e57789.md"
+                                },
+                                {
+                                    "filename": "output_piclegend.md",
+                                    "size": 165112,
+                                    "size_mb": 0.16,
+                                    "modified_time": "2025-11-17T05:01:19.252978",
+                                    "path": "app/dataset/data/output_piclegend.md"
+                                }
+                            ],
+                            "timestamp": "2025-12-19T08:36:47.929076"
+                        }
+                    ]
                 }
             }
         }
@@ -346,32 +350,29 @@ async def list_files():
             "description": "成功响应",
             "content": {
                 "application/json": {
-                    "example": {
-                        "status": "success",
-                        "message": "批量删除完成，成功删除 1 个文件，失败 0 个文件，知识库正在后台更新",
-                        "deleted_files": [
-                            {
-                                "filename": "test2_1f972e43.md",
-                                "size_mb": 0.11,
-                                "modified_time": "2025-12-19T08:23:56.443916"
-                            }
-                        ],
-                        "failed_files": [],
-                        "total_deleted_size_mb": 0.11,
-                        "timestamp": "2025-12-19T08:32:13.077454",
-                        "task_id": "8e1daab8-3789-49ab-b91c-9f266f961c4f"
-                    }
+                    "examples": [
+                        {
+                            "status": "success",
+                            "message": "批量删除完成，成功删除 1 个文件，失败 0 个文件，知识库正在后台更新",
+                            "deleted_files": [
+                                {
+                                    "filename": "test2_1f972e43.md",
+                                    "size_mb": 0.11,
+                                    "modified_time": "2025-12-19T08:23:56.443916"
+                                }
+                            ],
+                            "failed_files": [],
+                            "total_deleted_size_mb": 0.11,
+                            "timestamp": "2025-12-19T08:32:13.077454",
+                            "task_id": "8e1daab8-3789-49ab-b91c-9f266f961c4f"
+                        }
+                    ]
                 }
             }
         }
     })
 async def delete_files(
-    req: DeleteRequest = Body(
-        ...,
-        example={
-            "filenames": ["text1.md", "test2_1f972e43.md"]
-        }
-    ),
+    req: DeleteRequest = Body(...),
     background_tasks: BackgroundTasks = None
 ):
     filenames = req.filenames
@@ -522,15 +523,7 @@ async def delete_files(
     }
 )
 async def query_stream(
-    request: QueryRequest = Body(
-        ...,
-        example={
-            "question": "什么是工程造价",
-            "num_docs": 2,
-            "session_id": "abc123",
-            "force_new": False
-        }
-    )
+    request: QueryRequest = Body(...)
 ) -> StreamingResponse:
     """
     流式查询接口（支持会话隔离）
@@ -652,49 +645,16 @@ async def query_stream(
             "description": "价格推荐流式响应",
             "content": {
                 "text/plain": {
-                    "example": (
-                        "识别到渠道类型: information_price\n"
-                        "\n[END]\n"
-                        "解析到实体结果: {\"materialName\": \"铝合金幕墙型材\"} \n"
-                        "\n[END]\n"
-                        "{\"text\": \"\", "
-                        "\"intent\": \"price_recommendation\", "
-                        "\"channel\": \"information_price\", "
-                        "\"metadata\": {"
-                            "\"channel\": \"information_price\", "
-                            "\"entities\": {\"materialName\": \"铝合金幕墙型材\"}, "
-                            "\"price_analysis\": {"
-                                "\"kg\": {"
-                                    "\"total_count\": 46, "
-                                    "\"valid_count\": 46, "
-                                    "\"price_range\": [23.0, 25.0], "
-                                    "\"mean_price\": 24.02173913043478, "
-                                    "\"median_price\": 24.0, "
-                                    "\"recommend_kmeans\": {"
-                                        "\"mode\": \"single\", "
-                                        "\"prices\": [24.0], "
-                                        "\"reason\": \"条件不足: silhouette=0.75, gap_ratio=0.06, 小簇=False\""
-                                    "}"
-                                "}"
-                            "}, "
-                            "\"md_table\": \"\""
-                        "}, "
-                        "\"success\": true}\n"
-                    )
+                    "examples": [
+                        "识别到渠道类型: information_price\n[END]\n{\"text\": \"...\", \"intent\": \"price_recommendation\", \"success\": true}"
+                    ]
                 }
             }
         }
     }
 )
 async def query_price(
-    request: PriceRequest = Body(
-        ...,
-        example={
-            "question": "从信息价查铝合金幕墙型材的价格",
-            "session_id": "abc123",
-            "force_new": False
-        }
-    )
+    request: PriceRequest = Body(...)
 ) -> StreamingResponse:
     """价格推荐接口（支持会话隔离和话题切换检测）"""
     if not rag_service:
@@ -971,10 +931,12 @@ async def root():
             "description": "任务状态信息",
             "content": {
                 "application/json": {
-                    "example": {
-                        "task_id": "8e1daab8-3789-49ab-b91c-9f266f961c4f",
-                        "status": "pending"
-                    }
+                    "examples": [
+                        {
+                            "task_id": "8e1daab8-3789-49ab-b91c-9f266f961c4f",
+                            "status": "pending"
+                        }
+                    ]
                 }
             }
         }
@@ -1002,17 +964,19 @@ async def get_task_status(task_id: str):
             "description": "服务状态信息",
             "content": {
                 "application/json": {
-                    "example": {
-                        "is_rebuilding": False,
-                        "rebuild_progress": {
-                            "stage": "idle",
-                            "message": "就绪",
-                            "percent": 100
-                        },
-                        "retriever_ready": True,
-                        "llm_ready": True,
-                        "corpus_count": 42
-                    }
+                    "examples": [
+                        {
+                            "is_rebuilding": False,
+                            "rebuild_progress": {
+                                "stage": "idle",
+                                "message": "就绪",
+                                "percent": 100
+                            },
+                            "retriever_ready": True,
+                            "llm_ready": True,
+                            "corpus_count": 42
+                        }
+                    ]
                 }
             }
         }
@@ -1048,83 +1012,21 @@ async def get_service_status():
             "description": "直接价格查询结果",
             "content": {
                 "text/plain": {
-                    "example": {
-                        "text": "广东省深圳市铝合金门窗型材最近三年平均价格约为 22 元/kg",
-                        "intent": "price_recommendation",
-                        "channel": "information_price",
-                        "metadata": {
+                    "examples": [
+                        {
+                            "text": "广东省深圳市铝合金门窗型材最近三年平均价格约为 22 元/kg",
+                            "intent": "price_recommendation",
                             "channel": "information_price",
-                            "entities": {"materialName": "铝合金门窗型材"},
-                            "price_analysis": {
-                                "kg": {
-                                    "total_count": 10,
-                                    "valid_count": 10,
-                                    "price_range": [21.0, 23.0],
-                                    "mean_price": 22.0,
-                                    "median_price": 22.0,
-                                    "recommend_kmeans": {
-                                        "mode": "single",
-                                        "prices": [22.0],
-                                        "reason": "条件不足: silhouette=0.7, gap_ratio=0.05, 小簇=False"
-                                    }
-                                }
-                            },
-                            "md_table": ""
-                        },
-                        "success": True,
-                        "price_data": []
-                    }
+                            "success": True
+                        }
+                    ]
                 }
             }
         }
     }
 )
 async def query_price_direct(
-    request: DirectPriceQueryRequest = Body(
-        ...,
-        example={
-            "datatype": "informaterial",
-            "question": "查找铝合金门窗型材的价格数据",
-            "list": [{
-                "id": 6,
-                "materialId": "1369392Jvbw",
-                "accountId": "testoxidmwedxdkseucdnvksfnzmdfnzd",
-                "materialName": "铝合金门窗型材",
-                "materialCode": "01512001",
-                "checkState": 1,
-                "belongDataPool": 2,
-                "domain": "",
-                "categoryOneLevel": "",
-                "categoryTwoLevel": "",
-                "categoryThreeLevel": "",
-                "standardCategoryName": None,
-                "standardCategoryCode": None,
-                "standardCategoryUnit": None,
-                "standardCategoryConfidence": None,
-                "standardFeatures": None,
-                "label": "铝合金门窗型材,银白氧化,kg,深圳市造价站,深圳市造价站,广东省,深圳市",
-                "price": 22.0,
-                "taxRate": 0.0,
-                "materialModelSpec": "银白氧化",
-                "releaseDepartment": "",
-                "releaseTime": "2018-08-01",
-                "releaseDate": None,
-                "unit": "kg",
-                "province": "",
-                "city": "",
-                "materialDescribe": "",
-                "savePath": "",
-                "createTime": "2025-10-24 15:19:00",
-                "createTimeDate": "2025-07-31",
-                "updateTime": "2025-12-01 16:51:24",
-                "updateTimeDate": "2025-07-31",
-                "categoryOneLevelName": None,
-                "categoryTwoLevelName": None,
-                "provinceId": "25390907-898d-4d62-9e07-f1c9cb4eaaae",
-                "cityId": "76968431-d0e0-47ab-9ae9-31aff28237f3"
-            }]
-        }
-    )
+    request: DirectPriceQueryRequest = Body(...)
 ) -> StreamingResponse:
 
     if not rag_service:
@@ -1233,25 +1135,31 @@ class DialogueQueryRequest(BaseModel):
     session_id: Optional[str] = Field(None, description="会话ID，首次请求可为空")
     user_input: str = Field(..., description="用户输入")
     
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "session_id": None,
-                "user_input": "查一下钢筋的价格"
-            }
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "session_id": None,
+                    "user_input": "查一下钢筋的价格"
+                }
+            ]
         }
+    }
 
 
 class DialogueExecuteRequest(BaseModel):
     """执行对话查询请求"""
     session_id: str = Field(..., description="会话ID")
     
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "session_id": "abc12345"
-            }
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "session_id": "abc12345"
+                }
+            ]
         }
+    }
 
 
 @router.post(
@@ -1277,30 +1185,17 @@ class DialogueExecuteRequest(BaseModel):
             "description": "对话状态响应",
             "content": {
                 "application/json": {
-                    "example": {
-                        "session_id": "abc12345",
-                        "status": "collecting",
-                        "entities": {"materialName": "钢筋"},
-                        "channel": "information_price",
-                        "channel_info": {
+                    "examples": [
+                        {
+                            "session_id": "abc12345",
+                            "status": "collecting",
+                            "entities": {"materialName": "钢筋"},
                             "channel": "information_price",
-                            "confidence": 0.5,
-                            "reason": "未明确指定渠道，默认查询信息价",
-                            "inferred": True
-                        },
-                        "is_complete": False,
-                        "can_query": False,
-                        "response_text": "请问是哪个省份的材料？（如：广东省、江苏省）",
-                        "next_question": {
-                            "field": "province",
-                            "label": "省份",
-                            "prompt": "请问是哪个省份的材料？（如：广东省、江苏省）"
-                        },
-                        "quick_options": [
-                            {"text": "广东省", "value": "广东省"},
-                            {"text": "江苏省", "value": "江苏省"}
-                        ]
-                    }
+                            "is_complete": False,
+                            "can_query": False,
+                            "response_text": "请问是哪个省份的材料？"
+                        }
+                    ]
                 }
             }
         }
@@ -1308,22 +1203,14 @@ class DialogueExecuteRequest(BaseModel):
 )
 async def dialogue_query(request: DialogueQueryRequest):
     """
-    对话式价格查询接口
+    【已废弃】对话式价格查询接口
     
-    支持渐进式收集查询条件，通过多轮对话完成价格查询
+    该接口已停止服务，请迁移至 Agent 对话接口：POST /api/v1/agent/chat
     """
-    if not rag_service:
-        raise HTTPException(status_code=503, detail="RAG服务未初始化")
-    
-    try:
-        result = await rag_service.process_dialogue_query(
-            session_id=request.session_id,
-            user_input=request.user_input
-        )
-        return result
-    except Exception as e:
-        logging.exception("对话式查询失败")
-        raise HTTPException(status_code=500, detail=f"查询失败: {str(e)}")
+    raise HTTPException(
+        status_code=410,
+        detail="该接口已废弃，请使用 POST /api/v1/agent/chat 进行对话式价格查询"
+    )
 
 
 @router.post(
@@ -1340,20 +1227,22 @@ async def dialogue_query(request: DialogueQueryRequest):
             "description": "查询结果",
             "content": {
                 "application/json": {
-                    "example": {
-                        "success": True,
-                        "session_id": "abc12345",
-                        "entities": {
-                            "materialName": "钢筋",
-                            "province": "广东省",
-                            "city": "深圳市"
-                        },
-                        "price_result": {
-                            "answer": "...",
+                    "examples": [
+                        {
                             "success": True,
-                            "total_count": 156
+                            "session_id": "abc12345",
+                            "entities": {
+                                "materialName": "钢筋",
+                                "province": "广东省",
+                                "city": "深圳市"
+                            },
+                            "price_result": {
+                                "answer": "...",
+                                "success": True,
+                                "total_count": 156
+                            }
                         }
-                    }
+                    ]
                 }
             }
         }
@@ -1361,21 +1250,14 @@ async def dialogue_query(request: DialogueQueryRequest):
 )
 async def dialogue_execute(request: DialogueExecuteRequest):
     """
-    执行对话查询
+    【已废弃】执行对话查询
     
-    使用已收集的实体执行价格查询
+    该接口已停止服务，请迁移至 Agent 对话接口：POST /api/v1/agent/chat
     """
-    if not rag_service:
-        raise HTTPException(status_code=503, detail="RAG服务未初始化")
-    
-    try:
-        result = await rag_service.execute_dialogue_query(
-            session_id=request.session_id
-        )
-        return result
-    except Exception as e:
-        logging.exception("执行对话查询失败")
-        raise HTTPException(status_code=500, detail=f"查询失败: {str(e)}")
+    raise HTTPException(
+        status_code=410,
+        detail="该接口已废弃，请使用 POST /api/v1/agent/chat 进行对话式价格查询"
+    )
 
 
 @router.get(
@@ -1384,15 +1266,11 @@ async def dialogue_execute(request: DialogueExecuteRequest):
     description="获取指定会话ID的当前状态、已收集实体等信息"
 )
 async def get_dialogue_session(session_id: str):
-    """获取对话会话状态"""
-    if not rag_service:
-        raise HTTPException(status_code=503, detail="RAG服务未初始化")
-    
-    session = rag_service.get_dialogue_session(session_id)
-    if not session:
-        raise HTTPException(status_code=404, detail="会话不存在或已过期")
-    
-    return session
+    """【已废弃】获取对话会话状态"""
+    raise HTTPException(
+        status_code=410,
+        detail="该接口已废弃，请使用 POST /api/v1/agent/chat 进行对话式价格查询"
+    )
 
 
 @router.delete(
@@ -1401,9 +1279,8 @@ async def get_dialogue_session(session_id: str):
     description="手动清除指定会话，释放资源"
 )
 async def clear_dialogue_session(session_id: str):
-    """清除对话会话"""
-    if not rag_service:
-        raise HTTPException(status_code=503, detail="RAG服务未初始化")
-    
-    rag_service.clear_dialogue_session(session_id)
-    return {"success": True, "message": f"会话 {session_id} 已清除"}
+    """【已废弃】清除对话会话"""
+    raise HTTPException(
+        status_code=410,
+        detail="该接口已废弃，请使用 POST /api/v1/agent/chat 进行对话式价格查询"
+    )
