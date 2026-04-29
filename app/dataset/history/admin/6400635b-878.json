@@ -1,0 +1,161 @@
+{
+  "id": "6400635b-878",
+  "username": "admin",
+  "conversation_list": [
+    {
+      "role": "user",
+      "content": "什么是清单报价"
+    },
+    {
+      "role": "assistant",
+      "content": {
+        "text": "文档中包含相关内容。根据文档中的信息，清单报价属于工程造价领域的知识问答范畴。以下是基于文档的回答：\n\n在工程造价领域，清单报价是一种基于工程量清单进行价格编制的方法。用户可以通过自然语言提问，例如“什么是清单计价？”，系统将基于上传的文档语料库，通过 RAG（检索增强生成）技术检索相关知识并生成回答。",
+        "contexts": [
+          {
+            "page_content": "# Easy-RAG 用户操作说明书\n> 适用版本：智诚大模型对话系统（Streamlit 前端 + Easy-RAG 后端）\n> 服务地址：`http://localhost:8001`\n> 前端入口：`/home/tpc/suda/rag/h\\_rag/server/web\\_app.py`\n---\n## 一、系统简介\n本系统是一款面向\\*\\*工程造价领域\\*\\*的智能问答助手，基于 RAG（检索增强生成）技术构建。用户可通过自然语言进行两类核心交互：\n1. \\*\\*知识问答\\*\\*：基于上传的文档语料库回答专业问题\n2. \\*\\*价格推荐\\*\\*：查询材料的市场信息价、厂商报价、智诚信息价\n系统会自动识别用户意图，并调用相应的后端服务进行流式回答。\n---\n## 二、环境准备与启动\n### 2.1 启动后端服务\n在启动前端之前，请确保以下服务已正常运行：\n```bash\n# 1. 启动 Milvus 向量数据库\ncd /home/tpc/suda/rag/easy-rag\ndocker-compose up -d\n```bash\n# 1. 启动 Milvus 向量数据库",
+            "metadata": {
+              "chunk_index": 0,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813827",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_002644bacfff238d",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 3.930034875869751
+            }
+          },
+          {
+            "page_content": "在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n| 用户意图 | 示例问题 | 系统行为 |\n|----------|----------|----------|\n| \\*\\*知识问答\\*\\* | \"什么是清单计价？\" | 调用 RAG 检索文档，流式生成回答 |\n| \\*\\*价格推荐\\*\\* | \"304不锈钢价格多少？\" | 查询材料价格数据库，返回分析结果和图表 |\n| \\*\\*其他问题\\*\\* | \"今天几月几号？\" | 由大模型直接回答 |\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。",
+            "metadata": {
+              "chunk_index": 5,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813871",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_f295de08d4fd6d18",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 3.571441173553467
+            }
+          },
+          {
+            "page_content": "│ │ manufacturer\\_price/unknown │ │\n│ │ │ │\n│ │ 2. 如果 LLM 返回 unknown ──▶ 启用智能渠道推断器 │ │\n│ │ 2. 如果 LLM 返回 unknown ──▶ 启用智能渠道推断器 │ │\n│ │ • 基于关键词权重匹配 (信息价/厂商报价/智诚) │ │\n│ │ • 基于实体特征推断 (品牌存在→厂商报价) │ │\n│ │ • 置信度计算 (0-1) │ │\n│ │ │ │\n│ │ 返回: (ChannelType, InferenceResult) │ │\n│ │ 返回: (ChannelType, InferenceResult) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 2: 实体抽取 (extract\\_entities) │",
+            "metadata": {
+              "chunk_index": 16,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786498",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_0a39c699902f4534",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 3.459501028060913
+            }
+          },
+          {
+            "page_content": "\\*\\*A\\*\\*: 价格查询需要明确渠道，请在问题中加入\"信息价\"、\"厂商报价\"或\"智诚信息价\"等关键词。\n### Q5: 如何清空对话历史？\n\\*\\*A\\*\\*: 当前版本未提供一键清空按钮，可通过刷新浏览器页面来重置对话（文件和知识库状态不受影响）。\n---\n## 八、相关文件位置\n## 八、相关文件位置",
+            "metadata": {
+              "chunk_index": 15,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813943",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_7c2a53c36749d5de",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 3.0537667274475098
+            }
+          },
+          {
+            "page_content": "│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 20,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786527",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_0aa4982372a1ea91",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.893489122390747
+            }
+          },
+          {
+            "page_content": "│ │\n│ 渐进式补全流程示例: │\n│ ══════════════════ │\n│ ══════════════════ │\n│ │\n│ 用户: \"查一下钢筋价格\" │\n│ │ │\n│ ▼ │\n│ ┌─────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────┐ │\n│ │ 识别实体: {materialName: \"钢筋\"} │ │\n│ │ 缺失字段: [province, city] │ │\n│ │ 状态: COLLECTING │ │\n│ │ 回复: \"请问是哪个省份的材料？(如：广东省)\" │ │\n│ └─────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────┘ │\n│ │ │\n│ ▼ │\n│ 用户: \"广东省的\" │\n│ │ │\n│ ▼ │\n│ ▼ │",
+            "metadata": {
+              "chunk_index": 33,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786624",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_01a487ffe1abe9b1",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.3365752696990967
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────┘ │\n│ │ │\n│ ▼ │\n│ 用户: \"广东省的\" │\n│ │ │\n│ ▼ │\n│ ▼ │\n│ ┌─────────────────────────────────────────┐ │\n│ │ 更新实体: {materialName: \"钢筋\", │ │\n│ │ province: \"广东省\"} │ │\n│ │ 缺失字段: [city] │ │\n│ │ 状态: COLLECTING │ │\n│ │ 状态: COLLECTING │ │\n│ │ 回复: \"具体是哪个城市？(如：深圳市)\" │ │\n│ └─────────────────────────────────────────┘ │\n│ │ │\n│ ▼ │\n│ 用户: \"深圳市\" │\n│ 用户: \"深圳市\" │\n│ │ │\n│ ▼ │\n│ ┌─────────────────────────────────────────┐ │\n│ │ 实体完整: {materialName: \"钢筋\", │ │",
+            "metadata": {
+              "chunk_index": 34,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786738",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_8932e6c4c876c5dd",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.303920030593872
+            }
+          },
+          {
+            "page_content": "> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如：\"索赔的定义是什么？\"）\n2. 系统自动识别意图为 `knowledge\\_qa`",
+            "metadata": {
+              "chunk_index": 6,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813878",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_10cd176d3e45c4ff",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 2.065206527709961
+            }
+          },
+          {
+            "page_content": "---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如：\"索赔的定义是什么？\"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如：\"混凝土的单价是多少？\"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示\"不建议进行数据分析和价格推荐\"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如\"信息价\"、\"厂商报价\"），系统会提示\"请提供查询渠道关键词\"。",
+            "metadata": {
+              "chunk_index": 7,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813886",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_343e8c9c57948621",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 1.8134541511535645
+            }
+          },
+          {
+            "page_content": "\\*\\*A\\*\\*: 取决于文件大小和数量，通常几秒到几分钟。若长时间未恢复，可刷新页面或检查后端日志。\n---\n## 七、常见问题\n### Q1: 页面提示\"知识库更新中，暂不可提问\"，需要等多久？\n\\*\\*A\\*\\*: 取决于文件大小和数量，通常几秒到几分钟。若长时间未恢复，可刷新页面或检查后端日志。\n### Q2: 上传文件后为什么还是无法回答新文档的内容？\n\\*\\*A\\*\\*: 请确认上传后是否等待「数据库更新完成」的提示出现。若未出现，可能是 Milvus 或 Embedding 模型服务异常。\n### Q3: 价格查询没有返回图表，只显示了表格？\n\\*\\*A\\*\\*: 说明返回的数据条数 ≤ 您设置的阈值（默认 10 条）。您可以在左侧边栏调低阈值，或确认数据库中是否有更多相关样本。\n### Q4: 提问后被提示\"用户未提及任何渠道关键词\"？\n\\*\\*A\\*\\*: 价格查询需要明确渠道，请在问题中加入\"信息价\"、\"厂商报价\"或\"智诚信息价\"等关键词。\n### Q5: 如何清空对话历史？",
+            "metadata": {
+              "chunk_index": 14,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813936",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_c1ef3ef36baaf8f9",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 1.7818952798843384
+            }
+          }
+        ],
+        "session_id": "6400635b-878",
+        "conversation_type": "knowledge_qa"
+      }
+    }
+  ],
+  "updated_at": "2026-04-15T17:01:29.185504"
+}

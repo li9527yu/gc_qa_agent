@@ -172,11 +172,12 @@ class MCPServer:
         )
         
         channel_result = await self.call_tool("identify_channel", {"question": user_input})
-        thought2.observation = f"识别到渠道: {channel_result.data.get('channel', 'unknown')}"
+        channel_value = channel_result.data.get("channel", "unknown") if channel_result.data else "unknown"
+        thought2.observation = f"识别到渠道: {channel_value}"
         thought2.next_step = "快速搜索材料候选"
         thoughts.append(thought2)
         
-        channel = channel_result.data.get("channel", "information_price")
+        channel = channel_result.data.get("channel", "information_price") if channel_result.data else "information_price"
         
         # Step 3: 快速搜索材料候选
         step += 1
@@ -191,17 +192,18 @@ class MCPServer:
             "quick_search_materials", 
             {"keyword": material_name, "limit": 10}
         )
-        thought3.observation = f"找到 {len(search_result.data.get('candidates', []))} 个候选"
+        search_candidates = search_result.data.get("candidates", []) if search_result.data else []
+        thought3.observation = f"找到 {len(search_candidates)} 个候选"
         thought3.next_step = "返回结果给用户"
         thoughts.append(thought3)
         
         # 构建响应
-        candidates = search_result.data.get("candidates", [])
-        related_keywords = search_result.data.get("related_keywords", [])
+        candidates = search_result.data.get("candidates", []) if search_result.data else []
+        related_keywords = search_result.data.get("related_keywords", []) if search_result.data else []
         missing_fields = entity_result.metadata.get("missing_fields", [])
         
         # 生成自然语言回复
-        channel_confidence = channel_result.data.get("confidence", 1.0)
+        channel_confidence = channel_result.data.get("confidence", 1.0) if channel_result.data else 1.0
         response_text = self._generate_first_response(
             material_name=material_name,
             candidates=candidates,

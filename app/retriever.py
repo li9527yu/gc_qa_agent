@@ -395,6 +395,7 @@ class Retriever:
                 embedding_function=self.emb_model,
                 collection_name=collection_name,
                 connection_args=self.connection_args,
+                auto_id=True,
             )
             
         # 检查是否需要重建向量数据库
@@ -517,18 +518,36 @@ class Retriever:
 
     def retrieval(self, query, methods=None):
         if methods is None:
-            methods = ['bm25']
-        search_res = list()
+            methods = ['bm25', 'emb']
+
+        search_res = []
+        seen_docs = set()
+
         for method in methods:
             if method == 'bm25':
-                bm25_res = self.bm25_retrieval(query)
-                for item in bm25_res:
-                    if item['page_content'] not in search_res:
-                        search_res.append(item)
+                current_res = self.bm25_retrieval(query)
             elif method == 'emb':
-                emb_res = self.emb_retrieval(query)
-                for item in emb_res:
-                    if item not in search_res:
-                        search_res.append(item)
-            print("method:", method)
+                current_res = self.emb_retrieval(query)
+            else:
+                logger.warning(f"未知检索方法: {method}，已跳过")
+                continue
+
+            logger.info(f"检索方法 {method} 返回 {len(current_res)} 个候选文档")
+
+            for item in current_res:
+                metadata = item.get("metadata", {}) if isinstance(item, dict) else {}
+                dedup_key = (
+                    metadata.get("chunk_id")
+                    or (
+                        metadata.get("source"),
+                        metadata.get("page"),
+                        item.get("page_content", "") if isinstance(item, dict) else str(item),
+                    )
+                )
+                if dedup_key in seen_docs:
+                    continue
+                seen_docs.add(dedup_key)
+                search_res.append(item)
+
+        logger.info(f"混合检索完成，methods={methods}，去重后返回 {len(search_res)} 个文档")
         return search_res

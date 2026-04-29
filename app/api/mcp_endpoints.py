@@ -11,6 +11,7 @@ import logging
 
 from app.schemas.rag import QueryRequest
 from pydantic import BaseModel, Field
+from app.utils.conversation_manager import get_conversation_manager, ConversationType
 
 router = APIRouter()
 logger = logging.getLogger("easy_rag_api")
@@ -18,6 +19,9 @@ logger = logging.getLogger("easy_rag_api")
 # MCP Server 和 Agent 实例（由 main.py 注入）
 mcp_server = None
 material_price_agent = None
+
+# 获取统一对话管理器（支持数据库持久化）
+conversation_manager = get_conversation_manager()
 
 
 class AgentQueryRequest(BaseModel):
@@ -93,17 +97,80 @@ async def agent_chat(request: AgentQueryRequest):
     
     try:
         logger.info(f"[Agent API] 收到消息: session={request.session_id}, message={request.message}")
+
+        extracted_entities = {}
+        try:
+            extracted_entities = await material_price_agent.mcp_server.rag_service.extract_entities(
+                request.message
+            )
+        except Exception as e:
+            logger.warning(f"[Agent API] 预提取实体失败，继续使用原流程: {e}")
+        
+        # 获取或创建统一会话（支持数据库持久化）
+        session = await conversation_manager.get_or_create_session(
+            request.session_id,
+            ConversationType.PRICE_QUERY,
+            force_new=False,
+            new_question=request.message,
+            llm_predictor=material_price_agent.llm,
+            extracted_entities=extracted_entities,
+            user_id=1
+        )
+
+        # 如果 agent 内存上下文不存在，则从统一会话恢复
+        material_price_agent.restore_context_from_conversation(session)
+        
+        # 保存用户消息到数据库
+        await conversation_manager.save_message(
+            session.session_id,
+            "user",
+            request.message,
+            metadata={"extracted_entities": extracted_entities} if extracted_entities else None,
+            user_id=1
+        )
         
         result = await material_price_agent.process_message(
             user_message=request.message,
-            session_id=request.session_id
+            session_id=session.session_id
         )
+        
+        # 保存助手回复到数据库
+        assistant_msg = result.get("message", "")
+        if assistant_msg:
+            await conversation_manager.save_message(
+                session.session_id,
+                "assistant",
+                assistant_msg,
+                metadata={
+                    "agent_context": material_price_agent.export_context_snapshot(session.session_id)
+                },
+                user_id=1
+            )
         
         return result
         
     except Exception as e:
         logger.error(f"Agent处理失败: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"处理失败: {str(e)}")
+        error_detail = str(e)
+        
+        # 针对模型服务常见错误做友好提示
+        if "maximum model length" in error_detail.lower() or "max_model_len" in error_detail:
+            raise HTTPException(
+                status_code=400,
+                detail="对话上下文过长，已超出模型最大处理长度。建议：1) 开启新会话；2) 减少单次查询的数据量。"
+            )
+        if "context length" in error_detail.lower():
+            raise HTTPException(
+                status_code=400,
+                detail="对话上下文过长，请开启新会话后重试。"
+            )
+        if "500 internal server error" in error_detail.lower():
+            raise HTTPException(
+                status_code=503,
+                detail="模型服务暂时不可用（500错误），请稍后重试。"
+            )
+        
+        raise HTTPException(status_code=500, detail=f"处理失败: {error_detail}")
 
 
 @router.post(
@@ -130,20 +197,84 @@ async def agent_chat_stream(request: AgentQueryRequest):
     if not material_price_agent:
         raise HTTPException(status_code=503, detail="Agent服务未初始化")
     
+    extracted_entities = {}
+    try:
+        extracted_entities = await material_price_agent.mcp_server.rag_service.extract_entities(
+            request.message
+        )
+    except Exception as e:
+        logger.warning(f"[Agent Stream API] 预提取实体失败，继续使用原流程: {e}")
+
+    # 获取或创建统一会话（支持数据库持久化）
+    session = await conversation_manager.get_or_create_session(
+        request.session_id,
+        ConversationType.PRICE_QUERY,
+        force_new=False,
+        new_question=request.message,
+        llm_predictor=material_price_agent.llm,
+        extracted_entities=extracted_entities,
+        user_id=1
+    )
+
+    # 如果 agent 内存上下文不存在，则从统一会话恢复
+    material_price_agent.restore_context_from_conversation(session)
+    
+    # 保存用户消息到数据库
+    await conversation_manager.save_message(
+        session.session_id,
+        "user",
+        request.message,
+        metadata={"extracted_entities": extracted_entities} if extracted_entities else None,
+        user_id=1
+    )
+    
     async def stream_generator() -> AsyncGenerator[str, None]:
+        assistant_msg = ""
         try:
             async for event in material_price_agent.process_message_stream(
                 user_message=request.message,
-                session_id=request.session_id
+                session_id=session.session_id
             ):
                 yield json.dumps(event, ensure_ascii=False) + "\n"
+                if event.get("type") == "final":
+                    assistant_msg = event.get("data", {}).get("message", "")
                 
         except Exception as e:
             logger.error(f"流式处理失败: {e}", exc_info=True)
+            error_detail = str(e)
+            
+            # 针对模型服务常见错误做友好提示
+            if "maximum model length" in error_detail.lower() or "max_model_len" in error_detail:
+                user_message = "对话上下文过长，已超出模型最大处理长度。建议：1) 开启新会话；2) 减少单次查询的数据量。"
+            elif "context length" in error_detail.lower():
+                user_message = "对话上下文过长，请开启新会话后重试。"
+            elif "500 internal server error" in error_detail.lower():
+                user_message = "模型服务暂时不可用（500错误），请稍后重试。"
+            else:
+                user_message = f"处理失败: {error_detail}"
+            
             yield json.dumps({
                 "type": "error",
-                "message": str(e)
+                "message": user_message,
+                "detail": error_detail,
+                "next_type": None,
+                "display": {
+                    "title": "处理失败",
+                    "text": user_message
+                }
             }, ensure_ascii=False) + "\n"
+        finally:
+            # 保存助手回复到数据库
+            if assistant_msg:
+                await conversation_manager.save_message(
+                    session.session_id,
+                    "assistant",
+                    assistant_msg,
+                    metadata={
+                        "agent_context": material_price_agent.export_context_snapshot(session.session_id)
+                    },
+                    user_id=1
+                )
     
     return StreamingResponse(
         stream_generator(),

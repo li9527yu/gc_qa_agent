@@ -1,0 +1,349 @@
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-04-14 10:50:50,394 - INFO - 已加载知识库索引，共 4 个文件
+INFO:     Started server process [3783609]
+INFO:     Waiting for application startup.
+[2026-04-14 10:50:50] INFO     [api_server.py:29] 启动Easy-RAG API服务...
+2026-04-14 10:50:50,430 - INFO - 启动Easy-RAG API服务...
+[2026-04-14 10:50:50] INFO     [rag_service.py:109] 开始初始化RAG服务...
+2026-04-14 10:50:50,430 - INFO - 开始初始化RAG服务...
+2026-04-14 10:50:50,430 - INFO - 正在从缓存加载语料库...
+2026-04-14 10:50:50,446 - INFO - 已从缓存加载 1327 段文本
+2026-04-14 10:50:50,447 - INFO - 缓存验证通过
+[2026-04-14 10:50:50] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+2026-04-14 10:50:50,447 - INFO - 语料库加载完成，共1327个文档
+[2026-04-14 10:50:50] INFO     [rag_service.py:134] 语料库未发生变化，使用现有缓存
+2026-04-14 10:50:50,454 - INFO - 语料库未发生变化，使用现有缓存
+[2026-04-14 10:50:50] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+2026-04-14 10:50:50,509 - INFO - 🤖 初始化 LLM 客户端
+[2026-04-14 10:50:50] INFO     [llm_deepseek.py:91]    模式: local
+2026-04-14 10:50:50,509 - INFO -    模式: local
+[2026-04-14 10:50:50] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+2026-04-14 10:50:50,509 - INFO -    Base URL: http://localhost:9839/v1
+[2026-04-14 10:50:50] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+2026-04-14 10:50:50,509 - INFO -    Model: Qwen3-32B
+[2026-04-14 10:50:50] INFO     [rag_service.py:142] LLM初始化完成
+2026-04-14 10:50:50,509 - INFO - LLM初始化完成
+[2026-04-14 10:50:50] INFO     [rag_service.py:309] 价格推荐模板加载成功
+2026-04-14 10:50:50,509 - INFO - 价格推荐模板加载成功
+[2026-04-14 10:50:50] INFO     [rag_service.py:147] 价格推荐模板初始化完成
+2026-04-14 10:50:50,509 - INFO - 价格推荐模板初始化完成
+[2026-04-14 10:50:50] INFO     [rag_service.py:151] 语料库未变化，但Retriever未初始化，正在加载...
+2026-04-14 10:50:50,509 - INFO - 语料库未变化，但Retriever未初始化，正在加载...
+2026-04-14 10:50:51,511 - INFO - Use pytorch device_name: cuda:0
+2026-04-14 10:50:51,512 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-14 10:50:53,057 - INFO - 1 prompt is loaded, with the key: query
+2026-04-14 10:50:53,213 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-14 10:50:53,235 - INFO - Use pytorch device_name: cuda:0
+2026-04-14 10:50:53,235 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-14 10:50:54,471 - INFO - 1 prompt is loaded, with the key: query
+2026-04-14 10:50:54,506 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-14 10:50:54,506 - INFO - Rebuilding vector database...
+2026-04-14 10:50:54,506 - INFO - 发现缓存文件 tokenized_docs.pkl，正在加载...
+2026-04-14 10:50:54,549 - INFO - 语料库未变化，直接加载现有向量数据库...
+[2026-04-14 10:50:54] INFO     [rag_service.py:197] Retriever加载完成
+2026-04-14 10:50:54,591 - INFO - Retriever加载完成
+[2026-04-14 10:50:54] INFO     [rag_service.py:201] 语料库未变化，但Reranker未初始化，正在加载...
+2026-04-14 10:50:54,592 - INFO - 语料库未变化，但Reranker未初始化，正在加载...
+2026-04-14 10:50:54,592 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-14 10:50:54,594 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-14 10:50:54,594 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
+2026-04-14 10:50:54,594 - INFO - Instruction: Given a query and a passage, determine whether the...
+2026-04-14 10:50:55,184 - INFO - Using existing pad_token: <|endoftext|>
+Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-04-14 10:50:55,645 - INFO - Set model.config.pad_token_id to: 151643
+2026-04-14 10:50:55,650 - INFO - Qwen3-Reranker model loaded successfully
+2026-04-14 10:50:55,650 - INFO - Qwen3 Reranker loaded successfully
+[2026-04-14 10:50:55] INFO     [rag_service.py:207] Reranker加载完成
+2026-04-14 10:50:55,650 - INFO - Reranker加载完成
+[2026-04-14 10:50:55] INFO     [mcp_endpoints.py:318] MCP端点初始化完成
+2026-04-14 10:50:55,656 - INFO - MCP端点初始化完成
+[2026-04-14 10:50:55] INFO     [api_server.py:37] MCP和Agent服务初始化完成
+2026-04-14 10:50:55,656 - INFO - MCP和Agent服务初始化完成
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     116.147.250.80:42233 - "GET /docs HTTP/1.1" 200 OK
+INFO:     116.147.250.80:42233 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46910 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46922 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58052 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58066 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     111.7.96.151:21474 - "GET / HTTP/1.1" 200 OK
+INFO:     111.7.96.151:24878 - "GET / HTTP/1.1" 200 OK
+INFO:     111.7.96.152:42190 - "GET / HTTP/1.1" 200 OK
+INFO:     123.160.223.74:53099 - "GET / HTTP/1.1" 200 OK
+INFO:     111.7.96.152:42360 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     123.160.223.72:13573 - "GET / HTTP/1.1" 200 OK
+INFO:     111.7.96.152:42476 - "GET / HTTP/1.1" 200 OK
+INFO:     123.160.223.73:28692 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     123.160.223.74:53126 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     111.7.96.152:42560 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     123.160.223.73:28798 - "GET / HTTP/1.1" 200 OK
+INFO:     123.160.223.75:55656 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     123.160.223.74:54065 - "GET / HTTP/1.1" 200 OK
+INFO:     123.160.223.73:29778 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     47.92.226.216:36550 - "GET / HTTP/1.1" 200 OK
+INFO:     47.92.226.216:36632 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     121.199.163.141:35888 - "GET / HTTP/1.1" 200 OK
+INFO:     121.199.163.141:35894 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     120.46.206.182:39773 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     120.46.204.68:64872 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49274 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49276 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49286 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     116.147.250.80:48199 - "GET /docs HTTP/1.1" 200 OK
+INFO:     116.147.250.80:52308 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60888 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60904 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60906 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60912 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60928 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+[2026-04-15 13:32:08] INFO     [conversation_manager.py:459] 创建新会话: 8aded5d6-6d7 (类型: knowledge_qa)
+2026-04-15 13:32:08,259 - INFO - 创建新会话: 8aded5d6-6d7 (类型: knowledge_qa)
+INFO:     127.0.0.1:60930 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-15 13:32:08,276 - INFO - === 开始流式查询，问题: 你好, 会话: 8aded5d6-6d7, force_new: False
+[2026-04-15 13:32:08] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+2026-04-15 13:32:08,276 - WARNING - 查询重写器未初始化，退回到单轮查询
+Building prefix dict from the default dictionary ...
+2026-04-15 13:32:08,278 - DEBUG - Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+2026-04-15 13:32:08,279 - DEBUG - Loading model from cache /tmp/jieba.cache
+Loading model cost 0.793 seconds.
+2026-04-15 13:32:09,072 - DEBUG - Loading model cost 0.793 seconds.
+Prefix dict has been built successfully.
+2026-04-15 13:32:09,072 - DEBUG - Prefix dict has been built successfully.
+[2026-04-15 13:32:09] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+2026-04-15 13:32:09,078 - INFO - 检索完成，返回 20 个文档
+2026-04-15 13:32:16,222 - INFO - Reranked 20 docs, returning top 10. Best score: 1.5567
+[2026-04-15 13:32:16] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+2026-04-15 13:32:16,288 - INFO - rerank 完成，返回 10 个文档
+[2026-04-15 13:32:16] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-15 13:32:16,288 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 13:32:16] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3864
+2026-04-15 13:32:16,288 - INFO - 上下文构建成功，长度: 3864
+[2026-04-15 13:32:16] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 13:32:16,288 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 13:32:16,288 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-15 13:32:16,288 - INFO - 上下文文本长度: 3864 字符
+2026-04-15 13:32:16,288 - INFO - 开始调用 LLM stream_predict...
+[2026-04-15 13:32:16] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3864, query: 你好
+2026-04-15 13:32:16,288 - INFO - stream_predict 开始，context长度: 3864, query: 你好
+[2026-04-15 13:32:16] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4305
+2026-04-15 13:32:16,289 - INFO - prompt构建成功，长度: 4305
+[2026-04-15 13:32:16] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 13:32:16,289 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 13:32:16,326 - INFO - === LLM API 请求详情 ===
+2026-04-15 13:32:16,326 - INFO - 模型: Qwen3-32B
+2026-04-15 13:32:16,327 - INFO - 消息: [{'role': 'user', 'content': '你好'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\n### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库\n### 3.2 中间主区域（聊天对话区）\n#### 欢迎语\n首次进入或清空对话后，页面显示：\n> "👋 欢迎使用RAG对话助手"\n> "🌿 很高兴在此与你相遇，愿我们一同在知识的枝叶间，探寻微光与辽阔。"\n#### 提问方式\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如："混凝土的单价是多少？"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示"不建议进行数据分析和价格推荐"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如"信息价"、"厂商报价"），系统会提示"请提供查询渠道关键词"。\n## 八、相关文件位置\n| 文件 | 说明 |\n|------|------|\n| `/home/tpc/suda/rag/h\\_rag/server/web\\_app.py` | Streamlit 前端主程序 |\n| `/home/tpc/suda/rag/h\\_rag/server/price\\_chart\\_component.py` | 价格图表组件（ECharts） |\n| `/home/tpc/suda/rag/easy-rag/app/api\\_server.py` | FastAPI 后端主入口 |\n| `/home/tpc/suda/rag/easy-rag/app/services/rag\\_service.py` | RAG 核心服务逻辑 |\n| `/home/tpc/suda/rag/easy-rag/app/config.py` | LLM 及 API 配置 |\n| `/home/tpc/suda/rag/easy-rag/app/embedding\\_config.py` | Embedding / Reranker 配置 |\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n</Documents>\n\n用户问题：你好\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-15 13:32:16,327 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-15 13:32:16,327 - INFO - ========================
+2026-04-15 13:32:16,628 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-15 13:32:18] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 36 个 chunk
+2026-04-15 13:32:18,964 - INFO - openai_chat_by_api_as_astream 完成，共 36 个 chunk
+2026-04-15 13:32:18,965 - INFO - LLM stream_predict 完成，共收到 36 个 chunk
+2026-04-15 13:32:18,966 - INFO - 流式查询完成
+method: bm25
+INFO:     127.0.0.1:51482 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51494 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51502 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37310 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:37326 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37342 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56440 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56456 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56470 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38130 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:38144 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38160 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60360 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60372 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60374 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33270 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:33278 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33282 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45326 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:45328 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45342 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56068 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56070 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56074 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56260 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56272 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56278 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33880 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:33890 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33900 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52264 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52278 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52288 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51264 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51266 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51270 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40992 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:40994 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41000 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41002 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:41016 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+[2026-04-15 13:47:13] INFO     [conversation_manager.py:459] 创建新会话: 8c135e89-e88 (类型: knowledge_qa)
+2026-04-15 13:47:13,421 - INFO - 创建新会话: 8c135e89-e88 (类型: knowledge_qa)
+INFO:     127.0.0.1:41024 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-15 13:47:13,422 - INFO - === 开始流式查询，问题: 你好, 会话: 8c135e89-e88, force_new: False
+[2026-04-15 13:47:13] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+2026-04-15 13:47:13,422 - WARNING - 查询重写器未初始化，退回到单轮查询
+[2026-04-15 13:47:13] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+2026-04-15 13:47:13,434 - INFO - 检索完成，返回 20 个文档
+2026-04-15 13:47:17,526 - INFO - Reranked 20 docs, returning top 10. Best score: 1.5567
+[2026-04-15 13:47:17] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+2026-04-15 13:47:17,587 - INFO - rerank 完成，返回 10 个文档
+[2026-04-15 13:47:17] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-15 13:47:17,587 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 13:47:17] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3864
+2026-04-15 13:47:17,588 - INFO - 上下文构建成功，长度: 3864
+[2026-04-15 13:47:17] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 13:47:17,588 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 13:47:17,588 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-15 13:47:17,588 - INFO - 上下文文本长度: 3864 字符
+2026-04-15 13:47:17,588 - INFO - 开始调用 LLM stream_predict...
+[2026-04-15 13:47:17] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3864, query: 你好
+2026-04-15 13:47:17,588 - INFO - stream_predict 开始，context长度: 3864, query: 你好
+[2026-04-15 13:47:17] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4305
+2026-04-15 13:47:17,588 - INFO - prompt构建成功，长度: 4305
+[2026-04-15 13:47:17] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 13:47:17,588 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 13:47:17,632 - INFO - === LLM API 请求详情 ===
+2026-04-15 13:47:17,632 - INFO - 模型: Qwen3-32B
+2026-04-15 13:47:17,632 - INFO - 消息: [{'role': 'user', 'content': '你好'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\n### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库\n### 3.2 中间主区域（聊天对话区）\n#### 欢迎语\n首次进入或清空对话后，页面显示：\n> "👋 欢迎使用RAG对话助手"\n> "🌿 很高兴在此与你相遇，愿我们一同在知识的枝叶间，探寻微光与辽阔。"\n#### 提问方式\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如："混凝土的单价是多少？"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示"不建议进行数据分析和价格推荐"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如"信息价"、"厂商报价"），系统会提示"请提供查询渠道关键词"。\n## 八、相关文件位置\n| 文件 | 说明 |\n|------|------|\n| `/home/tpc/suda/rag/h\\_rag/server/web\\_app.py` | Streamlit 前端主程序 |\n| `/home/tpc/suda/rag/h\\_rag/server/price\\_chart\\_component.py` | 价格图表组件（ECharts） |\n| `/home/tpc/suda/rag/easy-rag/app/api\\_server.py` | FastAPI 后端主入口 |\n| `/home/tpc/suda/rag/easy-rag/app/services/rag\\_service.py` | RAG 核心服务逻辑 |\n| `/home/tpc/suda/rag/easy-rag/app/config.py` | LLM 及 API 配置 |\n| `/home/tpc/suda/rag/easy-rag/app/embedding\\_config.py` | Embedding / Reranker 配置 |\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n</Documents>\n\n用户问题：你好\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-15 13:47:17,632 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-15 13:47:17,632 - INFO - ========================
+2026-04-15 13:47:17,654 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-15 13:47:19] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 36 个 chunk
+2026-04-15 13:47:19,598 - INFO - openai_chat_by_api_as_astream 完成，共 36 个 chunk
+2026-04-15 13:47:19,599 - INFO - LLM stream_predict 完成，共收到 36 个 chunk
+2026-04-15 13:47:19,599 - INFO - 流式查询完成
+method: bm25
+INFO:     127.0.0.1:53606 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53616 - "GET /api/v1/history/admin HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53622 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+[2026-04-15 14:01:16] INFO     [conversation_manager.py:459] 创建新会话: 54ba66b2-60d (类型: knowledge_qa)
+2026-04-15 14:01:16,705 - INFO - 创建新会话: 54ba66b2-60d (类型: knowledge_qa)
+INFO:     116.147.250.80:48202 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-15 14:01:16,706 - INFO - === 开始流式查询，问题: string, 会话: 54ba66b2-60d, force_new: False
+[2026-04-15 14:01:16] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+2026-04-15 14:01:16,706 - WARNING - 查询重写器未初始化，退回到单轮查询
+[2026-04-15 14:01:16] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+2026-04-15 14:01:16,711 - INFO - 检索完成，返回 20 个文档
+2026-04-15 14:01:21,161 - INFO - Reranked 20 docs, returning top 10. Best score: 1.4023
+[2026-04-15 14:01:21] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+2026-04-15 14:01:21,161 - INFO - rerank 完成，返回 10 个文档
+[2026-04-15 14:01:21] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-15 14:01:21,162 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 14:01:21] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3514
+2026-04-15 14:01:21,162 - INFO - 上下文构建成功，长度: 3514
+[2026-04-15 14:01:21] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:01:21,162 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:01:21,162 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-15 14:01:21,162 - INFO - 上下文文本长度: 3514 字符
+2026-04-15 14:01:21,162 - INFO - 开始调用 LLM stream_predict...
+[2026-04-15 14:01:21] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3514, query: string
+2026-04-15 14:01:21,162 - INFO - stream_predict 开始，context长度: 3514, query: string
+[2026-04-15 14:01:21] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3959
+2026-04-15 14:01:21,162 - INFO - prompt构建成功，长度: 3959
+[2026-04-15 14:01:21] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 14:01:21,162 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 14:01:21,196 - INFO - === LLM API 请求详情 ===
+2026-04-15 14:01:21,196 - INFO - 模型: Qwen3-32B
+2026-04-15 14:01:21,196 - INFO - 消息: [{'role': 'user', 'content': 'string'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\n### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库\n### 3.2 中间主区域（聊天对话区）\n#### 欢迎语\n首次进入或清空对话后，页面显示：\n> "👋 欢迎使用RAG对话助手"\n> "🌿 很高兴在此与你相遇，愿我们一同在知识的枝叶间，探寻微光与辽阔。"\n#### 提问方式\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n- 系统每 2 秒轮询一次任务状态，最多等待约 20000 秒（进度条会循环走动）\n- 更新成功后会自动刷新页面\n### 5.2 价格图表展示\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如："混凝土的单价是多少？"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示"不建议进行数据分析和价格推荐"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如"信息价"、"厂商报价"），系统会提示"请提供查询渠道关键词"。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n</Documents>\n\n用户问题：string\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-15 14:01:21,196 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-15 14:01:21,196 - INFO - ========================
+2026-04-15 14:01:21,217 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-15 14:01:23] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:01:23,936 - INFO - openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:01:23,937 - INFO - LLM stream_predict 完成，共收到 49 个 chunk
+2026-04-15 14:01:23,937 - INFO - 流式查询完成
+method: bm25
+INFO:     116.147.250.80:52321 - "GET /api/v1/query/dialogue/54ba66b2-60d HTTP/1.1" 410 Gone
+INFO:     116.147.250.80:52328 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-15 14:21:10,523 - INFO - === 开始流式查询，问题: string, 会话: 54ba66b2-60d, force_new: False
+[2026-04-15 14:21:10] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+2026-04-15 14:21:10,523 - WARNING - 查询重写器未初始化，退回到单轮查询
+[2026-04-15 14:21:10] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+2026-04-15 14:21:10,528 - INFO - 检索完成，返回 20 个文档
+2026-04-15 14:21:13,869 - INFO - Reranked 20 docs, returning top 10. Best score: 1.4023
+[2026-04-15 14:21:13] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+2026-04-15 14:21:13,935 - INFO - rerank 完成，返回 10 个文档
+[2026-04-15 14:21:13] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-15 14:21:13,936 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 14:21:13] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3514
+2026-04-15 14:21:13,936 - INFO - 上下文构建成功，长度: 3514
+[2026-04-15 14:21:13] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:21:13,936 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:21:13,936 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-15 14:21:13,936 - INFO - 上下文文本长度: 3514 字符
+2026-04-15 14:21:13,936 - INFO - 开始调用 LLM stream_predict...
+[2026-04-15 14:21:13] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3514, query: string
+2026-04-15 14:21:13,936 - INFO - stream_predict 开始，context长度: 3514, query: string
+[2026-04-15 14:21:13] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3959
+2026-04-15 14:21:13,936 - INFO - prompt构建成功，长度: 3959
+[2026-04-15 14:21:13] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 4
+2026-04-15 14:21:13,936 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 4
+2026-04-15 14:21:13,963 - INFO - === LLM API 请求详情 ===
+2026-04-15 14:21:13,963 - INFO - 模型: Qwen3-32B
+2026-04-15 14:21:13,963 - INFO - 消息: [{'role': 'user', 'content': 'string'}, {'role': 'assistant', 'content': '提供的文档未涵盖此问题，以下回答基于我的训练知识：  \n您输入的问题为 "string"，这是一个字符串类型的数据表示，通常用于存储文本信息。如果您有更具体的问题或需要进一步解释，请提供更多上下文。'}, {'role': 'user', 'content': 'string'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\n### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库\n### 3.2 中间主区域（聊天对话区）\n#### 欢迎语\n首次进入或清空对话后，页面显示：\n> "👋 欢迎使用RAG对话助手"\n> "🌿 很高兴在此与你相遇，愿我们一同在知识的枝叶间，探寻微光与辽阔。"\n#### 提问方式\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n- 系统每 2 秒轮询一次任务状态，最多等待约 20000 秒（进度条会循环走动）\n- 更新成功后会自动刷新页面\n### 5.2 价格图表展示\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如："混凝土的单价是多少？"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示"不建议进行数据分析和价格推荐"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如"信息价"、"厂商报价"），系统会提示"请提供查询渠道关键词"。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n</Documents>\n\n用户问题：string\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-15 14:21:13,963 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-15 14:21:13,963 - INFO - ========================
+2026-04-15 14:21:13,982 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-15 14:21:16] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:21:16,765 - INFO - openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:21:16,766 - INFO - LLM stream_predict 完成，共收到 49 个 chunk
+2026-04-15 14:21:16,766 - INFO - 流式查询完成
+[2026-04-15 14:21:21] INFO     [conversation_manager.py:459] 创建新会话: 5adbe043-fb5 (类型: knowledge_qa)
+2026-04-15 14:21:21,506 - INFO - 创建新会话: 5adbe043-fb5 (类型: knowledge_qa)
+method: bm25
+INFO:     116.147.250.80:52328 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-15 14:21:21,507 - INFO - === 开始流式查询，问题: string, 会话: 5adbe043-fb5, force_new: False
+[2026-04-15 14:21:21] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+2026-04-15 14:21:21,507 - WARNING - 查询重写器未初始化，退回到单轮查询
+[2026-04-15 14:21:21] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+2026-04-15 14:21:21,513 - INFO - 检索完成，返回 20 个文档
+2026-04-15 14:21:24,729 - INFO - Reranked 20 docs, returning top 10. Best score: 1.4023
+[2026-04-15 14:21:24] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+2026-04-15 14:21:24,804 - INFO - rerank 完成，返回 10 个文档
+[2026-04-15 14:21:24] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-15 14:21:24,804 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 14:21:24] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3514
+2026-04-15 14:21:24,804 - INFO - 上下文构建成功，长度: 3514
+[2026-04-15 14:21:24] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:21:24,804 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-15 14:21:24,805 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-15 14:21:24,805 - INFO - 上下文文本长度: 3514 字符
+2026-04-15 14:21:24,805 - INFO - 开始调用 LLM stream_predict...
+[2026-04-15 14:21:24] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3514, query: string
+2026-04-15 14:21:24,805 - INFO - stream_predict 开始，context长度: 3514, query: string
+[2026-04-15 14:21:24] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3959
+2026-04-15 14:21:24,805 - INFO - prompt构建成功，长度: 3959
+[2026-04-15 14:21:24] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 14:21:24,805 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+2026-04-15 14:21:24,838 - INFO - === LLM API 请求详情 ===
+2026-04-15 14:21:24,838 - INFO - 模型: Qwen3-32B
+2026-04-15 14:21:24,838 - INFO - 消息: [{'role': 'user', 'content': 'string'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\n### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库\n### 3.2 中间主区域（聊天对话区）\n#### 欢迎语\n首次进入或清空对话后，页面显示：\n> "👋 欢迎使用RAG对话助手"\n> "🌿 很高兴在此与你相遇，愿我们一同在知识的枝叶间，探寻微光与辽阔。"\n#### 提问方式\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n- 系统每 2 秒轮询一次任务状态，最多等待约 20000 秒（进度条会循环走动）\n- 更新成功后会自动刷新页面\n### 5.2 价格图表展示\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n3. 后端检索向量数据库和 BM25 索引，获取相关文档片段\n4. 重排模型对文档进行精排序\n5. LLM 基于检索到的上下文生成流式回答\n6. 前端展示回答内容，并在底部列出参考文档\n### 4.2 价格推荐流程\n1. 用户输入问题（如："混凝土的单价是多少？"）\n2. 系统自动识别意图为 `price\\_recommendation`\n3. 后端调用价格查询 API（信息价 / 厂商报价 / 智诚信息价）\n4. 返回价格原始数据和分析结论\n5. 前端根据数据量判断是否渲染图表：\n- \\*\\*数据量充足\\*\\*（> 阈值）：展示「价格分布频数图」和「价格散点图」\n- \\*\\*数据量不足\\*\\*（≤ 阈值）：仅展示原始数据表格，并提示"不建议进行数据分析和价格推荐"\n> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如"信息价"、"厂商报价"），系统会提示"请提供查询渠道关键词"。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如"删除数据库"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如："索赔的定义是什么？"）\n2. 系统自动识别意图为 `knowledge\\_qa`\n</Documents>\n\n用户问题：string\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-15 14:21:24,838 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-15 14:21:24,838 - INFO - ========================
+2026-04-15 14:21:24,854 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-15 14:21:27] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:21:27,230 - INFO - openai_chat_by_api_as_astream 完成，共 49 个 chunk
+2026-04-15 14:21:27,231 - INFO - LLM stream_predict 完成，共收到 49 个 chunk
+2026-04-15 14:21:27,231 - INFO - 流式查询完成
+method: bm25
+INFO:     116.147.250.80:52329 - "GET /api/v1/query/dialogue/5adbe043-fb5 HTTP/1.1" 410 Gone
+INFO:     223.244.8.27:46588 - "GET /tools/other_ajax.ashx%3Faction%3Dsite_templet HTTP/1.1" 404 Not Found
+INFO:     223.244.8.27:56013 - "GET /Scripts/topic.js HTTP/1.1" 404 Not Found
+INFO:     223.244.8.24:59033 - "GET /tools/other_ajax.ashx%3Faction%3Dsite_templet HTTP/1.1" 404 Not Found
+INFO:     223.244.8.26:44009 - "GET /tools/other_ajax.ashx%3Faction%3Dsite_templet HTTP/1.1" 404 Not Found
+INFO:     223.244.8.24:32908 - "GET /Scripts/topic.js HTTP/1.1" 404 Not Found
+INFO:     223.244.8.26:55467 - "GET /Scripts/topic.js HTTP/1.1" 404 Not Found

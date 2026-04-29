@@ -232,23 +232,29 @@ class IncrementalRetriever(Retriever):
         
         logger.info(f"开始增量更新，变更情况: {changes}")
         
-        # 1. 处理删除的文件
-        for filename in changes.get("deleted", []):
+        # 1. 批量处理删除和修改旧版本，避免对每个文件都重建一次 BM25
+        files_to_remove = changes.get("deleted", []) + changes.get("modified", [])
+        file_chunk_map = {}
+        for filename in files_to_remove:
             chunk_ids = self.kb_manager.get_chunk_ids_by_file(filename)
-            if self.delete_documents(chunk_ids):
-                self.kb_manager.remove_file_record(filename)
-                stats["deleted"] += 1
+            if chunk_ids:
+                file_chunk_map[filename] = chunk_ids
+
+        if file_chunk_map:
+            delete_result = self.delete_documents_batch(file_chunk_map)
+            if delete_result["failed_files"] > 0:
+                failed_delete_files = set(file_chunk_map.keys())
+                stats["failed"].extend([f"delete:{filename}" for filename in failed_delete_files])
             else:
-                stats["failed"].append(f"delete:{filename}")
+                for filename in changes.get("deleted", []):
+                    self.kb_manager.remove_file_record(filename)
+                    stats["deleted"] += 1
+                for filename in changes.get("modified", []):
+                    self.kb_manager.remove_file_record(filename)
+        else:
+            logger.info("本次增量更新没有需要删除的旧chunks")
         
-        # 2. 处理修改的文件（先删除旧版本）
-        for filename in changes.get("modified", []):
-            old_chunk_ids = self.kb_manager.get_chunk_ids_by_file(filename)
-            if old_chunk_ids:
-                self.delete_documents(old_chunk_ids)
-            # 注意：修改的文件会在added逻辑中统一添加
-        
-        # 3. 处理新增和修改的文件（统一作为新增处理）
+        # 2. 处理新增和修改的文件（统一作为新增处理）
         files_to_add = changes.get("added", []) + changes.get("modified", [])
         
         for filename in files_to_add:
@@ -258,10 +264,6 @@ class IncrementalRetriever(Retriever):
                 chunks = reader.corpus
                 
                 if chunks:
-                    # 如果之前是修改的，先移除记录
-                    if filename in changes.get("modified", []):
-                        self.kb_manager.remove_file_record(filename)
-                    
                     if self.add_documents(chunks, filename):
                         if filename in changes.get("modified", []):
                             stats["modified"] += 1

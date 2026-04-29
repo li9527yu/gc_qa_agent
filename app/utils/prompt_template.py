@@ -119,13 +119,16 @@ Entity_Extract_TEMPLATE="""\
 输出: {{"materialName": "汽油", "materialModelSpec": "95号"}}
 
 用户输入: 查询上海的近三年的铝合金材料价格
-输出: {{"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}}
+输出: {{"materialName": "铝合金","city": "上海市", "startReleaseDate": "2022-01-01", "endReleaseDate": "2025-08-07"}}
 
 用户输入: 查询2024年的普通照明用自镇流LED灯的价格
-输出: {{"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}}
+输出: {{"materialName": "普通照明用自镇流LED灯", "startReleaseDate": "2024-01-01", "endReleaseDate": "2024-12-31"}}
 
 用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格
-输出: {{"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}}
+输出: {{"materialName": "普通照明用自镇流LED灯", "startReleaseDate": "2020-01-01", "endReleaseDate": "2024-12-31"}}
+
+用户输入: 查询一下2021年以后的白水泥信息价
+输出: {{"materialName": "白水泥", "channel": "information_price", "startReleaseDate": "2021-01-01"}}
 
 
 # 当前任务

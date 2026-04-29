@@ -545,7 +545,8 @@ async def query_stream(
         ConversationType.KNOWLEDGE_QA,
         request.force_new,
         request.question,
-        rag_service.llm
+        rag_service.llm,
+        user_id=1
     )
     
     if request.force_new:
@@ -555,8 +556,10 @@ async def query_stream(
         try:
             logging.info(f"=== 开始流式查询，问题: {request.question}, 会话: {session.session_id}, force_new: {request.force_new}")
             
-            # 添加用户消息到会话
-            session.add_message("user", request.question)
+            # 统一通过 save_message 更新内存和数据库，避免重复写入会话历史
+            await conversation_manager.save_message(
+                session.session_id, "user", request.question, user_id=1
+            )
             
             # 使用多轮查询处理（支持查询重写）
             result = await rag_service.process_multi_turn_query(
@@ -604,8 +607,10 @@ async def query_stream(
 
             yield "\n[END]\n"
             
-            # 保存助手回复到会话
-            session.add_message("assistant", full_text)
+            # 统一通过 save_message 更新内存和数据库，避免重复写入会话历史
+            await conversation_manager.save_message(
+                session.session_id, "assistant", full_text, user_id=1
+            )
 
             meta = {
                 "text": full_text,
@@ -672,7 +677,8 @@ async def query_price(
         request.force_new,
         new_question=request.question,
         llm_predictor=rag_service.llm,
-        extracted_entities=parsed_entities
+        extracted_entities=parsed_entities,
+        user_id=1
     )
     
     if request.force_new:
@@ -694,12 +700,15 @@ async def query_price(
             
             full_text = ""
             
-            # 添加用户消息（包含实体信息到metadata，用于后续话题切换检测）
-            session.add_message("user", request.question, metadata={
+            # 统一通过 save_message 更新内存和数据库，避免重复写入会话历史
+            user_metadata = {
                 "materialName": parsed_entities.get("materialName"),
                 "province": parsed_entities.get("province"),
                 "city": parsed_entities.get("city")
-            })
+            }
+            await conversation_manager.save_message(
+                session.session_id, "user", request.question, metadata=user_metadata, user_id=1
+            )
             
             # ========== 修改开始：智能渠道推断 ==========
             # 实体已在前文提取，直接使用即可
@@ -786,8 +795,10 @@ async def query_price(
                 
                 yield "\n[END]\n"
 
-                # 保存助手回复到会话
-                session.add_message("assistant", full_text)
+                # 统一通过 save_message 更新内存和数据库，避免重复写入会话历史
+                await conversation_manager.save_message(
+                    session.session_id, "assistant", full_text, user_id=1
+                )
                 
                 # 打印 LLM 性能统计（只有成功生成内容时才打印）
                 if first_token_time is not None and token_count > 0:

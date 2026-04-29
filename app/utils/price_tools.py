@@ -128,7 +128,8 @@ def analyze_prices(price_data: list) -> dict:
             confidence_interval = (mean_price - half, mean_price + half)
         else:
             confidence_interval = None
-        result_kmeans=recommend_price_mode(prices)
+        # 推荐价与区间、均值等指标保持同一统计口径，都基于过滤后的价格
+        result_kmeans = recommend_price_mode(filtered_prices)
         return {
             "total_count": len(price_data),     # 原始记录数
             "valid_count": int(n),              # 剔除异常值后有效价格个数

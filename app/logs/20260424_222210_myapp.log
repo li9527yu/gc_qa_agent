@@ -1,0 +1,843 @@
+nohup: ignoring input
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/tpc/suda/rag/env/miniconda3/envs/easy_rag/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-04-24 22:22:17,043 - INFO - 已加载知识库索引，共 4 个文件
+INFO:     Started server process [3718672]
+INFO:     Waiting for application startup.
+[2026-04-24 22:22:17] INFO     [api_server.py:37] 启动Easy-RAG API服务...
+2026-04-24 22:22:17,497 - INFO - 启动Easy-RAG API服务...
+[2026-04-24 22:22:17] INFO     [api_server.py:40] 初始化数据库...
+2026-04-24 22:22:17,497 - INFO - 初始化数据库...
+[2026-04-24 22:22:17] INFO     [api_server.py:48] 管理员账号初始化完成: id=1, username=admin
+2026-04-24 22:22:17,529 - INFO - 管理员账号初始化完成: id=1, username=admin
+[2026-04-24 22:22:17] INFO     [api_server.py:52] 自动清理了 2 个超过7天未活跃的会话
+2026-04-24 22:22:17,545 - INFO - 自动清理了 2 个超过7天未活跃的会话
+[2026-04-24 22:22:17] INFO     [api_server.py:56] ConversationManager数据库会话注入完成
+2026-04-24 22:22:17,545 - INFO - ConversationManager数据库会话注入完成
+[2026-04-24 22:22:17] INFO     [rag_service.py:139] 开始初始化RAG服务...
+2026-04-24 22:22:17,546 - INFO - 开始初始化RAG服务...
+2026-04-24 22:22:17,546 - INFO - 正在从缓存加载语料库...
+2026-04-24 22:22:17,576 - INFO - 已从缓存加载 1327 段文本
+2026-04-24 22:22:17,576 - INFO - 缓存验证通过
+[2026-04-24 22:22:17] INFO     [rag_service.py:150] 语料库加载完成，共1327个文档
+2026-04-24 22:22:17,577 - INFO - 语料库加载完成，共1327个文档
+[2026-04-24 22:22:17] INFO     [rag_service.py:164] 语料库未发生变化，使用现有缓存
+2026-04-24 22:22:17,589 - INFO - 语料库未发生变化，使用现有缓存
+[2026-04-24 22:22:17] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+2026-04-24 22:22:17,659 - INFO - 🤖 初始化 LLM 客户端
+[2026-04-24 22:22:17] INFO     [llm_deepseek.py:91]    模式: local
+2026-04-24 22:22:17,659 - INFO -    模式: local
+[2026-04-24 22:22:17] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+2026-04-24 22:22:17,659 - INFO -    Base URL: http://localhost:9839/v1
+[2026-04-24 22:22:17] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+2026-04-24 22:22:17,659 - INFO -    Model: Qwen3-32B
+[2026-04-24 22:22:17] INFO     [rag_service.py:172] LLM初始化完成
+2026-04-24 22:22:17,659 - INFO - LLM初始化完成
+[2026-04-24 22:22:17] INFO     [rag_service.py:339] 价格推荐模板加载成功
+2026-04-24 22:22:17,659 - INFO - 价格推荐模板加载成功
+[2026-04-24 22:22:17] INFO     [rag_service.py:177] 价格推荐模板初始化完成
+2026-04-24 22:22:17,659 - INFO - 价格推荐模板初始化完成
+[2026-04-24 22:22:17] INFO     [rag_service.py:181] 语料库未变化，但Retriever未初始化，正在加载...
+2026-04-24 22:22:17,659 - INFO - 语料库未变化，但Retriever未初始化，正在加载...
+2026-04-24 22:22:18,462 - INFO - Use pytorch device_name: cuda:0
+2026-04-24 22:22:18,463 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-24 22:22:20,158 - INFO - 1 prompt is loaded, with the key: query
+2026-04-24 22:22:20,316 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-24 22:22:20,338 - INFO - Use pytorch device_name: cuda:0
+2026-04-24 22:22:20,338 - INFO - Load pretrained SentenceTransformer: /home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B
+2026-04-24 22:22:21,650 - INFO - 1 prompt is loaded, with the key: query
+2026-04-24 22:22:21,682 - INFO - Successfully loaded SentenceTransformer embedding model on cuda:1
+2026-04-24 22:22:21,682 - INFO - Rebuilding vector database...
+2026-04-24 22:22:21,682 - INFO - 发现缓存文件 tokenized_docs.pkl，正在加载...
+2026-04-24 22:22:21,720 - INFO - 语料库未变化，直接加载现有向量数据库...
+[2026-04-24 22:22:21] INFO     [rag_service.py:227] Retriever加载完成
+2026-04-24 22:22:21,765 - INFO - Retriever加载完成
+[2026-04-24 22:22:21] INFO     [rag_service.py:231] 语料库未变化，但Reranker未初始化，正在加载...
+2026-04-24 22:22:21,766 - INFO - 语料库未变化，但Reranker未初始化，正在加载...
+2026-04-24 22:22:21,766 - INFO - Loading Qwen3 Reranker from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-24 22:22:21,768 - INFO - Loading Qwen3-Reranker model from /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B
+2026-04-24 22:22:21,768 - INFO - Configuration: device=cpu, max_length=32768, fp16=True
+2026-04-24 22:22:21,768 - INFO - Instruction: Given a query and a passage, determine whether the...
+2026-04-24 22:22:22,283 - INFO - Using existing pad_token: <|endoftext|>
+Some weights of Qwen3ForSequenceClassification were not initialized from the model checkpoint at /home/tpc/suda/rag/easy-rag/models/Qwen3-Reranker-0.6B and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-04-24 22:22:22,713 - INFO - Set model.config.pad_token_id to: 151643
+2026-04-24 22:22:22,717 - INFO - Qwen3-Reranker model loaded successfully
+2026-04-24 22:22:22,718 - INFO - Qwen3 Reranker loaded successfully
+[2026-04-24 22:22:22] INFO     [rag_service.py:237] Reranker加载完成
+2026-04-24 22:22:22,718 - INFO - Reranker加载完成
+[2026-04-24 22:22:22] INFO     [mcp_endpoints.py:409] MCP端点初始化完成
+2026-04-24 22:22:22,723 - INFO - MCP端点初始化完成
+[2026-04-24 22:22:22] INFO     [api_server.py:73] MCP和Agent服务初始化完成
+2026-04-24 22:22:22,723 - INFO - MCP和Agent服务初始化完成
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     116.147.251.100:53265 - "GET /docs HTTP/1.1" 200 OK
+INFO:     116.147.251.100:61856 - "GET /docs HTTP/1.1" 200 OK
+INFO:     116.147.251.100:61856 - "GET /docs HTTP/1.1" 200 OK
+INFO:     116.147.251.100:61857 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     116.147.251.100:53266 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 422 Unprocessable Entity
+INFO:     116.147.251.100:53267 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 422 Unprocessable Entity
+[2026-04-24 22:23:41] INFO     [conversation_manager.py:516] 创建新会话: 425b0185-bd3 (类型: price_query, 用户: 1)
+2026-04-24 22:23:41,883 - INFO - 创建新会话: 425b0185-bd3 (类型: price_query, 用户: 1)
+INFO:     116.147.251.100:53268 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 22:23:41] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] request.start | session_id="425b0185-bd3", turn=1, user_message="查一下深圳天加空调器信息价", entities={}
+2026-04-24 22:23:41,925 - INFO - [Agent Trace][425b0185-bd3-t1] request.start | session_id="425b0185-bd3", turn=1, user_message="查一下深圳天加空调器信息价", entities={}
+[2026-04-24 22:23:41] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+2026-04-24 22:23:41,926 - INFO - [Agent Trace][425b0185-bd3-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+2026-04-24 22:23:43,922 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:23:43] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] react.step.llm_response | step=1, duration_ms=2021, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:23:43,948 - INFO - [Agent Trace][425b0185-bd3-t1] react.step.llm_response | step=1, duration_ms=2021, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:23:43] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:23:43,948 - INFO - [Agent Trace][425b0185-bd3-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:23:43,950 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 22:23:45,342 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:23:45] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:45,344 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:23:45] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1396, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:45,345 - INFO - [Agent Trace][425b0185-bd3-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1396, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:23:45] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:45,345 - INFO - [Agent Trace][425b0185-bd3-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:47,410 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:23:47] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] react.step.llm_response | step=2, duration_ms=2066, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:23:47,412 - INFO - [Agent Trace][425b0185-bd3-t1] react.step.llm_response | step=2, duration_ms=2066, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:23:47] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:23:47,413 - INFO - [Agent Trace][425b0185-bd3-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:23:47] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=425b0185-bd3-t1, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 22:23:47,413 - INFO - [MCP Tool] query_price_data start: trace_id=425b0185-bd3-t1, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 22:23:47,413 - INFO - [Price Trace][425b0185-bd3-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.quick_check.start | channel="information_price"
+2026-04-24 22:23:47,413 - INFO - [Price Trace][425b0185-bd3-t1] phase.quick_check.start | channel="information_price"
+[2026-04-24 22:23:47] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:23:47,414 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:23:47] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:23:47,414 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:23:47] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:23:47,682 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:23:47] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:23:47,682 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 22:23:47,683 - INFO - [Price Trace][425b0185-bd3-t1] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.quick_check.end | total_count=25, duration_ms=270
+2026-04-24 22:23:47,684 - INFO - [Price Trace][425b0185-bd3-t1] phase.quick_check.end | total_count=25, duration_ms=270
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 22:23:47,684 - INFO - [Price Trace][425b0185-bd3-t1] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.query_data.start | channel="information_price"
+2026-04-24 22:23:47,684 - INFO - [Price Trace][425b0185-bd3-t1] phase.query_data.start | channel="information_price"
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:23:47,684 - INFO - [Price Trace][425b0185-bd3-t1] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:23:47] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:23:47,685 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:23:47] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:23:47,685 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:23:47] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:23:47,830 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:23:47] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:23:47,830 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] api.query.success | channel="information_price", total_count=25, duration_ms=146
+2026-04-24 22:23:47,831 - INFO - [Price Trace][425b0185-bd3-t1] api.query.success | channel="information_price", total_count=25, duration_ms=146
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.query_data.end | success=true, total_count=25, duration_ms=146
+2026-04-24 22:23:47,831 - INFO - [Price Trace][425b0185-bd3-t1] phase.query_data.end | success=true, total_count=25, duration_ms=146
+[2026-04-24 22:23:47] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.filter.end | original_count=25, filtered_count=16, duration_ms=9
+2026-04-24 22:23:47,840 - INFO - [Price Trace][425b0185-bd3-t1] phase.filter.end | original_count=25, filtered_count=16, duration_ms=9
+[2026-04-24 22:23:48] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=171
+2026-04-24 22:23:48,012 - INFO - [Price Trace][425b0185-bd3-t1] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=171
+[2026-04-24 22:23:48] INFO     [rag_service.py:124] [Price Trace][425b0185-bd3-t1] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=600, analysis_time_ms=172, total_time_ms=600, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 22:23:48,014 - INFO - [Price Trace][425b0185-bd3-t1] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=600, analysis_time_ms=172, total_time_ms=600, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 22:23:48] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=602, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "425b0185-bd3-t1", "duration_ms": 601}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:48,015 - INFO - [Agent Trace][425b0185-bd3-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=602, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "425b0185-bd3-t1", "duration_ms": 601}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:23:48] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:48,018 - INFO - [Agent Trace][425b0185-bd3-t1] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:23:48,063 - INFO - === LLM API 请求详情 ===
+2026-04-24 22:23:48,064 - INFO - 模型: Qwen3-32B
+2026-04-24 22:23:48,064 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 22:23:48,064 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 22:23:48,064 - INFO - ========================
+2026-04-24 22:23:48,078 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:24:21] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] report.end | duration_ms=33182, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 22:24:21,200 - INFO - [Agent Trace][425b0185-bd3-t1] report.end | duration_ms=33182, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 22:24:21] INFO     [agent.py:272] [Agent Trace][425b0185-bd3-t1] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35855
+2026-04-24 22:24:21,200 - INFO - [Agent Trace][425b0185-bd3-t1] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35855
+INFO:     116.147.251.100:61858 - "GET /api/v1/conversations/425b0185-bd3/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54482 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54484 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54498 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48694 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48696 - "GET /api/v1/conversations/425b0185-bd3/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48710 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54502 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54514 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54522 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54524 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54528 - "GET /api/v1/conversations/425b0185-bd3/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54534 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54546 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54550 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54566 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54578 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+[2026-04-24 22:58:06] INFO     [conversation_manager.py:516] 创建新会话: f1a829bb-a93 (类型: knowledge_qa, 用户: 1)
+2026-04-24 22:58:06,608 - INFO - 创建新会话: f1a829bb-a93 (类型: knowledge_qa, 用户: 1)
+INFO:     127.0.0.1:54594 - "POST /api/v1/query/stream HTTP/1.1" 200 OK
+2026-04-24 22:58:06,609 - INFO - === 开始流式查询，问题: 查一下深圳天加空调器信息价, 会话: f1a829bb-a93, force_new: False
+[2026-04-24 22:58:06] WARNING  [rag_service.py:1767] 查询重写器未初始化，退回到单轮查询
+2026-04-24 22:58:06,626 - WARNING - 查询重写器未初始化，退回到单轮查询
+Building prefix dict from the default dictionary ...
+2026-04-24 22:58:06,627 - DEBUG - Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+2026-04-24 22:58:06,627 - DEBUG - Loading model from cache /tmp/jieba.cache
+Loading model cost 0.828 seconds.
+2026-04-24 22:58:07,455 - DEBUG - Loading model cost 0.828 seconds.
+Prefix dict has been built successfully.
+2026-04-24 22:58:07,456 - DEBUG - Prefix dict has been built successfully.
+[2026-04-24 22:58:07] INFO     [rag_service.py:1653] 检索完成，返回 20 个文档
+2026-04-24 22:58:07,461 - INFO - 检索完成，返回 20 个文档
+2026-04-24 22:58:17,570 - INFO - Reranked 20 docs, returning top 10. Best score: 4.6024
+[2026-04-24 22:58:17] INFO     [rag_service.py:1667] rerank 完成，返回 10 个文档
+2026-04-24 22:58:17,677 - INFO - rerank 完成，返回 10 个文档
+[2026-04-24 22:58:17] INFO     [rag_service.py:1672] 开始构建上下文，rerank_res 类型: <class 'list'>
+2026-04-24 22:58:17,678 - INFO - 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-24 22:58:17] INFO     [rag_service.py:1675] 上下文构建成功，长度: 3982
+2026-04-24 22:58:17,678 - INFO - 上下文构建成功，长度: 3982
+[2026-04-24 22:58:17] INFO     [rag_service.py:1686] process_single_query 即将返回结果，contexts数量: 10
+2026-04-24 22:58:17,678 - INFO - process_single_query 即将返回结果，contexts数量: 10
+2026-04-24 22:58:17,678 - INFO - process_multi_turn_query 返回结果: success=True, num_contexts=10
+2026-04-24 22:58:17,678 - INFO - 上下文文本长度: 3982 字符
+2026-04-24 22:58:17,678 - INFO - 开始调用 LLM stream_predict...
+[2026-04-24 22:58:17] INFO     [llm_deepseek.py:273] stream_predict 开始，context长度: 3982, query: 查一下深圳天加空调器信息价
+2026-04-24 22:58:17,679 - INFO - stream_predict 开始，context长度: 3982, query: 查一下深圳天加空调器信息价
+[2026-04-24 22:58:17] INFO     [llm_deepseek.py:282] prompt构建成功，长度: 4434
+2026-04-24 22:58:17,679 - INFO - prompt构建成功，长度: 4434
+[2026-04-24 22:58:17] INFO     [llm_deepseek.py:289] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+2026-04-24 22:58:17,679 - INFO - 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+2026-04-24 22:58:17,724 - INFO - === LLM API 请求详情 ===
+2026-04-24 22:58:17,724 - INFO - 模型: Qwen3-32B
+2026-04-24 22:58:17,725 - INFO - 消息: [{'role': 'user', 'content': '查一下深圳天加空调器信息价'}, {'role': 'user', 'content': '查一下深圳天加空调器信息价'}, {'role': 'user', 'content': '你是一个智能助手。回答用户问题时，请遵循以下优先级策略：\n\n【回答策略】\n1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。\n2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："\n3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"\n \n\n【格式要求】\n- 所有回答使用中文\n- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断\n\n<Documents>\nsity of electricity suppliedby a national grid� There are also databases that compile comparable carbon emissions data fromconstruction products and/or construction projects and constructed assets�Reporting carbon emissions alongside life cycle costsCarbon\n# Easy-RAG 用户操作说明书\n> 适用版本：智诚大模型对话系统（Streamlit 前端 + Easy-RAG 后端）\n> 服务地址：`http://localhost:8001`\n> 前端入口：`/home/tpc/suda/rag/h\\_rag/server/web\\_app.py`\n---\n## 一、系统简介\n本系统是一款面向\\*\\*工程造价领域\\*\\*的智能问答助手，基于 RAG（检索增强生成）技术构建。用户可通过自然语言进行两类核心交互：\n1. \\*\\*知识问答\\*\\*：基于上传的文档语料库回答专业问题\n2. \\*\\*价格推荐\\*\\*：查询材料的市场信息价、厂商报价、智诚信息价\n系统会自动识别用户意图，并调用相应的后端服务进行流式回答。\n---\n## 二、环境准备与启动\n### 2.1 启动后端服务\n在启动前端之前，请确保以下服务已正常运行：\n```bash\n# 1. 启动 Milvus 向量数据库\ncd /home/tpc/suda/rag/easy-rag\ndocker-compose up -d\n```bash\n# 1. 启动 Milvus 向量数据库\n│ │ │\n│ ▼ │\n│ ┌─────────────────────────────────────────┐ │\n│ │ 实体完整: {materialName: "钢筋", │ │\n│ │ province: "广东省", │\n│ │ province: "广东省", │\n│ │ city: "深圳市"} │ │\n│ │ 状态: READY │ │\n│ │ 回复: "信息已收集完整！正在查询..." │ │\n│ │ 触发: process\\_price\\_recommendation() │ │\n│ └─────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────┘ │\n│ │\n│ 接口方法: │\n│ • process\\_dialogue\\_query() - 处理用户输入 │\n│ • execute\\_dialogue\\_query() - 执行已收集条件的查询 │\n│ • get\\_dialogue\\_session() - 获取会话状态 │\n│ │ manufacturer\\_price/unknown │ │\n│ │ │ │\n│ │ 2. 如果 LLM 返回 unknown ──▶ 启用智能渠道推断器 │ │\n│ │ 2. 如果 LLM 返回 unknown ──▶ 启用智能渠道推断器 │ │\n│ │ • 基于关键词权重匹配 (信息价/厂商报价/智诚) │ │\n│ │ • 基于实体特征推断 (品牌存在→厂商报价) │ │\n│ │ • 置信度计算 (0-1) │ │\n│ │ │ │\n│ │ 返回: (ChannelType, InferenceResult) │ │\n│ │ 返回: (ChannelType, InferenceResult) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 2: 实体抽取 (extract\\_entities) │\n│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n\\*\\*A\\*\\*: 价格查询需要明确渠道，请在问题中加入"信息价"、"厂商报价"或"智诚信息价"等关键词。\n### Q5: 如何清空对话历史？\n\\*\\*A\\*\\*: 当前版本未提供一键清空按钮，可通过刷新浏览器页面来重置对话（文件和知识库状态不受影响）。\n---\n## 八、相关文件位置\n## 八、相关文件位置\n│ │\n│ 渐进式补全流程示例: │\n│ ══════════════════ │\n│ ══════════════════ │\n│ │\n│ 用户: "查一下钢筋价格" │\n│ │ │\n│ ▼ │\n│ ┌─────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────┐ │\n│ │ 识别实体: {materialName: "钢筋"} │ │\n│ │ 缺失字段: [province, city] │ │\n│ │ 状态: COLLECTING │ │\n│ │ 回复: "请问是哪个省份的材料？(如：广东省)" │ │\n│ └─────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────┘ │\n│ │ │\n│ ▼ │\n│ 用户: "广东省的" │\n│ │ │\n│ ▼ │\n│ ▼ │\nwhole life carbon assessment is provided in a growing body of publicationscovering different jurisdictions and different project types� One example that addresses both buildingsand infrastructure projects is the RICS professional statement Whole life carb\n│ │\n│ 关键字段优先级: │\n│ ┌────┬─────────────────┬────────────┐ │\n│ │ 优先级 │ 字段 │ 是否必填 │ │\n│ │ 优先级 │ 字段 │ 是否必填 │ │\n│ ├────┼─────────────────┼────────────┤ │\n│ │ 1 │ materialName │ ✓ 必填 │ │\n│ │ 2 │ province │ 可选 │ │\n│ │ 3 │ city │ 可选 │ │\n│ │ 4 │ materialModelSpec│ 可选 │ │\n│ │ 4 │ materialModelSpec│ 可选 │ │\n│ │ 5 │ brand │ 可选 │ │\n│ └────┴─────────────────┴────────────┘ │\n│ │\n│ 渐进式补全流程示例: │\n│ ══════════════════ │\n│ ══════════════════ │\n│ │\n│ 用户: "查一下钢筋价格" │\n│ │ │\n│ ▼ │\n</Documents>\n\n用户问题：查一下深圳天加空调器信息价\n\n请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。'}]
+2026-04-24 22:58:17,725 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 22:58:17,725 - INFO - ========================
+2026-04-24 22:58:17,754 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:58:19] INFO     [llm_deepseek.py:300] openai_chat_by_api_as_astream 完成，共 28 个 chunk
+2026-04-24 22:58:19,475 - INFO - openai_chat_by_api_as_astream 完成，共 28 个 chunk
+2026-04-24 22:58:19,475 - INFO - LLM stream_predict 完成，共收到 28 个 chunk
+2026-04-24 22:58:19,510 - INFO - 流式查询完成
+method: bm25
+INFO:     127.0.0.1:37162 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56242 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56248 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56262 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56270 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56280 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56288 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56302 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56308 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 22:58:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] request.start | session_id="f1a829bb-a93", turn=1, user_message="查一下深圳天加空调器信息价", entities={}
+2026-04-24 22:58:25,022 - INFO - [Agent Trace][f1a829bb-a93-t1] request.start | session_id="f1a829bb-a93", turn=1, user_message="查一下深圳天加空调器信息价", entities={}
+[2026-04-24 22:58:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+2026-04-24 22:58:25,023 - INFO - [Agent Trace][f1a829bb-a93-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+2026-04-24 22:58:26,395 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:58:26] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] react.step.llm_response | step=1, duration_ms=1373, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:58:26,397 - INFO - [Agent Trace][f1a829bb-a93-t1] react.step.llm_response | step=1, duration_ms=1373, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:58:26] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:58:26,397 - INFO - [Agent Trace][f1a829bb-a93-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:58:26,398 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 22:58:27,787 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:58:27] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:27,788 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:58:27] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1391, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:27,789 - INFO - [Agent Trace][f1a829bb-a93-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1391, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:58:27] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:27,790 - INFO - [Agent Trace][f1a829bb-a93-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:29,852 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:58:29] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] react.step.llm_response | step=2, duration_ms=2064, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:58:29,854 - INFO - [Agent Trace][f1a829bb-a93-t1] react.step.llm_response | step=2, duration_ms=2064, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:58:29] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:58:29,855 - INFO - [Agent Trace][f1a829bb-a93-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:58:29] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t1, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 22:58:29,855 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t1, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 22:58:29] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 22:58:29,856 - INFO - [Price Trace][f1a829bb-a93-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 22:58:29] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.quick_check.start | channel="information_price"
+2026-04-24 22:58:29,856 - INFO - [Price Trace][f1a829bb-a93-t1] phase.quick_check.start | channel="information_price"
+[2026-04-24 22:58:29] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:58:29,856 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:58:29] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:58:29,857 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:58:30] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:58:30,082 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:58:30] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:58:30,083 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 22:58:30,084 - INFO - [Price Trace][f1a829bb-a93-t1] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.quick_check.end | total_count=25, duration_ms=228
+2026-04-24 22:58:30,084 - INFO - [Price Trace][f1a829bb-a93-t1] phase.quick_check.end | total_count=25, duration_ms=228
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 22:58:30,085 - INFO - [Price Trace][f1a829bb-a93-t1] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.query_data.start | channel="information_price"
+2026-04-24 22:58:30,085 - INFO - [Price Trace][f1a829bb-a93-t1] phase.query_data.start | channel="information_price"
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:58:30,085 - INFO - [Price Trace][f1a829bb-a93-t1] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:58:30] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:58:30,085 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:58:30] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:58:30,086 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:58:30] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:58:30,217 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:58:30] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:58:30,217 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] api.query.success | channel="information_price", total_count=25, duration_ms=132
+2026-04-24 22:58:30,218 - INFO - [Price Trace][f1a829bb-a93-t1] api.query.success | channel="information_price", total_count=25, duration_ms=132
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.query_data.end | success=true, total_count=25, duration_ms=133
+2026-04-24 22:58:30,218 - INFO - [Price Trace][f1a829bb-a93-t1] phase.query_data.end | success=true, total_count=25, duration_ms=133
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.filter.end | original_count=25, filtered_count=16, duration_ms=10
+2026-04-24 22:58:30,229 - INFO - [Price Trace][f1a829bb-a93-t1] phase.filter.end | original_count=25, filtered_count=16, duration_ms=10
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=33
+2026-04-24 22:58:30,263 - INFO - [Price Trace][f1a829bb-a93-t1] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=33
+[2026-04-24 22:58:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t1] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=408, analysis_time_ms=34, total_time_ms=408, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 22:58:30,265 - INFO - [Price Trace][f1a829bb-a93-t1] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=408, analysis_time_ms=34, total_time_ms=408, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 22:58:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=411, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t1", "duration_ms": 410}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:30,266 - INFO - [Agent Trace][f1a829bb-a93-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=411, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t1", "duration_ms": 410}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:58:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:30,270 - INFO - [Agent Trace][f1a829bb-a93-t1] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:58:30,325 - INFO - === LLM API 请求详情 ===
+2026-04-24 22:58:30,325 - INFO - 模型: Qwen3-32B
+2026-04-24 22:58:30,326 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 22:58:30,326 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 22:58:30,326 - INFO - ========================
+2026-04-24 22:58:30,341 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:59:03] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] report.end | duration_ms=33211, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 22:59:03,481 - INFO - [Agent Trace][f1a829bb-a93-t1] report.end | duration_ms=33211, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 22:59:03] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t1] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35692
+2026-04-24 22:59:03,482 - INFO - [Agent Trace][f1a829bb-a93-t1] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35692
+INFO:     127.0.0.1:37194 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37200 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51480 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51496 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49108 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49118 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49126 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49142 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 22:59:22] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] request.start | session_id="f1a829bb-a93", turn=2, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:22,343 - INFO - [Agent Trace][f1a829bb-a93-t2] request.start | session_id="f1a829bb-a93", turn=2, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:59:22] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:22,344 - INFO - [Agent Trace][f1a829bb-a93-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:24,309 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:59:24] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] react.step.llm_response | step=1, duration_ms=1966, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:59:24,311 - INFO - [Agent Trace][f1a829bb-a93-t2] react.step.llm_response | step=1, duration_ms=1966, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:59:24] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:59:24,311 - INFO - [Agent Trace][f1a829bb-a93-t2] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 22:59:24,312 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 22:59:25,703 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:59:25] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:25,705 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:59:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] tool.call.end | step=1, tool="extract_entities", duration_ms=1394, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:25,706 - INFO - [Agent Trace][f1a829bb-a93-t2] tool.call.end | step=1, tool="extract_entities", duration_ms=1394, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:59:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:25,706 - INFO - [Agent Trace][f1a829bb-a93-t2] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:28,388 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 22:59:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] react.step.llm_response | step=2, duration_ms=2683, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 22:59:28,390 - INFO - [Agent Trace][f1a829bb-a93-t2] react.step.llm_response | step=2, duration_ms=2683, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 22:59:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:59:28,390 - INFO - [Agent Trace][f1a829bb-a93-t2] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:59:28] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t2, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 22:59:28,391 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t2, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 22:59:28,391 - INFO - [Price Trace][f1a829bb-a93-t2] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.quick_check.start | channel="information_price"
+2026-04-24 22:59:28,391 - INFO - [Price Trace][f1a829bb-a93-t2] phase.quick_check.start | channel="information_price"
+[2026-04-24 22:59:28] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:59:28,392 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:59:28] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:59:28,392 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:59:28] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:59:28,536 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:59:28] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:59:28,537 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 22:59:28,537 - INFO - [Price Trace][f1a829bb-a93-t2] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.quick_check.end | total_count=25, duration_ms=146
+2026-04-24 22:59:28,537 - INFO - [Price Trace][f1a829bb-a93-t2] phase.quick_check.end | total_count=25, duration_ms=146
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 22:59:28,538 - INFO - [Price Trace][f1a829bb-a93-t2] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.query_data.start | channel="information_price"
+2026-04-24 22:59:28,538 - INFO - [Price Trace][f1a829bb-a93-t2] phase.query_data.start | channel="information_price"
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 22:59:28,538 - INFO - [Price Trace][f1a829bb-a93-t2] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 22:59:28] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 22:59:28,538 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 22:59:28] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 22:59:28,539 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 22:59:28] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 22:59:28,677 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 22:59:28] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 22:59:28,677 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] api.query.success | channel="information_price", total_count=25, duration_ms=139
+2026-04-24 22:59:28,678 - INFO - [Price Trace][f1a829bb-a93-t2] api.query.success | channel="information_price", total_count=25, duration_ms=139
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.query_data.end | success=true, total_count=25, duration_ms=140
+2026-04-24 22:59:28,678 - INFO - [Price Trace][f1a829bb-a93-t2] phase.query_data.end | success=true, total_count=25, duration_ms=140
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.filter.end | original_count=25, filtered_count=16, duration_ms=7
+2026-04-24 22:59:28,685 - INFO - [Price Trace][f1a829bb-a93-t2] phase.filter.end | original_count=25, filtered_count=16, duration_ms=7
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=29
+2026-04-24 22:59:28,716 - INFO - [Price Trace][f1a829bb-a93-t2] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=29
+[2026-04-24 22:59:28] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t2] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=326, analysis_time_ms=31, total_time_ms=326, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 22:59:28,718 - INFO - [Price Trace][f1a829bb-a93-t2] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=326, analysis_time_ms=31, total_time_ms=326, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 22:59:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] tool.call.end | step=2, tool="query_price_data", duration_ms=328, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t2", "duration_ms": 327}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:28,719 - INFO - [Agent Trace][f1a829bb-a93-t2] tool.call.end | step=2, tool="query_price_data", duration_ms=328, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t2", "duration_ms": 327}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 22:59:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:28,722 - INFO - [Agent Trace][f1a829bb-a93-t2] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 22:59:28,780 - INFO - === LLM API 请求详情 ===
+2026-04-24 22:59:28,780 - INFO - 模型: Qwen3-32B
+2026-04-24 22:59:28,780 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 22:59:28,780 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 22:59:28,780 - INFO - ========================
+2026-04-24 22:59:28,794 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:00:01] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] report.end | duration_ms=33193, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 23:00:01,916 - INFO - [Agent Trace][f1a829bb-a93-t2] report.end | duration_ms=33193, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 23:00:01] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t2] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=36210
+2026-04-24 23:00:01,917 - INFO - [Agent Trace][f1a829bb-a93-t2] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=36210
+INFO:     127.0.0.1:52800 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52812 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49938 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49950 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49954 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49968 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49978 - "GET /api/v1/conversations/f1a829bb-a93/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49980 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40182 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40190 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40202 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40208 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40212 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:04:53] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] request.start | session_id="f1a829bb-a93", turn=3, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:53,518 - INFO - [Agent Trace][f1a829bb-a93-t3] request.start | session_id="f1a829bb-a93", turn=3, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:04:53] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:53,519 - INFO - [Agent Trace][f1a829bb-a93-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:55,685 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:04:55] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] react.step.llm_response | step=1, duration_ms=2169, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:04:55,689 - INFO - [Agent Trace][f1a829bb-a93-t3] react.step.llm_response | step=1, duration_ms=2169, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:04:55] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:04:55,690 - INFO - [Agent Trace][f1a829bb-a93-t3] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:04:55,692 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 23:04:57,079 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:04:57] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:57,081 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:04:57] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] tool.call.end | step=1, tool="extract_entities", duration_ms=1392, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:57,082 - INFO - [Agent Trace][f1a829bb-a93-t3] tool.call.end | step=1, tool="extract_entities", duration_ms=1392, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:04:57] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:57,083 - INFO - [Agent Trace][f1a829bb-a93-t3] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:59,205 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:04:59] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] react.step.llm_response | step=2, duration_ms=2123, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:04:59,207 - INFO - [Agent Trace][f1a829bb-a93-t3] react.step.llm_response | step=2, duration_ms=2123, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:04:59] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:04:59,207 - INFO - [Agent Trace][f1a829bb-a93-t3] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:04:59] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t3, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 23:04:59,208 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t3, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 23:04:59,208 - INFO - [Price Trace][f1a829bb-a93-t3] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.quick_check.start | channel="information_price"
+2026-04-24 23:04:59,208 - INFO - [Price Trace][f1a829bb-a93-t3] phase.quick_check.start | channel="information_price"
+[2026-04-24 23:04:59] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:04:59,209 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:04:59] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:04:59,210 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:04:59] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:04:59,358 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:04:59] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:04:59,358 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 23:04:59,359 - INFO - [Price Trace][f1a829bb-a93-t3] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.quick_check.end | total_count=25, duration_ms=150
+2026-04-24 23:04:59,359 - INFO - [Price Trace][f1a829bb-a93-t3] phase.quick_check.end | total_count=25, duration_ms=150
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 23:04:59,359 - INFO - [Price Trace][f1a829bb-a93-t3] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.query_data.start | channel="information_price"
+2026-04-24 23:04:59,360 - INFO - [Price Trace][f1a829bb-a93-t3] phase.query_data.start | channel="information_price"
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:04:59,360 - INFO - [Price Trace][f1a829bb-a93-t3] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:04:59] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:04:59,360 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:04:59] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:04:59,361 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:04:59] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:04:59,490 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:04:59] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:04:59,490 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] api.query.success | channel="information_price", total_count=25, duration_ms=130
+2026-04-24 23:04:59,491 - INFO - [Price Trace][f1a829bb-a93-t3] api.query.success | channel="information_price", total_count=25, duration_ms=130
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.query_data.end | success=true, total_count=25, duration_ms=131
+2026-04-24 23:04:59,491 - INFO - [Price Trace][f1a829bb-a93-t3] phase.query_data.end | success=true, total_count=25, duration_ms=131
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.filter.end | original_count=25, filtered_count=16, duration_ms=9
+2026-04-24 23:04:59,501 - INFO - [Price Trace][f1a829bb-a93-t3] phase.filter.end | original_count=25, filtered_count=16, duration_ms=9
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=37
+2026-04-24 23:04:59,539 - INFO - [Price Trace][f1a829bb-a93-t3] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=37
+[2026-04-24 23:04:59] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t3] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=332, analysis_time_ms=38, total_time_ms=332, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 23:04:59,541 - INFO - [Price Trace][f1a829bb-a93-t3] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=332, analysis_time_ms=38, total_time_ms=332, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 23:04:59] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] tool.call.end | step=2, tool="query_price_data", duration_ms=334, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t3", "duration_ms": 333}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:59,542 - INFO - [Agent Trace][f1a829bb-a93-t3] tool.call.end | step=2, tool="query_price_data", duration_ms=334, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t3", "duration_ms": 333}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:04:59] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:59,546 - INFO - [Agent Trace][f1a829bb-a93-t3] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:04:59,604 - INFO - === LLM API 请求详情 ===
+2026-04-24 23:04:59,604 - INFO - 模型: Qwen3-32B
+2026-04-24 23:04:59,604 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 23:04:59,604 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 23:04:59,604 - INFO - ========================
+2026-04-24 23:04:59,618 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:05:32] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] report.end | duration_ms=33170, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 23:05:32,716 - INFO - [Agent Trace][f1a829bb-a93-t3] report.end | duration_ms=33170, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 23:05:32] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t3] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35634
+2026-04-24 23:05:32,717 - INFO - [Agent Trace][f1a829bb-a93-t3] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35634
+INFO:     127.0.0.1:42528 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42538 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40664 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40666 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40674 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40684 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:07:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] request.start | session_id="f1a829bb-a93", turn=4, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:25,649 - INFO - [Agent Trace][f1a829bb-a93-t4] request.start | session_id="f1a829bb-a93", turn=4, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:07:25] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:25,650 - INFO - [Agent Trace][f1a829bb-a93-t4] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:27,078 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:07:27] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] react.step.llm_response | step=1, duration_ms=1429, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:07:27,080 - INFO - [Agent Trace][f1a829bb-a93-t4] react.step.llm_response | step=1, duration_ms=1429, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:07:27] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:07:27,081 - INFO - [Agent Trace][f1a829bb-a93-t4] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:07:27,082 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 23:07:28,467 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:07:28] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:28,469 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:07:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] tool.call.end | step=1, tool="extract_entities", duration_ms=1388, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:28,469 - INFO - [Agent Trace][f1a829bb-a93-t4] tool.call.end | step=1, tool="extract_entities", duration_ms=1388, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:07:28] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:28,470 - INFO - [Agent Trace][f1a829bb-a93-t4] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:30,590 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:07:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] react.step.llm_response | step=2, duration_ms=2120, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:07:30,591 - INFO - [Agent Trace][f1a829bb-a93-t4] react.step.llm_response | step=2, duration_ms=2120, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:07:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:07:30,592 - INFO - [Agent Trace][f1a829bb-a93-t4] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:07:30] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t4, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 23:07:30,592 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t4, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 23:07:30,593 - INFO - [Price Trace][f1a829bb-a93-t4] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.quick_check.start | channel="information_price"
+2026-04-24 23:07:30,593 - INFO - [Price Trace][f1a829bb-a93-t4] phase.quick_check.start | channel="information_price"
+[2026-04-24 23:07:30] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:07:30,593 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:07:30] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:07:30,594 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:07:30] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:07:30,733 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:07:30] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:07:30,734 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 23:07:30,734 - INFO - [Price Trace][f1a829bb-a93-t4] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.quick_check.end | total_count=25, duration_ms=141
+2026-04-24 23:07:30,735 - INFO - [Price Trace][f1a829bb-a93-t4] phase.quick_check.end | total_count=25, duration_ms=141
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 23:07:30,735 - INFO - [Price Trace][f1a829bb-a93-t4] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.query_data.start | channel="information_price"
+2026-04-24 23:07:30,735 - INFO - [Price Trace][f1a829bb-a93-t4] phase.query_data.start | channel="information_price"
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:07:30,735 - INFO - [Price Trace][f1a829bb-a93-t4] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:07:30] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:07:30,736 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:07:30] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:07:30,736 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:07:30] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:07:30,862 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:07:30] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:07:30,863 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] api.query.success | channel="information_price", total_count=25, duration_ms=128
+2026-04-24 23:07:30,864 - INFO - [Price Trace][f1a829bb-a93-t4] api.query.success | channel="information_price", total_count=25, duration_ms=128
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.query_data.end | success=true, total_count=25, duration_ms=128
+2026-04-24 23:07:30,864 - INFO - [Price Trace][f1a829bb-a93-t4] phase.query_data.end | success=true, total_count=25, duration_ms=128
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+2026-04-24 23:07:30,871 - INFO - [Price Trace][f1a829bb-a93-t4] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=28
+2026-04-24 23:07:30,900 - INFO - [Price Trace][f1a829bb-a93-t4] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=28
+[2026-04-24 23:07:30] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t4] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=308, analysis_time_ms=29, total_time_ms=308, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 23:07:30,902 - INFO - [Price Trace][f1a829bb-a93-t4] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=308, analysis_time_ms=29, total_time_ms=308, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 23:07:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] tool.call.end | step=2, tool="query_price_data", duration_ms=310, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t4", "duration_ms": 310}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:30,903 - INFO - [Agent Trace][f1a829bb-a93-t4] tool.call.end | step=2, tool="query_price_data", duration_ms=310, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t4", "duration_ms": 310}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:07:30] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:30,906 - INFO - [Agent Trace][f1a829bb-a93-t4] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:07:30,961 - INFO - === LLM API 请求详情 ===
+2026-04-24 23:07:30,961 - INFO - 模型: Qwen3-32B
+2026-04-24 23:07:30,961 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 23:07:30,961 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 23:07:30,961 - INFO - ========================
+2026-04-24 23:07:30,976 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:08:04] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] report.end | duration_ms=33174, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 23:08:04,081 - INFO - [Agent Trace][f1a829bb-a93-t4] report.end | duration_ms=33174, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 23:08:04] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t4] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35611
+2026-04-24 23:08:04,081 - INFO - [Agent Trace][f1a829bb-a93-t4] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35611
+INFO:     127.0.0.1:59314 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59322 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34352 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34368 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34384 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34400 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34414 - "GET /api/v1/conversations/f1a829bb-a93/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34420 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39352 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39354 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39368 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39378 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39382 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:11:06] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] request.start | session_id="f1a829bb-a93", turn=5, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:06,053 - INFO - [Agent Trace][f1a829bb-a93-t5] request.start | session_id="f1a829bb-a93", turn=5, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:11:06] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:06,053 - INFO - [Agent Trace][f1a829bb-a93-t5] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:07,481 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:11:07] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] react.step.llm_response | step=1, duration_ms=1429, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:11:07,483 - INFO - [Agent Trace][f1a829bb-a93-t5] react.step.llm_response | step=1, duration_ms=1429, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:11:07] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:11:07,484 - INFO - [Agent Trace][f1a829bb-a93-t5] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:11:07,485 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 23:11:08,877 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:11:08] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:08,878 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:11:08] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] tool.call.end | step=1, tool="extract_entities", duration_ms=1394, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:08,878 - INFO - [Agent Trace][f1a829bb-a93-t5] tool.call.end | step=1, tool="extract_entities", duration_ms=1394, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:11:08] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:08,879 - INFO - [Agent Trace][f1a829bb-a93-t5] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:10,998 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:11:11] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] react.step.llm_response | step=2, duration_ms=2120, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:11:11,000 - INFO - [Agent Trace][f1a829bb-a93-t5] react.step.llm_response | step=2, duration_ms=2120, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:11:11] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:11:11,000 - INFO - [Agent Trace][f1a829bb-a93-t5] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:11:11] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t5, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 23:11:11,001 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t5, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 23:11:11,001 - INFO - [Price Trace][f1a829bb-a93-t5] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.quick_check.start | channel="information_price"
+2026-04-24 23:11:11,001 - INFO - [Price Trace][f1a829bb-a93-t5] phase.quick_check.start | channel="information_price"
+[2026-04-24 23:11:11] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:11:11,002 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:11:11] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:11:11,002 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:11:11] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:11:11,144 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:11:11] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:11:11,144 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 23:11:11,145 - INFO - [Price Trace][f1a829bb-a93-t5] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.quick_check.end | total_count=25, duration_ms=143
+2026-04-24 23:11:11,145 - INFO - [Price Trace][f1a829bb-a93-t5] phase.quick_check.end | total_count=25, duration_ms=143
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 23:11:11,145 - INFO - [Price Trace][f1a829bb-a93-t5] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.query_data.start | channel="information_price"
+2026-04-24 23:11:11,145 - INFO - [Price Trace][f1a829bb-a93-t5] phase.query_data.start | channel="information_price"
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:11:11,145 - INFO - [Price Trace][f1a829bb-a93-t5] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:11:11] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:11:11,146 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:11:11] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:11:11,146 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:11:11] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:11:11,268 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:11:11] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:11:11,268 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] api.query.success | channel="information_price", total_count=25, duration_ms=123
+2026-04-24 23:11:11,269 - INFO - [Price Trace][f1a829bb-a93-t5] api.query.success | channel="information_price", total_count=25, duration_ms=123
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.query_data.end | success=true, total_count=25, duration_ms=124
+2026-04-24 23:11:11,269 - INFO - [Price Trace][f1a829bb-a93-t5] phase.query_data.end | success=true, total_count=25, duration_ms=124
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+2026-04-24 23:11:11,276 - INFO - [Price Trace][f1a829bb-a93-t5] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=29
+2026-04-24 23:11:11,306 - INFO - [Price Trace][f1a829bb-a93-t5] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=29
+[2026-04-24 23:11:11] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t5] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=305, analysis_time_ms=30, total_time_ms=305, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 23:11:11,308 - INFO - [Price Trace][f1a829bb-a93-t5] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=305, analysis_time_ms=30, total_time_ms=305, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 23:11:11] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] tool.call.end | step=2, tool="query_price_data", duration_ms=307, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t5", "duration_ms": 307}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:11,309 - INFO - [Agent Trace][f1a829bb-a93-t5] tool.call.end | step=2, tool="query_price_data", duration_ms=307, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t5", "duration_ms": 307}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:11:11] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:11,312 - INFO - [Agent Trace][f1a829bb-a93-t5] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:11:11,368 - INFO - === LLM API 请求详情 ===
+2026-04-24 23:11:11,368 - INFO - 模型: Qwen3-32B
+2026-04-24 23:11:11,368 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 23:11:11,368 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 23:11:11,368 - INFO - ========================
+2026-04-24 23:11:11,382 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:11:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] report.end | duration_ms=33208, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 23:11:44,520 - INFO - [Agent Trace][f1a829bb-a93-t5] report.end | duration_ms=33208, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 23:11:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t5] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35641
+2026-04-24 23:11:44,520 - INFO - [Agent Trace][f1a829bb-a93-t5] request.final | step=2, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35641
+INFO:     127.0.0.1:39748 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39758 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33582 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33592 - "GET /api/v1/files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33596 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33610 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33614 - "GET /api/v1/conversations/f1a829bb-a93/messages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33622 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42474 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42486 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42502 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42514 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:14:43] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] request.start | session_id="f1a829bb-a93", turn=6, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:43,137 - INFO - [Agent Trace][f1a829bb-a93-t6] request.start | session_id="f1a829bb-a93", turn=6, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:14:43] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:43,137 - INFO - [Agent Trace][f1a829bb-a93-t6] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:44,583 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:14:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] react.step.llm_response | step=1, duration_ms=1447, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:14:44,585 - INFO - [Agent Trace][f1a829bb-a93-t6] react.step.llm_response | step=1, duration_ms=1447, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:14:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:14:44,585 - INFO - [Agent Trace][f1a829bb-a93-t6] tool.call.start | step=1, tool="extract_entities", params={"question": "查一下深圳天加空调器信息价"}
+2026-04-24 23:14:44,586 - INFO - 请求参数: {'model': 'Qwen3-32B', 'messages': [{'role': 'user', 'content': '# 角色\n你是一个擅长结构化信息抽取的助手，需要从用户问题中精确提取数据库查询参数。\n\n# 任务\n1. 根据用户输入提取对应参数\n2. 只提取用户明确提及的参数，未提及的参数不要填充\n3. 输出纯净的JSON格式，不要包含任何解释文本\n\n# 参数字段：\n1. materialName: 材料名称（如：镀锌方钢(综合)、200*200*8镀锌方钢、角钢_213等）\n2. materialModelSpec: 规格型号（如：304，1mm厚，Φ25×2.0）\n3. brand: 材料品牌（如：宝钢、鞍钢）\n4. province: 省份\n5. city: 城市名称（如\'北京市\'）\n6. startReleaseDate: 开始时间 （如：2025-01-01）\n7. endReleaseDate: 结束时间  （如：2025-08-07）\n8. channel: 查询渠道，仅当用户明确提到"信息价"或"厂商报价"时填充，值为"information_price"或"manufacturer_price"\n\n# 处理原则\n1. 材料名称需提取完整名词（如\'角钢_213\'而非\'角钢\'）\n2. 规格型号保留原始表达（如\'20kg/桶\'）\n3. 城市名称使用标准地名（如\'上海市\'而非\'上海\'）\n4. 时间格式为\'YYYY-MM-DD\'，若用户未指定具体时间则不填充\n\n\n#示例输入：\n用户输入: 从厂商报价查三棵树品牌的金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆，规格要20kg桶装的\n输出: {"brand": "三棵树", "materialName": "金属加强件\u3000松套层绞填充式\u3000钢-聚乙烯粘接护套通信用单模室外光缆", "materialModelSpec": "20kg/桶"}\n\n用户输入: 查询北京市的鞍形管夹(明装线卡)_336\n输出: {"materialName": "鞍形管夹(明装线卡)_336", "materialModelSpec": "", "city": "北京市"}\n\n用户输入: 查询95号汽油\n输出: {"materialName": "汽油", "materialModelSpec": "95号"}\n\n用户输入: 查询上海的近三年的铝合金材料价格\n输出: {"materialName": "铝合金","city": "上海市", "startReleaseTime": "2022-01-01", "endReleaseTime": "2025-08-07"}\n\n用户输入: 查询2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2024-01-01", "endReleaseTime": "2024-12-31"}\n\n用户输入: 查询2020年到2024年的普通照明用自镇流LED灯的价格\n输出: {"materialName": "普通照明用自镇流LED灯", "startReleaseTime": "2020-01-01", "endReleaseTime": "2024-12-31"}\n\n\n# 当前任务\n用户输入:查一下深圳天加空调器信息价\n输出:'}], 'temperature': 0}
+2026-04-24 23:14:45,982 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:14:45] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:45,984 - INFO - LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:14:45] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] tool.call.end | step=1, tool="extract_entities", duration_ms=1399, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:45,985 - INFO - [Agent Trace][f1a829bb-a93-t6] tool.call.end | step=1, tool="extract_entities", duration_ms=1399, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "city", "channel", "brand"], "missing_fields": ["province"]}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:14:45] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:45,986 - INFO - [Agent Trace][f1a829bb-a93-t6] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:48,106 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:14:48] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] react.step.llm_response | step=2, duration_ms=2121, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:14:48,108 - INFO - [Agent Trace][f1a829bb-a93-t6] react.step.llm_response | step=2, duration_ms=2121, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:14:48] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:14:48,108 - INFO - [Agent Trace][f1a829bb-a93-t6] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:14:48] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t6, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 23:14:48,108 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t6, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 23:14:48,109 - INFO - [Price Trace][f1a829bb-a93-t6] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.quick_check.start | channel="information_price"
+2026-04-24 23:14:48,109 - INFO - [Price Trace][f1a829bb-a93-t6] phase.quick_check.start | channel="information_price"
+[2026-04-24 23:14:48] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:14:48,109 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:14:48] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:14:48,110 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:14:48] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:14:48,254 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:14:48] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:14:48,255 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 23:14:48,255 - INFO - [Price Trace][f1a829bb-a93-t6] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.quick_check.end | total_count=25, duration_ms=146
+2026-04-24 23:14:48,256 - INFO - [Price Trace][f1a829bb-a93-t6] phase.quick_check.end | total_count=25, duration_ms=146
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 23:14:48,256 - INFO - [Price Trace][f1a829bb-a93-t6] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.query_data.start | channel="information_price"
+2026-04-24 23:14:48,256 - INFO - [Price Trace][f1a829bb-a93-t6] phase.query_data.start | channel="information_price"
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:14:48,256 - INFO - [Price Trace][f1a829bb-a93-t6] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:14:48] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:14:48,257 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:14:48] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:14:48,257 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:14:48] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:14:48,380 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:14:48] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:14:48,380 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] api.query.success | channel="information_price", total_count=25, duration_ms=124
+2026-04-24 23:14:48,381 - INFO - [Price Trace][f1a829bb-a93-t6] api.query.success | channel="information_price", total_count=25, duration_ms=124
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.query_data.end | success=true, total_count=25, duration_ms=124
+2026-04-24 23:14:48,381 - INFO - [Price Trace][f1a829bb-a93-t6] phase.query_data.end | success=true, total_count=25, duration_ms=124
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+2026-04-24 23:14:48,388 - INFO - [Price Trace][f1a829bb-a93-t6] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=30
+2026-04-24 23:14:48,419 - INFO - [Price Trace][f1a829bb-a93-t6] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=30
+[2026-04-24 23:14:48] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t6] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=310, analysis_time_ms=31, total_time_ms=310, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 23:14:48,421 - INFO - [Price Trace][f1a829bb-a93-t6] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=310, analysis_time_ms=31, total_time_ms=310, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 23:14:48] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] tool.call.end | step=2, tool="query_price_data", duration_ms=312, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t6", "duration_ms": 312}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:48,422 - INFO - [Agent Trace][f1a829bb-a93-t6] tool.call.end | step=2, tool="query_price_data", duration_ms=312, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t6", "duration_ms": 312}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:14:48] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:48,425 - INFO - [Agent Trace][f1a829bb-a93-t6] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:14:48,480 - INFO - === LLM API 请求详情 ===
+2026-04-24 23:14:48,480 - INFO - 模型: Qwen3-32B
+2026-04-24 23:14:48,480 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 23:14:48,480 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 23:14:48,480 - INFO - ========================
+2026-04-24 23:14:48,494 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60810 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60818 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+[2026-04-24 23:14:52] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t6] report.end | duration_ms=3792, chunk_count=79, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“"
+2026-04-24 23:14:52,217 - INFO - [Agent Trace][f1a829bb-a93-t6] report.end | duration_ms=3792, chunk_count=79, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“"
+INFO:     127.0.0.1:60820 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37310 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37316 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37328 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37330 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:17:10] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t7] request.start | session_id="f1a829bb-a93", turn=7, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:10,401 - INFO - [Agent Trace][f1a829bb-a93-t7] request.start | session_id="f1a829bb-a93", turn=7, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:17:10] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t7] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:10,401 - INFO - [Agent Trace][f1a829bb-a93-t7] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:38,559 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:17:38] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t7] react.step.llm_response | step=1, duration_ms=28159, has_tool_calls=false, tool_call_count=0, content_preview="根据查询结果，以下是深圳市“天加”品牌空调器的信息价分析：\\n\\n### 一、价格概况\\n- **样本数量**：共16条记录\\n- **单位**：台\\n- **价格范围**：2,461元 至 79,632元\\n- **平均价格**：32,941.75元\\n- **中位数价格**：29,433.0元\\n\\n### 二、价格分布特征\\n1. **价格区间划分**：\\n   - **中档价格**：约 *..."
+2026-04-24 23:17:38,561 - INFO - [Agent Trace][f1a829bb-a93-t7] react.step.llm_response | step=1, duration_ms=28159, has_tool_calls=false, tool_call_count=0, content_preview="根据查询结果，以下是深圳市“天加”品牌空调器的信息价分析：\\n\\n### 一、价格概况\\n- **样本数量**：共16条记录\\n- **单位**：台\\n- **价格范围**：2,461元 至 79,632元\\n- **平均价格**：32,941.75元\\n- **中位数价格**：29,433.0元\\n\\n### 二、价格分布特征\\n1. **价格区间划分**：\\n   - **中档价格**：约 *..."
+[2026-04-24 23:17:38] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t7] request.final | step=1, source="llm_direct_reply", final_text_preview="根据查询结果，以下是深圳市“天加”品牌空调器的信息价分析：\\n\\n### 一、价格概况\\n- **样本数量**：共16条记录\\n- **单位**：台\\n- **价格范围**：2,461元 至 79,632元\\n- **平均价格**：32,941.75元\\n- **中位数价格**：29,433.0元\\n\\n### 二、价格分布特征\\n1. **价格区间划分**：\\n   - **中档价格**：约 **19,158.45元**\\n   - **高档价格**：约 **63,265....", total_step_duration_ms=28160
+2026-04-24 23:17:38,561 - INFO - [Agent Trace][f1a829bb-a93-t7] request.final | step=1, source="llm_direct_reply", final_text_preview="根据查询结果，以下是深圳市“天加”品牌空调器的信息价分析：\\n\\n### 一、价格概况\\n- **样本数量**：共16条记录\\n- **单位**：台\\n- **价格范围**：2,461元 至 79,632元\\n- **平均价格**：32,941.75元\\n- **中位数价格**：29,433.0元\\n\\n### 二、价格分布特征\\n1. **价格区间划分**：\\n   - **中档价格**：约 **19,158.45元**\\n   - **高档价格**：约 **63,265....", total_step_duration_ms=28160
+INFO:     127.0.0.1:51196 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51212 - "GET /api/v1/service/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51228 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57712 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57724 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57738 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57744 - "POST /mcp/api/v1/agent/chat/stream HTTP/1.1" 200 OK
+[2026-04-24 23:17:42] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] request.start | session_id="f1a829bb-a93", turn=8, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:42,415 - INFO - [Agent Trace][f1a829bb-a93-t8] request.start | session_id="f1a829bb-a93", turn=8, user_message="查一下深圳天加空调器信息价", entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:17:42] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:42,416 - INFO - [Agent Trace][f1a829bb-a93-t8] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:44,600 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:17:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] react.step.llm_response | step=1, duration_ms=2185, has_tool_calls=true, tool_call_count=1, content_preview=""
+2026-04-24 23:17:44,601 - INFO - [Agent Trace][f1a829bb-a93-t8] react.step.llm_response | step=1, duration_ms=2185, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-24 23:17:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:17:44,602 - INFO - [Agent Trace][f1a829bb-a93-t8] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:17:44] INFO     [tools.py:362] [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t8, channel=information_price, material=空调器, province=, city=深圳市
+2026-04-24 23:17:44,602 - INFO - [MCP Tool] query_price_data start: trace_id=f1a829bb-a93-t8, channel=information_price, material=空调器, province=, city=深圳市
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+2026-04-24 23:17:44,602 - INFO - [Price Trace][f1a829bb-a93-t8] request.start | channel="information_price", generate_report=false, entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}, user_question="查一下深圳天加空调器信息价"
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.quick_check.start | channel="information_price"
+2026-04-24 23:17:44,603 - INFO - [Price Trace][f1a829bb-a93-t8] phase.quick_check.start | channel="information_price"
+[2026-04-24 23:17:44] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:17:44,603 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:17:44] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:17:44,604 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:17:44] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:17:44,742 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:17:44] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:17:44,743 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] api.quick_check.success | channel="information_price", total_count=25
+2026-04-24 23:17:44,743 - INFO - [Price Trace][f1a829bb-a93-t8] api.quick_check.success | channel="information_price", total_count=25
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.quick_check.end | total_count=25, duration_ms=140
+2026-04-24 23:17:44,744 - INFO - [Price Trace][f1a829bb-a93-t8] phase.quick_check.end | total_count=25, duration_ms=140
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+2026-04-24 23:17:44,744 - INFO - [Price Trace][f1a829bb-a93-t8] phase.volume_check | total_count=25, estimated_tokens=3000, can_process=true
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.query_data.start | channel="information_price"
+2026-04-24 23:17:44,744 - INFO - [Price Trace][f1a829bb-a93-t8] phase.query_data.start | channel="information_price"
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+2026-04-24 23:17:44,744 - INFO - [Price Trace][f1a829bb-a93-t8] api.query.start | channel="information_price", entities={"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-24 23:17:44] INFO     [rag_service.py:1448] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+2026-04-24 23:17:44,745 - INFO - 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-24 23:17:44] INFO     [rag_service.py:1506] 请求第 1 页，每页 2000 条...
+2026-04-24 23:17:44,745 - INFO - 请求第 1 页，每页 2000 条...
+[2026-04-24 23:17:44] INFO     [rag_service.py:1527] 第 1 页获取 25 条数据，累计 25 条
+2026-04-24 23:17:44,870 - INFO - 第 1 页获取 25 条数据，累计 25 条
+[2026-04-24 23:17:44] INFO     [rag_service.py:1547] 分页拉取完成，共 25 条数据
+2026-04-24 23:17:44,871 - INFO - 分页拉取完成，共 25 条数据
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] api.query.success | channel="information_price", total_count=25, duration_ms=127
+2026-04-24 23:17:44,871 - INFO - [Price Trace][f1a829bb-a93-t8] api.query.success | channel="information_price", total_count=25, duration_ms=127
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.query_data.end | success=true, total_count=25, duration_ms=127
+2026-04-24 23:17:44,872 - INFO - [Price Trace][f1a829bb-a93-t8] phase.query_data.end | success=true, total_count=25, duration_ms=127
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+2026-04-24 23:17:44,878 - INFO - [Price Trace][f1a829bb-a93-t8] phase.filter.end | original_count=25, filtered_count=16, duration_ms=6
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=28
+2026-04-24 23:17:44,908 - INFO - [Price Trace][f1a829bb-a93-t8] phase.analyze.end | most_common_unit="台", result_unit_count=1, duration_ms=28
+[2026-04-24 23:17:44] INFO     [rag_service.py:124] [Price Trace][f1a829bb-a93-t8] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=306, analysis_time_ms=30, total_time_ms=306, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+2026-04-24 23:17:44,910 - INFO - [Price Trace][f1a829bb-a93-t8] request.success | original_count=25, filtered_count=16, returned_count=16, estimated_tokens=3000, filtered_data_tokens=1920, llm_input_tokens=231, token_optimization_rate="92.3%", check_time_ms=306, analysis_time_ms=30, total_time_ms=306, summary_metrics={"total_count": 16, "most_common_unit": "台", "valid_count": 16, "min_price": 2461.0, "max_price": 79632.0, "mean_price": 32941.75, "median_price": 29433.0, "recommend_mode": "two-tier", "recommended_prices": [19158.45, 63265.0], "recommend_reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"}
+[2026-04-24 23:17:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] tool.call.end | step=1, tool="query_price_data", duration_ms=308, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t8", "duration_ms": 308}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:44,911 - INFO - [Agent Trace][f1a829bb-a93-t8] tool.call.end | step=1, tool="query_price_data", duration_ms=308, result={"status": "success", "message": "查询到 16 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 16, "most_common_unit": "台", "price_data_count": 16, "metadata": {"channel": "information_price", "total_count": 16, "entities": {"materialName": "空调器", "province": "", "city": "深圳市", "materialModelSpec": "", "brand": "天加"}, "trace_id": "f1a829bb-a93-t8", "duration_ms": 308}}, entities_after={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-24 23:17:44] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:44,914 - INFO - [Agent Trace][f1a829bb-a93-t8] report.start | parsed_entities={"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+2026-04-24 23:17:44,969 - INFO - === LLM API 请求详情 ===
+2026-04-24 23:17:44,969 - INFO - 模型: Qwen3-32B
+2026-04-24 23:17:44,969 - INFO - 消息: [{'role': 'user', 'content': '请你根据提供的内容，对以下材料价格的统计结果进行解析，并生成一段结构清晰、逻辑严谨的价格分析内容。\n用户初始问题：\n查一下深圳天加空调器信息价\n\n材料说明：\n{\n  "materialName": "空调器",\n  "province": "",\n  "city": "深圳市",\n  "materialModelSpec": "",\n  "brand": "天加"\n}\n\n材料字段说明：\nmaterialName: 材料名称\nmaterialModelSpec: 规格型号\nbrand: 材料品牌\nprovince: 省份\ncity: 城市名称\nstartReleaseDate: 查询时间开始\nendReleaseDate: 查询时间结束\n\n得到的数据分析结果如下：\n{\n  "台": {\n    "total_count": 16,\n    "valid_count": 16,\n    "price_range": [\n      2461.0,\n      79632.0\n    ],\n    "mean_price": 32941.75,\n    "median_price": 29433.0,\n    "recommend_kmeans": {\n      "mode": "two-tier",\n      "prices": [\n        19158.45,\n        63265.0\n      ],\n      "reason": "轮廓系数=0.67 >= 0.5, 差距比例=1.34 >= 0.3, 两簇规模均衡"\n    }\n  }\n}\n\n数据分析字段说明：\n\ntotal_count：全部样本数量\n\nvalid_count：过滤异常值后的样本数量\n\nprice_range：价格区间（最低价与最高价）\n\nmean_price：平均价格\n\nmedian_price：中位数价格\n\nrecommend_kmeans：基于K-means聚类算法的推荐价格建议，包括：\n\nmode：推荐价格类型。若为 "two-tier" 表示分为中档与高档两个价格；若为 "single" 表示推荐单一整体价格\n\nprices：具体推荐价格值\n\nreason：推荐理由，包括轮廓系数（silhouette）、差距比例（gap_ratio）及聚类规模信息\n\n\n请依据上述数据，按单位规格分别分析其价格分布特征并结合推荐算法结果，生成可用于市场分析或决策参考的解读文本。'}]
+2026-04-24 23:17:44,969 - INFO - 推理参数: {'temperature': 0, 'top_p': 1, 'frequency_penalty': 0, 'presence_penalty': 0, 'seed': 42}
+2026-04-24 23:17:44,969 - INFO - ========================
+2026-04-24 23:17:44,983 - INFO - HTTP Request: POST http://localhost:9839/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-24 23:18:17] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] report.end | duration_ms=33052, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+2026-04-24 23:18:17,967 - INFO - [Agent Trace][f1a829bb-a93-t8] report.end | duration_ms=33052, chunk_count=707, used_fallback=false, report_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **..."
+[2026-04-24 23:18:17] INFO     [agent.py:272] [Agent Trace][f1a829bb-a93-t8] request.final | step=1, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35551
+2026-04-24 23:18:17,967 - INFO - [Agent Trace][f1a829bb-a93-t8] request.final | step=1, source="query_price_data", final_text_preview="根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。\\n\\n### 一、样本概况\\n\\n本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**  \\n   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市...", total_step_duration_ms=35551
+INFO:     127.0.0.1:53936 - "GET /api/v1/conversations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53942 - "GET /api/v1/service/status HTTP/1.1" 200 OK

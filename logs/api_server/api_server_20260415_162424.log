@@ -1,0 +1,28 @@
+[2026-04-15 16:24:24] INFO     [api_server.py:32] 启动Easy-RAG API服务...
+[2026-04-15 16:24:24] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-15 16:24:24] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-15 16:24:24] INFO     [rag_service.py:134] 语料库未发生变化，使用现有缓存
+[2026-04-15 16:24:25] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-15 16:24:25] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-15 16:24:25] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-15 16:24:25] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-15 16:24:25] INFO     [rag_service.py:142] LLM初始化完成
+[2026-04-15 16:24:25] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-15 16:24:25] INFO     [rag_service.py:147] 价格推荐模板初始化完成
+[2026-04-15 16:24:25] INFO     [rag_service.py:151] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-15 16:24:29] INFO     [rag_service.py:197] Retriever加载完成
+[2026-04-15 16:24:29] INFO     [rag_service.py:201] 语料库未变化，但Reranker未初始化，正在加载...
+[2026-04-15 16:24:31] INFO     [rag_service.py:207] Reranker加载完成
+[2026-04-15 16:24:31] INFO     [mcp_endpoints.py:353] MCP端点初始化完成
+[2026-04-15 16:24:31] INFO     [api_server.py:48] MCP和Agent服务初始化完成
+[2026-04-15 16:24:57] INFO     [conversation_manager.py:459] 创建新会话: 01f1b7d9-ab3 (类型: knowledge_qa)
+[2026-04-15 16:24:58] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-15 16:24:58] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-15 16:25:11] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-15 16:25:11] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-15 16:25:11] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3090
+[2026-04-15 16:25:11] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-15 16:25:11] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3090, query: 你好
+[2026-04-15 16:25:11] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3531
+[2026-04-15 16:25:11] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+[2026-04-15 16:25:12] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 21 个 chunk

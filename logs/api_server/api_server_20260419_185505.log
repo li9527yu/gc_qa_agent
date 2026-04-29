@@ -1,0 +1,254 @@
+[2026-04-19 18:55:05] INFO     [api_server.py:37] 启动Easy-RAG API服务...
+[2026-04-19 18:55:05] INFO     [api_server.py:40] 初始化数据库...
+[2026-04-19 18:55:06] INFO     [api_server.py:48] 管理员账号初始化完成: id=1, username=admin
+[2026-04-19 18:55:06] INFO     [api_server.py:56] ConversationManager数据库会话注入完成
+[2026-04-19 18:55:06] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-19 18:55:06] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-19 18:55:06] INFO     [rag_service.py:134] 语料库未发生变化，使用现有缓存
+[2026-04-19 18:55:06] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-19 18:55:06] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-19 18:55:06] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-19 18:55:06] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-19 18:55:06] INFO     [rag_service.py:142] LLM初始化完成
+[2026-04-19 18:55:06] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-19 18:55:06] INFO     [rag_service.py:147] 价格推荐模板初始化完成
+[2026-04-19 18:55:06] INFO     [rag_service.py:151] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-19 18:55:12] INFO     [rag_service.py:197] Retriever加载完成
+[2026-04-19 18:55:12] INFO     [rag_service.py:201] 语料库未变化，但Reranker未初始化，正在加载...
+[2026-04-19 18:55:13] INFO     [rag_service.py:207] Reranker加载完成
+[2026-04-19 18:55:13] INFO     [mcp_endpoints.py:404] MCP端点初始化完成
+[2026-04-19 18:55:13] INFO     [api_server.py:73] MCP和Agent服务初始化完成
+[2026-04-22 10:04:43] INFO     [conversation_manager.py:516] 创建新会话: 7ee80858-79c (类型: knowledge_qa, 用户: 1)
+[2026-04-22 10:04:43] WARNING  [rag_service.py:1648] 查询重写器未初始化，退回到单轮查询
+[2026-04-22 10:04:44] INFO     [rag_service.py:1534] 检索完成，返回 20 个文档
+[2026-04-22 10:04:52] INFO     [rag_service.py:1548] rerank 完成，返回 10 个文档
+[2026-04-22 10:04:52] INFO     [rag_service.py:1553] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-22 10:04:52] INFO     [rag_service.py:1556] 上下文构建成功，长度: 4144
+[2026-04-22 10:04:52] INFO     [rag_service.py:1567] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-22 10:04:52] INFO     [llm_deepseek.py:273] stream_predict 开始，context长度: 4144, query: 查一下信息价渠道的电缆价格
+[2026-04-22 10:04:52] INFO     [llm_deepseek.py:282] prompt构建成功，长度: 4596
+[2026-04-22 10:04:52] INFO     [llm_deepseek.py:289] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-22 10:04:58] INFO     [llm_deepseek.py:300] openai_chat_by_api_as_astream 完成，共 95 个 chunk
+[2026-04-22 10:05:17] INFO     [agent.py:294] [Agent Stream] 开始处理: session=7ee80858-79c, turn=1, entities={}
+[2026-04-22 10:05:17] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 10:05:19] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价渠道的电缆价格'}
+[2026-04-22 10:05:20] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-22 10:05:20] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-22 10:05:21] INFO     [agent.py:370] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-22 10:05:21] INFO     [tools.py:278] [MCP Tool] quick_search_materials: keyword=电缆, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-22 10:05:21] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-22 10:05:21] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 10:05:21] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 10:05:22] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-22 10:05:22] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-22 10:05:22] INFO     [agent.py:310] [Agent Stream] ReAct Step 3
+[2026-04-22 10:05:25] INFO     [agent.py:474] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能的原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称或相关信息（如规格、品牌等），以便我更好地帮助您查询。
+[2026-04-22 10:06:50] INFO     [conversation_manager.py:516] 创建新会话: 2dd59d5e-44b (类型: price_query, 用户: 1)
+[2026-04-22 10:06:50] INFO     [agent.py:294] [Agent Stream] 开始处理: session=2dd59d5e-44b, turn=1, entities={}
+[2026-04-22 10:06:50] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 10:06:51] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价渠道的电缆价格'}
+[2026-04-22 10:06:52] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-22 10:06:52] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-22 10:06:53] INFO     [agent.py:370] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-22 10:06:53] INFO     [tools.py:278] [MCP Tool] quick_search_materials: keyword=电缆, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-22 10:06:53] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-22 10:06:53] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 10:06:53] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 10:06:54] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-22 10:06:54] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-22 10:06:54] INFO     [agent.py:310] [Agent Stream] ReAct Step 3
+[2026-04-22 10:06:57] INFO     [agent.py:474] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称（如“电力电缆”、“控制电缆”等）或补充其他查询条件（如省份、城市、规格等），以便我更好地帮助您查询。
+[2026-04-22 12:28:35] INFO     [conversation_manager.py:516] 创建新会话: 79d52bab-fab (类型: price_query, 用户: 1)
+[2026-04-22 12:28:35] INFO     [agent.py:294] [Agent Stream] 开始处理: session=79d52bab-fab, turn=1, entities={}
+[2026-04-22 12:28:35] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 12:28:37] INFO     [agent.py:474] [Agent Stream] 最终回复: 您好！我是「材价通」，可以帮您查询建筑材料的价格信息。请问您需要查询什么材料的价格？请提供材料名称、地区、规格等信息。
+[2026-04-22 12:51:57] INFO     [conversation_manager.py:516] 创建新会话: 8c846053-5a8 (类型: knowledge_qa, 用户: 1)
+[2026-04-22 12:51:57] WARNING  [rag_service.py:1648] 查询重写器未初始化，退回到单轮查询
+[2026-04-22 12:51:57] INFO     [rag_service.py:1534] 检索完成，返回 20 个文档
+[2026-04-22 12:52:03] INFO     [rag_service.py:1548] rerank 完成，返回 10 个文档
+[2026-04-22 12:52:03] INFO     [rag_service.py:1553] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-22 12:52:03] INFO     [rag_service.py:1556] 上下文构建成功，长度: 4144
+[2026-04-22 12:52:03] INFO     [rag_service.py:1567] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-22 12:52:03] INFO     [llm_deepseek.py:273] stream_predict 开始，context长度: 4144, query: 查一下信息价渠道的电缆价格
+[2026-04-22 12:52:03] INFO     [llm_deepseek.py:282] prompt构建成功，长度: 4596
+[2026-04-22 12:52:03] INFO     [llm_deepseek.py:289] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-22 12:52:09] INFO     [llm_deepseek.py:300] openai_chat_by_api_as_astream 完成，共 134 个 chunk
+[2026-04-22 12:52:13] INFO     [agent.py:294] [Agent Stream] 开始处理: session=8c846053-5a8, turn=1, entities={}
+[2026-04-22 12:52:13] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 12:52:14] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价渠道的电缆价格'}
+[2026-04-22 12:52:15] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-22 12:52:15] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-22 12:52:16] INFO     [agent.py:370] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-22 12:52:16] INFO     [tools.py:278] [MCP Tool] quick_search_materials: keyword=电缆, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-22 12:52:16] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-22 12:52:16] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 12:52:16] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 12:52:17] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-22 12:52:17] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-22 12:52:17] INFO     [agent.py:310] [Agent Stream] ReAct Step 3
+[2026-04-22 12:52:20] INFO     [agent.py:474] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能原因包括材料名称不准确或系统中暂无相关数据。建议您提供更多细节，例如具体材料型号（如：YJV电缆、VV电缆等），以便我更准确地帮助您查询。您还有其他补充信息吗？
+[2026-04-22 12:52:39] INFO     [agent.py:294] [Agent Stream] 开始处理: session=8c846053-5a8, turn=2, entities={'materialName': '电缆', 'channel': 'information_price'}
+[2026-04-22 12:52:39] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 12:52:40] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-22 12:52:42] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-22 12:52:42] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-22 12:52:44] INFO     [agent.py:370] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-22 12:52:44] INFO     [tools.py:359] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-22 12:52:44] INFO     [rag_service.py:812] 阶段1: 快速检查数据总数...
+[2026-04-22 12:52:44] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 12:52:44] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 12:52:44] INFO     [rag_service.py:1408] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:1428] 分页拉取完成，共 25 条数据
+[2026-04-22 12:52:44] INFO     [rag_service.py:1242] 快速检查成功，总数: 25 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:814] 数据总数: 25 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:823] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-22 12:52:44] INFO     [rag_service.py:866] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-22 12:52:44] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 12:52:44] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 12:52:44] INFO     [rag_service.py:1408] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:1428] 分页拉取完成，共 25 条数据
+[2026-04-22 12:52:44] INFO     [rag_service.py:978] ================================================================================
+[2026-04-22 12:52:44] INFO     [rag_service.py:979] 📊 价格查询数据处理统计
+[2026-04-22 12:52:44] INFO     [rag_service.py:980] ================================================================================
+[2026-04-22 12:52:44] INFO     [rag_service.py:981] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-22 12:52:44] INFO     [rag_service.py:982] 📈 数据统计:
+[2026-04-22 12:52:44] INFO     [rag_service.py:983]    - 原始数据量: 25 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:984]    - 过滤后数量: 16 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:985]    - 返回数量: 16 条
+[2026-04-22 12:52:44] INFO     [rag_service.py:986] 🎫 Token 分析:
+[2026-04-22 12:52:44] INFO     [rag_service.py:987]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-22 12:52:44] INFO     [rag_service.py:988]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-22 12:52:44] INFO     [rag_service.py:989]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-22 12:52:44] INFO     [rag_service.py:990]    - Token 优化率: 92.3%
+[2026-04-22 12:52:44] INFO     [rag_service.py:991] ⏱️  数据处理时间:
+[2026-04-22 12:52:44] INFO     [rag_service.py:992]    - 数据检查: 0.610s
+[2026-04-22 12:52:44] INFO     [rag_service.py:993]    - 数据分析: 0.276s
+[2026-04-22 12:52:44] INFO     [rag_service.py:994]    - 总耗时: 0.610s
+[2026-04-22 12:52:44] INFO     [rag_service.py:995] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-22 12:52:44] INFO     [rag_service.py:996] ================================================================================
+[2026-04-22 12:53:14] INFO     [agent.py:454] [Agent Stream] 最终回复: 根据对深圳市“天加”品牌空调器的价格数据分析结果，结合K-means聚类算法的推荐结果，现对价格分布特征及市场参考价值进行如下分析：
+
+### 一、样本概况
+
+本次统计共获取16条有效价格数据，全部为有效样本，未发现异常值。样本覆盖范围较广，价格区间跨度较大，最低价格为2,461元，最高价格为79,632元，显示出该品牌空调器在深圳市市场中存在较大的价格差异，可能与产品类型、功能配置、安装服务等因素密切相关。
+
+### 二、价格分布特征
+
+- **平均价格**为32,941.75元，表明整体价格水平偏高，可能以中高端产品为主。
+- **中位数价格**为29,433元，低于平均值，说明价格分布存在右偏现象，即高价产品对平均值的拉高作用较为明显。
+- **价格区间**跨度较大，从2,461元到79,632元，反映出该品牌在深圳市市场中覆盖了从经济型到高端型的多个产品线，满足不同消费层次的需求。
+
+### 三、聚类分析与价格推荐
+
+通过K-means聚类算法对价格数据进行分析，推荐采用**两档价格结构**（two-tier），具体推荐价格为：
+
+- **中档价格**：19,158.45元
+- **高档价格**：63,265.0元
+
+该推荐结果的依据如下：
+
+- **轮廓系数**为0.67，大于0.5，说明聚类效果良好，数据点在两个价格区间内具有较好的聚集性；
+- **差距比例**为1.34，大于0.3，表明两个价格区间之间存在显著差异；
+- **聚类规模均衡**，说明中档与高档产品在市场中均有代表性，不存在明显的偏态分布。
+
+### 四、市场分析与建议
+
+1. **产品定位建议**：天加空调器在深圳市场中呈现出明显的中高端产品定位，建议企业根据聚类结果进一步细分产品线，明确中档与高档产品的功能差异与目标客户群，以提升市场竞争力。
+
+2. **价格策略建议**：基于推荐的两档价格结构，建议在市场推广中分别突出“性价比优选”与“高端品质”两个价格区间，满足不同消费群体的需求，同时增强品牌在中高端市场的影响力。
+
+3. **市场调研建议**：鉴于价格跨度较大，建议进一步收集产品规格、功能配置、安装服务等详细信息，以更精准地分析价格差异的成因，为后续定价策略提供数据支持。
+
+综上所述，天加空调器在深圳市场中价格分布呈现中高端化趋势，且具备明确的中档与高档产品区分。企业可结合聚类分析结果，优化产品结构与价格策略，以提升市场占有率与品牌影响力。
+[2026-04-22 13:34:38] INFO     [conversation_manager.py:516] 创建新会话: f4adcda5-d8d (类型: knowledge_qa, 用户: 1)
+[2026-04-22 13:34:38] WARNING  [rag_service.py:1648] 查询重写器未初始化，退回到单轮查询
+[2026-04-22 13:34:38] INFO     [rag_service.py:1534] 检索完成，返回 20 个文档
+[2026-04-22 13:34:42] INFO     [rag_service.py:1548] rerank 完成，返回 10 个文档
+[2026-04-22 13:34:42] INFO     [rag_service.py:1553] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-22 13:34:42] INFO     [rag_service.py:1556] 上下文构建成功，长度: 3746
+[2026-04-22 13:34:42] INFO     [rag_service.py:1567] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-22 13:34:42] INFO     [llm_deepseek.py:273] stream_predict 开始，context长度: 3746, query: 查一下深圳天加空调器信息价
+[2026-04-22 13:34:42] INFO     [llm_deepseek.py:282] prompt构建成功，长度: 4198
+[2026-04-22 13:34:42] INFO     [llm_deepseek.py:289] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-22 13:34:44] INFO     [llm_deepseek.py:300] openai_chat_by_api_as_astream 完成，共 28 个 chunk
+[2026-04-22 13:34:50] INFO     [agent.py:294] [Agent Stream] 开始处理: session=f4adcda5-d8d, turn=1, entities={}
+[2026-04-22 13:34:50] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-22 13:34:51] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-22 13:34:52] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-22 13:34:52] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-22 13:34:54] INFO     [agent.py:370] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-22 13:34:54] INFO     [tools.py:359] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-22 13:34:54] INFO     [rag_service.py:812] 阶段1: 快速检查数据总数...
+[2026-04-22 13:34:54] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 13:34:54] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 13:34:55] INFO     [rag_service.py:1408] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:1428] 分页拉取完成，共 25 条数据
+[2026-04-22 13:34:55] INFO     [rag_service.py:1242] 快速检查成功，总数: 25 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:814] 数据总数: 25 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:823] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-22 13:34:55] INFO     [rag_service.py:866] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-22 13:34:55] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-22 13:34:55] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-22 13:34:55] INFO     [rag_service.py:1408] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:1428] 分页拉取完成，共 25 条数据
+[2026-04-22 13:34:55] INFO     [rag_service.py:978] ================================================================================
+[2026-04-22 13:34:55] INFO     [rag_service.py:979] 📊 价格查询数据处理统计
+[2026-04-22 13:34:55] INFO     [rag_service.py:980] ================================================================================
+[2026-04-22 13:34:55] INFO     [rag_service.py:981] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-22 13:34:55] INFO     [rag_service.py:982] 📈 数据统计:
+[2026-04-22 13:34:55] INFO     [rag_service.py:983]    - 原始数据量: 25 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:984]    - 过滤后数量: 16 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:985]    - 返回数量: 16 条
+[2026-04-22 13:34:55] INFO     [rag_service.py:986] 🎫 Token 分析:
+[2026-04-22 13:34:55] INFO     [rag_service.py:987]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-22 13:34:55] INFO     [rag_service.py:988]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-22 13:34:55] INFO     [rag_service.py:989]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-22 13:34:55] INFO     [rag_service.py:990]    - Token 优化率: 92.3%
+[2026-04-22 13:34:55] INFO     [rag_service.py:991] ⏱️  数据处理时间:
+[2026-04-22 13:34:55] INFO     [rag_service.py:992]    - 数据检查: 0.467s
+[2026-04-22 13:34:55] INFO     [rag_service.py:993]    - 数据分析: 0.080s
+[2026-04-22 13:34:55] INFO     [rag_service.py:994]    - 总耗时: 0.467s
+[2026-04-22 13:34:55] INFO     [rag_service.py:995] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-22 13:34:55] INFO     [rag_service.py:996] ================================================================================
+[2026-04-22 13:35:28] INFO     [agent.py:454] [Agent Stream] 最终回复: 根据对深圳市“天加”品牌空调器的价格统计与分析结果，现将相关数据进行结构化解读，以供市场分析或采购决策参考。
+
+### 一、样本概况
+
+本次统计共获取16条有效价格样本，所有样本均通过异常值过滤，数据质量较高，具有较强的代表性。样本覆盖深圳市多个区域，适用于不同应用场景的“天加”品牌空调器产品。
+
+### 二、价格分布特征
+
+1. **价格区间**  
+   样本价格范围为 **2,461元 至 79,632元**，价格跨度较大，表明“天加”空调器在深圳市市场中覆盖了从经济型到高端型的多个产品线。
+
+2. **集中趋势分析**  
+   - **平均价格**：32,941.75元  
+   - **中位数价格**：29,433.0元  
+   平均价格略高于中位数，说明价格分布存在右偏现象，即高价产品对整体均价有一定拉高作用。
+
+3. **价格分布形态**  
+   通过K-means聚类分析，推荐采用“**两档定价模式**”（two-tier），将价格划分为两个主要区间：
+   - **中档价格**：约 **19,158.45元**
+   - **高档价格**：约 **63,265.0元**
+
+   推荐理由如下：
+   - **轮廓系数**（Silhouette）为 **0.67**，大于0.5，说明聚类效果良好；
+   - **差距比例**（Gap Ratio）为 **1.34**，大于0.3，表明两个价格区间之间存在显著差异；
+   - 两簇样本数量分布均衡，说明中档与高档产品在市场中均有稳定需求。
+
+### 三、市场分析与建议
+
+1. **产品定位建议**  
+   “天加”空调器在深圳市市场中呈现出明显的**中高端产品定位**，建议厂商或采购方根据实际需求选择相应档次产品。若预算有限，可优先考虑中档产品（约19,158元）；若对性能、能效或品牌溢价有更高要求，可选择高档产品（约63,265元）。
+
+2. **采购策略建议**  
+   - 对于批量采购或工程项目，建议结合具体使用场景（如商用、家用、工业用途）进行产品匹配；
+   - 若需控制成本，可优先考虑中档产品，其性价比相对较高；
+   - 若对品牌、技术参数或售后服务有较高要求，可选择高档产品，但需注意其价格波动可能较大。
+
+3. **市场趋势观察**  
+   从价格分布来看，深圳市对“天加”空调器的需求呈现**多元化趋势**，中高端产品市场接受度较高，建议关注其在节能、智能控制、静音等技术方面的优势，以提升产品竞争力。
+
+### 四、总结
+
+综上所述，深圳市“天加”空调器的价格分布具有明显的两极分化特征，推荐采用**中档与高档双档定价策略**，以满足不同用户群体的需求。建议采购方结合自身预算与使用场景，合理选择产品档次，以实现成本与性能的最优平衡。

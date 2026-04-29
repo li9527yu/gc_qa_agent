@@ -1,0 +1,134 @@
+[2026-04-19 18:47:07] INFO     [api_server.py:37] 启动Easy-RAG API服务...
+[2026-04-19 18:47:07] INFO     [api_server.py:40] 初始化数据库...
+[2026-04-19 18:47:08] INFO     [api_server.py:48] 管理员账号初始化完成: id=1, username=admin
+[2026-04-19 18:47:08] INFO     [api_server.py:56] ConversationManager数据库会话注入完成
+[2026-04-19 18:47:08] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-19 18:47:08] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-19 18:47:08] INFO     [rag_service.py:134] 语料库未发生变化，使用现有缓存
+[2026-04-19 18:47:08] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-19 18:47:08] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-19 18:47:08] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-19 18:47:08] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-19 18:47:08] INFO     [rag_service.py:142] LLM初始化完成
+[2026-04-19 18:47:08] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-19 18:47:08] INFO     [rag_service.py:147] 价格推荐模板初始化完成
+[2026-04-19 18:47:08] INFO     [rag_service.py:151] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-19 18:47:12] INFO     [rag_service.py:197] Retriever加载完成
+[2026-04-19 18:47:12] INFO     [rag_service.py:201] 语料库未变化，但Reranker未初始化，正在加载...
+[2026-04-19 18:47:13] INFO     [rag_service.py:207] Reranker加载完成
+[2026-04-19 18:47:13] INFO     [mcp_endpoints.py:404] MCP端点初始化完成
+[2026-04-19 18:47:13] INFO     [api_server.py:73] MCP和Agent服务初始化完成
+[2026-04-19 18:47:34] INFO     [conversation_manager.py:516] 创建新会话: 722d16f2-6c6 (类型: price_query, 用户: 1)
+[2026-04-19 18:47:34] INFO     [agent.py:294] [Agent Stream] 开始处理: session=722d16f2-6c6, turn=1, entities={}
+[2026-04-19 18:47:34] INFO     [agent.py:310] [Agent Stream] ReAct Step 1
+[2026-04-19 18:47:36] INFO     [agent.py:370] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价渠道的电缆价格'}
+[2026-04-19 18:47:37] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-19 18:47:37] INFO     [agent.py:310] [Agent Stream] ReAct Step 2
+[2026-04-19 18:47:38] INFO     [agent.py:370] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-19 18:47:38] INFO     [tools.py:278] [MCP Tool] quick_search_materials: keyword=电缆, limit=10, ignored_params={}
+[2026-04-19 18:47:38] INFO     [llm_deepseek.py:174] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-19 18:47:38] INFO     [rag_service.py:812] 阶段1: 快速检查数据总数...
+[2026-04-19 18:47:38] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:38] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:39] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:39] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:47:39] INFO     [rag_service.py:1242] 快速检查成功，总数: 402 条
+[2026-04-19 18:47:39] INFO     [rag_service.py:814] 数据总数: 402 条
+[2026-04-19 18:47:39] INFO     [rag_service.py:823] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-19 18:47:39] INFO     [rag_service.py:866] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-19 18:47:39] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:39] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:39] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:39] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:47:47] ERROR    [llm_deepseek.py:194] LLM API 同步调用出错: Request timed out.
+[2026-04-19 18:47:47] ERROR    [rag_service.py:794] 生成价格报告失败: Request timed out.
+[2026-04-19 18:47:47] INFO     [rag_service.py:978] ================================================================================
+[2026-04-19 18:47:47] INFO     [rag_service.py:979] 📊 价格查询数据处理统计
+[2026-04-19 18:47:47] INFO     [rag_service.py:980] ================================================================================
+[2026-04-19 18:47:47] INFO     [rag_service.py:981] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-19 18:47:47] INFO     [rag_service.py:982] 📈 数据统计:
+[2026-04-19 18:47:47] INFO     [rag_service.py:983]    - 原始数据量: 402 条
+[2026-04-19 18:47:47] INFO     [rag_service.py:984]    - 过滤后数量: 324 条
+[2026-04-19 18:47:47] INFO     [rag_service.py:985]    - 返回数量: 257 条
+[2026-04-19 18:47:47] INFO     [rag_service.py:986] 🎫 Token 分析:
+[2026-04-19 18:47:47] INFO     [rag_service.py:987]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-19 18:47:47] INFO     [rag_service.py:988]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-19 18:47:47] INFO     [rag_service.py:989]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-19 18:47:47] INFO     [rag_service.py:990]    - Token 优化率: 99.2%
+[2026-04-19 18:47:47] INFO     [rag_service.py:991] ⏱️  数据处理时间:
+[2026-04-19 18:47:47] INFO     [rag_service.py:992]    - 数据检查: 1.285s
+[2026-04-19 18:47:47] INFO     [rag_service.py:993]    - 数据分析: 0.352s
+[2026-04-19 18:47:47] INFO     [rag_service.py:994]    - 总耗时: 1.285s
+[2026-04-19 18:47:47] INFO     [rag_service.py:995] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-19 18:47:47] INFO     [rag_service.py:996] ================================================================================
+[2026-04-19 18:47:47] INFO     [rag_service.py:812] 阶段1: 快速检查数据总数...
+[2026-04-19 18:47:47] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:47] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:48] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:48] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:47:48] INFO     [rag_service.py:1242] 快速检查成功，总数: 402 条
+[2026-04-19 18:47:48] INFO     [rag_service.py:814] 数据总数: 402 条
+[2026-04-19 18:47:48] INFO     [rag_service.py:823] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-19 18:47:48] INFO     [rag_service.py:866] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-19 18:47:48] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:48] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:48] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:48] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:47:56] ERROR    [llm_deepseek.py:194] LLM API 同步调用出错: Request timed out.
+[2026-04-19 18:47:56] ERROR    [rag_service.py:794] 生成价格报告失败: Request timed out.
+[2026-04-19 18:47:56] INFO     [rag_service.py:978] ================================================================================
+[2026-04-19 18:47:56] INFO     [rag_service.py:979] 📊 价格查询数据处理统计
+[2026-04-19 18:47:56] INFO     [rag_service.py:980] ================================================================================
+[2026-04-19 18:47:56] INFO     [rag_service.py:981] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-19 18:47:56] INFO     [rag_service.py:982] 📈 数据统计:
+[2026-04-19 18:47:56] INFO     [rag_service.py:983]    - 原始数据量: 402 条
+[2026-04-19 18:47:56] INFO     [rag_service.py:984]    - 过滤后数量: 324 条
+[2026-04-19 18:47:56] INFO     [rag_service.py:985]    - 返回数量: 257 条
+[2026-04-19 18:47:56] INFO     [rag_service.py:986] 🎫 Token 分析:
+[2026-04-19 18:47:56] INFO     [rag_service.py:987]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-19 18:47:56] INFO     [rag_service.py:988]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-19 18:47:56] INFO     [rag_service.py:989]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-19 18:47:56] INFO     [rag_service.py:990]    - Token 优化率: 99.2%
+[2026-04-19 18:47:56] INFO     [rag_service.py:991] ⏱️  数据处理时间:
+[2026-04-19 18:47:56] INFO     [rag_service.py:992]    - 数据检查: 0.985s
+[2026-04-19 18:47:56] INFO     [rag_service.py:993]    - 数据分析: 0.150s
+[2026-04-19 18:47:56] INFO     [rag_service.py:994]    - 总耗时: 0.985s
+[2026-04-19 18:47:56] INFO     [rag_service.py:995] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-19 18:47:56] INFO     [rag_service.py:996] ================================================================================
+[2026-04-19 18:47:56] INFO     [rag_service.py:812] 阶段1: 快速检查数据总数...
+[2026-04-19 18:47:56] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:56] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:57] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:57] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:47:57] INFO     [rag_service.py:1242] 快速检查成功，总数: 402 条
+[2026-04-19 18:47:57] INFO     [rag_service.py:814] 数据总数: 402 条
+[2026-04-19 18:47:57] INFO     [rag_service.py:823] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-19 18:47:57] INFO     [rag_service.py:866] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-19 18:47:57] INFO     [rag_service.py:1329] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-19 18:47:57] INFO     [rag_service.py:1387] 请求第 1 页，每页 2000 条...
+[2026-04-19 18:47:57] INFO     [rag_service.py:1408] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-19 18:47:57] INFO     [rag_service.py:1428] 分页拉取完成，共 402 条数据
+[2026-04-19 18:48:06] ERROR    [llm_deepseek.py:194] LLM API 同步调用出错: Request timed out.
+[2026-04-19 18:48:06] ERROR    [rag_service.py:794] 生成价格报告失败: Request timed out.
+[2026-04-19 18:48:06] INFO     [rag_service.py:978] ================================================================================
+[2026-04-19 18:48:06] INFO     [rag_service.py:979] 📊 价格查询数据处理统计
+[2026-04-19 18:48:06] INFO     [rag_service.py:980] ================================================================================
+[2026-04-19 18:48:06] INFO     [rag_service.py:981] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-19 18:48:06] INFO     [rag_service.py:982] 📈 数据统计:
+[2026-04-19 18:48:06] INFO     [rag_service.py:983]    - 原始数据量: 402 条
+[2026-04-19 18:48:06] INFO     [rag_service.py:984]    - 过滤后数量: 324 条
+[2026-04-19 18:48:06] INFO     [rag_service.py:985]    - 返回数量: 257 条
+[2026-04-19 18:48:06] INFO     [rag_service.py:986] 🎫 Token 分析:
+[2026-04-19 18:48:06] INFO     [rag_service.py:987]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-19 18:48:06] INFO     [rag_service.py:988]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-19 18:48:06] INFO     [rag_service.py:989]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-19 18:48:06] INFO     [rag_service.py:990]    - Token 优化率: 99.2%
+[2026-04-19 18:48:06] INFO     [rag_service.py:991] ⏱️  数据处理时间:
+[2026-04-19 18:48:06] INFO     [rag_service.py:992]    - 数据检查: 1.072s
+[2026-04-19 18:48:06] INFO     [rag_service.py:993]    - 数据分析: 0.145s
+[2026-04-19 18:48:06] INFO     [rag_service.py:994]    - 总耗时: 1.072s
+[2026-04-19 18:48:06] INFO     [rag_service.py:995] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-19 18:48:06] INFO     [rag_service.py:996] ================================================================================
+[2026-04-19 18:48:06] INFO     [agent.py:310] [Agent Stream] ReAct Step 3
+[2026-04-19 18:48:09] INFO     [agent.py:472] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料。可能的原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称（如“电力电缆”、“控制电缆”等）或补充省份、城市等信息，以便我更好地帮助您查询。
+[2026-04-19 18:49:31] INFO     [api_server.py:77] 关闭Easy-RAG API服务...

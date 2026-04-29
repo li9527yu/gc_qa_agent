@@ -7,6 +7,7 @@ import os
 import json
 import hashlib
 import logging
+import tempfile
 from typing import Dict, List, Set, Optional, Tuple
 from pathlib import Path
 from datetime import datetime
@@ -91,10 +92,45 @@ class KnowledgeBaseManager:
                 "last_updated": datetime.now().isoformat(),
                 "files": {k: v.to_dict() for k, v in self.index.items()}
             }
-            with open(self.index_path, 'w', encoding='utf-8') as f:
+            with tempfile.NamedTemporaryFile(
+                "w",
+                encoding="utf-8",
+                dir=os.path.dirname(self.index_path),
+                delete=False,
+            ) as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+                temp_path = f.name
+            os.replace(temp_path, self.index_path)
         except Exception as e:
             logger.error(f"保存索引失败: {e}")
+
+    def _build_file_index(self, filename: str, chunks: List[dict]) -> Optional[FileIndex]:
+        """基于文件名和chunks构建FileIndex，不落盘"""
+        filepath = os.path.join(self.data_path, filename)
+        if not os.path.exists(filepath):
+            logger.warning(f"构建索引时文件不存在，跳过: {filepath}")
+            return None
+
+        chunk_ids = []
+        for i, chunk in enumerate(chunks):
+            chunk_hash = hashlib.md5(
+                f"{filename}:{i}:{chunk.get('page_content', '')[:100]}".encode()
+            ).hexdigest()[:16]
+            chunk_id = f"{filename}_{chunk_hash}"
+            if 'metadata' not in chunk:
+                chunk['metadata'] = {}
+            chunk['metadata']['chunk_id'] = chunk_id
+            chunk['metadata']['source_file'] = filename
+            chunk_ids.append(chunk_id)
+
+        file_stat = os.stat(filepath)
+        return FileIndex(
+            file_hash=self.compute_file_hash(filepath),
+            chunk_ids=chunk_ids,
+            doc_count=len(chunks),
+            last_modified=datetime.fromtimestamp(file_stat.st_mtime).isoformat(),
+            file_size=file_stat.st_size
+        )
     
     def _rebuild_chunk_index(self):
         """重建chunk到文件的反向索引"""
@@ -158,40 +194,17 @@ class KnowledgeBaseManager:
     
     def add_file_record(self, filename: str, chunks: List[dict]) -> List[str]:
         """添加文件记录"""
-        filepath = os.path.join(self.data_path, filename)
-        if not os.path.exists(filepath):
-            logger.error(f"文件不存在: {filepath}")
+        file_index = self._build_file_index(filename, chunks)
+        if file_index is None:
             return []
-        
-        # 生成chunk IDs
-        chunk_ids = []
-        for i, chunk in enumerate(chunks):
-            chunk_hash = hashlib.md5(
-                f"{filename}:{i}:{chunk.get('page_content', '')[:100]}".encode()
-            ).hexdigest()[:16]
-            chunk_id = f"{filename}_{chunk_hash}"
-            if 'metadata' not in chunk:
-                chunk['metadata'] = {}
-            chunk['metadata']['chunk_id'] = chunk_id
-            chunk['metadata']['source_file'] = filename
-            chunk_ids.append(chunk_id)
-        
-        file_stat = os.stat(filepath)
-        file_index = FileIndex(
-            file_hash=self.compute_file_hash(filepath),
-            chunk_ids=chunk_ids,
-            doc_count=len(chunks),
-            last_modified=datetime.fromtimestamp(file_stat.st_mtime).isoformat(),
-            file_size=file_stat.st_size
-        )
-        
+
         self.index[filename] = file_index
-        for chunk_id in chunk_ids:
+        for chunk_id in file_index.chunk_ids:
             self._chunk_to_file[chunk_id] = filename
         
         self._save_index()
         logger.info(f"添加文件记录: {filename}, {len(chunks)} chunks")
-        return chunk_ids
+        return file_index.chunk_ids
     
     def remove_file_record(self, filename: str) -> List[str]:
         """删除文件记录，返回关联的chunk_ids"""
@@ -239,6 +252,45 @@ class KnowledgeBaseManager:
             "total_size_mb": round(total_size / (1024 * 1024), 2),
             "last_updated": max((f.last_modified for f in self.index.values()), default=None)
         }
+
+    def sync_with_corpus(self, corpus_chunks: List[dict]) -> dict:
+        """
+        根据当前内存语料重建文件索引。
+
+        用于全量初始化后修复 kb_index.json 与真实知识库状态不一致的问题。
+        """
+        grouped_chunks: Dict[str, List[dict]] = {}
+        for chunk in corpus_chunks:
+            metadata = chunk.get("metadata", {}) if isinstance(chunk, dict) else {}
+            source_file = metadata.get("source_file") or metadata.get("source")
+            if not source_file:
+                continue
+            grouped_chunks.setdefault(source_file, []).append(chunk)
+
+        new_index: Dict[str, FileIndex] = {}
+        skipped_files: List[str] = []
+        for filename, chunks in grouped_chunks.items():
+            file_index = self._build_file_index(filename, chunks)
+            if file_index is None:
+                skipped_files.append(filename)
+                continue
+            new_index[filename] = file_index
+
+        old_count = len(self.index)
+        self.index = new_index
+        self._rebuild_chunk_index()
+        self._save_index()
+
+        stats = {
+            "old_files": old_count,
+            "new_files": len(self.index),
+            "skipped_files": skipped_files,
+        }
+        logger.info(
+            f"知识库索引已同步: old_files={old_count}, new_files={len(self.index)}, "
+            f"skipped_files={len(skipped_files)}"
+        )
+        return stats
 
 
 # 全局单例

@@ -1,0 +1,781 @@
+[2026-04-27 13:21:51] INFO     [api_server.py:37] 启动Easy-RAG API服务...
+[2026-04-27 13:21:51] INFO     [api_server.py:40] 初始化数据库...
+[2026-04-27 13:21:51] INFO     [api_server.py:48] 管理员账号初始化完成: id=1, username=admin
+[2026-04-27 13:21:51] INFO     [api_server.py:56] ConversationManager数据库会话注入完成
+[2026-04-27 13:21:51] INFO     [rag_service.py:162] 开始初始化RAG服务...
+[2026-04-27 13:21:52] INFO     [rag_service.py:173] 语料库加载完成，共26664个文档
+[2026-04-27 13:21:52] INFO     [rag_service.py:187] 语料库未发生变化，使用现有缓存
+[2026-04-27 13:21:52] INFO     [llm_deepseek.py:92] 🤖 初始化 LLM 客户端
+[2026-04-27 13:21:52] INFO     [llm_deepseek.py:93]    模式: local
+[2026-04-27 13:21:52] INFO     [llm_deepseek.py:94]    Base URL: http://localhost:9839/v1
+[2026-04-27 13:21:52] INFO     [llm_deepseek.py:95]    Model: Qwen3-32B
+[2026-04-27 13:21:52] INFO     [rag_service.py:195] LLM初始化完成
+[2026-04-27 13:21:52] INFO     [rag_service.py:200] 查询重写器初始化完成
+[2026-04-27 13:21:52] INFO     [rag_service.py:380] 价格推荐模板加载成功
+[2026-04-27 13:21:52] INFO     [rag_service.py:205] 价格推荐模板初始化完成
+[2026-04-27 13:21:52] INFO     [rag_service.py:209] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-27 13:22:00] INFO     [rag_service.py:255] Retriever加载完成
+[2026-04-27 13:22:00] INFO     [rag_service.py:259] 语料库未变化，但Reranker未初始化，正在加载...
+[2026-04-27 13:22:02] INFO     [rag_service.py:265] Reranker加载完成
+[2026-04-27 13:22:02] INFO     [rag_service.py:268] 知识库索引同步完成: old_files=348, new_files=348, skipped_files=0
+[2026-04-27 13:22:02] INFO     [mcp_endpoints.py:409] MCP端点初始化完成
+[2026-04-27 13:22:02] INFO     [api_server.py:73] MCP和Agent服务初始化完成
+[2026-04-27 13:30:00] INFO     [conversation_manager.py:516] 创建新会话: 7204711d-81a (类型: price_query, 用户: 1)
+[2026-04-27 13:30:00] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] request.start | session_id="7204711d-81a", turn=1, user_message="查询一下2021年以后的白水泥信息价", entities={}
+[2026-04-27 13:30:00] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-27 13:30:02] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] react.step.llm_response | step=1, duration_ms=2249, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 13:30:02] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "查询一下2021年以后的白水泥信息价"}
+[2026-04-27 13:30:04] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "白水泥", "channel": "information_price", "startReleaseDate": "2021-01-01"}
+[2026-04-27 13:30:04] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1622, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "channel", "startReleaseDate"], "missing_fields": ["province", "city"]}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-27 13:30:04] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-27 13:30:06] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] react.step.llm_response | step=2, duration_ms=2272, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 13:30:06] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "白水泥", "start_release_date": "2021-01-01"}
+[2026-04-27 13:30:06] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=7204711d-81a-t1, channel=information_price, material=白水泥, province=, city=
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "白水泥", "startReleaseDate": "2021-01-01"}, user_question="查询一下2021年以后的白水泥信息价"
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.quick_check.start | channel="information_price"
+[2026-04-27 13:30:06] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 13:30:06] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 13:30:06] INFO     [rag_service.py:1583] 第 1 页获取 217 条数据，累计 217 条
+[2026-04-27 13:30:06] INFO     [rag_service.py:1603] 分页拉取完成，共 217 条数据
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] api.quick_check.success | channel="information_price", total_count=217
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.quick_check.end | total_count=217, duration_ms=231
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.volume_check | total_count=217, estimated_tokens=26040, can_process=true
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.query_data.start | channel="information_price"
+[2026-04-27 13:30:06] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] api.query.start | channel="information_price", entities={"materialName": "白水泥", "startReleaseDate": "2021-01-01"}
+[2026-04-27 13:30:06] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 13:30:06] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 13:30:07] INFO     [rag_service.py:1583] 第 1 页获取 217 条数据，累计 217 条
+[2026-04-27 13:30:07] INFO     [rag_service.py:1603] 分页拉取完成，共 217 条数据
+[2026-04-27 13:30:07] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] api.query.success | channel="information_price", total_count=217, duration_ms=131
+[2026-04-27 13:30:07] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.query_data.end | success=true, total_count=217, duration_ms=131
+[2026-04-27 13:30:07] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.filter.end | original_count=217, filtered_count=42, duration_ms=23
+[2026-04-27 13:30:07] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] phase.analyze.end | most_common_unit="t", result_unit_count=1, duration_ms=172
+[2026-04-27 13:30:07] INFO     [rag_service.py:147] [Price Trace][7204711d-81a-t1] request.success | original_count=217, filtered_count=42, returned_count=42, estimated_tokens=26040, filtered_data_tokens=5040, llm_input_tokens=253, token_optimization_rate="99.0%", check_time_ms=561, analysis_time_ms=173, total_time_ms=561, summary_metrics={"total_count": 42, "most_common_unit": "t", "valid_count": 34, "min_price": 977.0, "max_price": 1129.0, "mean_price": 1067.264705882353, "median_price": 1062.5, "recommend_mode": "single", "recommended_prices": [1062.5], "recommend_reason": "条件不足: silhouette=0.61, gap_ratio=0.05, 小簇=False"}
+[2026-04-27 13:30:07] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=563, result={"status": "success", "message": "查询到 42 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 42, "most_common_unit": "t", "price_data_count": 42, "metadata": {"channel": "information_price", "total_count": 42, "entities": {"materialName": "白水泥", "province": "", "city": "", "materialModelSpec": "", "brand": "", "startReleaseDate": "2021-01-01", "endReleaseDate": ""}, "trace_id": "7204711d-81a-t1", "duration_ms": 563}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-27 13:30:07] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] report.start | parsed_entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-27 13:30:37] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] report.end | duration_ms=29830, chunk_count=637, used_fallback=false, report_preview="根据2021年1月1日至今的白水泥市场信息价数据，我们对全国范围内白水泥的价格进行了统计与分析，现将结果整理如下，供市场分析与采购决策参考。\\n\\n### 一、数据概况\\n\\n本次分析共收集到白水泥价格样本 **42条**，其中经过异常值过滤后，有效样本数量为 **34条**。样本覆盖时间跨度为2021年至今，未限定具体品牌、规格型号、省份及城市，因此具有一定的市场代表性。\\n\\n### 二、价格..."
+[2026-04-27 13:30:37] INFO     [agent.py:272] [Agent Trace][7204711d-81a-t1] request.final | step=2, source="query_price_data", final_text_preview="根据2021年1月1日至今的白水泥市场信息价数据，我们对全国范围内白水泥的价格进行了统计与分析，现将结果整理如下，供市场分析与采购决策参考。\\n\\n### 一、数据概况\\n\\n本次分析共收集到白水泥价格样本 **42条**，其中经过异常值过滤后，有效样本数量为 **34条**。样本覆盖时间跨度为2021年至今，未限定具体品牌、规格型号、省份及城市，因此具有一定的市场代表性。\\n\\n### 二、价格分布特征\\n\\n从价格区间来看，白水泥的市场报价范围为 **977元/吨至112...", total_step_duration_ms=32672
+[2026-04-27 15:02:37] INFO     [conversation_manager.py:516] 创建新会话: 59054beb-6a6 (类型: price_query, 用户: 1)
+[2026-04-27 15:02:37] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] request.start | session_id="59054beb-6a6", turn=1, user_message="混凝土c30", entities={}
+[2026-04-27 15:02:37] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-27 15:02:38] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.llm_response | step=1, duration_ms=1165, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:02:38] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "混凝土c30"}
+[2026-04-27 15:02:39] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:02:39] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=884, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:02:39] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:02:40] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.llm_response | step=2, duration_ms=1141, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:02:40] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] tool.call.start | step=2, tool="quick_search_materials", params={"material_name": "混凝土"}
+[2026-04-27 15:02:40] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=混凝土, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-27 15:02:41] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "混凝土"}
+[2026-04-27 15:02:41] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "混凝土"}
+[2026-04-27 15:02:41] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:02:41] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:02:41] INFO     [rag_service.py:1583] 第 1 页获取 1975 条数据，累计 1975 条
+[2026-04-27 15:02:41] INFO     [rag_service.py:1603] 分页拉取完成，共 1975 条数据
+[2026-04-27 15:02:41] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=1975, duration_ms=480
+[2026-04-27 15:02:41] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "混凝土"}
+[2026-04-27 15:02:41] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:02:41] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:02:41] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-27 15:02:41] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=0, duration_ms=107
+[2026-04-27 15:02:41] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:02:41] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:02:42] INFO     [rag_service.py:1583] 第 1 页获取 2000 条数据，累计 2000 条
+[2026-04-27 15:02:42] INFO     [rag_service.py:1562] 请求第 2 页，每页 2000 条...
+[2026-04-27 15:02:42] INFO     [rag_service.py:1583] 第 2 页获取 943 条数据，累计 2943 条
+[2026-04-27 15:02:42] INFO     [rag_service.py:1603] 分页拉取完成，共 2943 条数据
+[2026-04-27 15:02:42] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] tool.call.end | step=2, tool="quick_search_materials", duration_ms=1622, result={"status": "success", "message": "找到 3 个相关材料，常见省份：广东省", "candidate_count": 3, "metadata": {"total_candidates": 3, "has_exact_match": false}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:02:42] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:02:45] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] react.step.llm_response | step=3, duration_ms=3262, has_tool_calls=false, tool_call_count=0, content_preview="找到了相关材料：普通混凝土空心砌块、预应力高强混凝土管桩、承插式钢筋混凝土排水管（Ⅱ级）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）"
+[2026-04-27 15:02:45] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t1] request.final | step=3, source="llm_direct_reply", final_text_preview="找到了相关材料：普通混凝土空心砌块、预应力高强混凝土管桩、承插式钢筋混凝土排水管（Ⅱ级）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）", total_step_duration_ms=3263
+[2026-04-27 15:03:33] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] request.start | session_id="59054beb-6a6", turn=2, user_message="信息价 广东省", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:03:33] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:03:35] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] react.step.llm_response | step=1, duration_ms=2191, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:03:35] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-27 15:03:35] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=59054beb-6a6-t2, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="信息价 广东省"
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.quick_check.start | channel="information_price"
+[2026-04-27 15:03:35] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:03:35] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:03:35] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:03:35] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.quick_check.end | total_count=35, duration_ms=133
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.query_data.start | channel="information_price"
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-27 15:03:35] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:03:35] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:03:35] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:03:35] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] api.query.success | channel="information_price", total_count=35, duration_ms=109
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.query_data.end | success=true, total_count=35, duration_ms=110
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.filter.end | original_count=35, filtered_count=35, duration_ms=17
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=71
+[2026-04-27 15:03:35] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t2] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=335, analysis_time_ms=72, total_time_ms=335, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-27 15:03:35] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] tool.call.end | step=1, tool="query_price_data", duration_ms=337, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "59054beb-6a6-t2", "duration_ms": 337}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:03:35] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:04:03] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] report.end | duration_ms=27850, chunk_count=592, used_fallback=false, report_preview="根据提供的材料价格数据，我们对广东省C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n- **价格区间**：C30混凝土..."
+[2026-04-27 15:04:03] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t2] request.final | step=1, source="query_price_data", final_text_preview="根据提供的材料价格数据，我们对广东省C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n- **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，表明市场存在...", total_step_duration_ms=30386
+[2026-04-27 15:31:34] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] request.start | session_id="59054beb-6a6", turn=3, user_message="混凝土c30", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:31:34] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:31:36] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] react.step.llm_response | step=1, duration_ms=2726, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:31:36] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-27 15:31:36] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=59054beb-6a6-t3, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-27 15:31:36] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="混凝土c30"
+[2026-04-27 15:31:36] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.quick_check.start | channel="information_price"
+[2026-04-27 15:31:36] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:31:36] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:31:37] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:31:37] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.quick_check.end | total_count=35, duration_ms=209
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.query_data.start | channel="information_price"
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-27 15:31:37] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:31:37] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:31:37] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:31:37] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] api.query.success | channel="information_price", total_count=35, duration_ms=111
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.query_data.end | success=true, total_count=35, duration_ms=112
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.filter.end | original_count=35, filtered_count=35, duration_ms=12
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=32
+[2026-04-27 15:31:37] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t3] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=369, analysis_time_ms=33, total_time_ms=369, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-27 15:31:37] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] tool.call.end | step=1, tool="query_price_data", duration_ms=370, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "59054beb-6a6-t3", "duration_ms": 370}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:31:37] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:32:07] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] report.end | duration_ms=30354, chunk_count=649, used_fallback=false, report_preview="根据对广东省范围内C30混凝土价格的统计分析结果，结合K-means聚类算法的推荐结果，现对价格分布特征及市场情况作如下分析：\\n\\n### 一、样本概况\\n本次统计共收集到C30混凝土价格样本35条，其中剔除异常值后，有效样本数量为32条，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n### 二、价格分布特征\\n1. **价格区间**：C30混凝土的价格范围为 *..."
+[2026-04-27 15:32:07] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t3] request.final | step=1, source="query_price_data", final_text_preview="根据对广东省范围内C30混凝土价格的统计分析结果，结合K-means聚类算法的推荐结果，现对价格分布特征及市场情况作如下分析：\\n\\n### 一、样本概况\\n本次统计共收集到C30混凝土价格样本35条，其中剔除异常值后，有效样本数量为32条，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n### 二、价格分布特征\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，整体价格波动幅度约为 **2...", total_step_duration_ms=33456
+[2026-04-27 15:32:55] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] request.start | session_id="59054beb-6a6", turn=4, user_message="混凝土c30", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:32:55] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:32:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] react.step.llm_response | step=1, duration_ms=3193, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:32:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-27 15:32:58] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=59054beb-6a6-t4, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="混凝土c30"
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.quick_check.start | channel="information_price"
+[2026-04-27 15:32:58] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:32:58] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:32:58] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:32:58] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.quick_check.end | total_count=35, duration_ms=127
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.query_data.start | channel="information_price"
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-27 15:32:58] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:32:58] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:32:58] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:32:58] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] api.query.success | channel="information_price", total_count=35, duration_ms=119
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.query_data.end | success=true, total_count=35, duration_ms=119
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.filter.end | original_count=35, filtered_count=35, duration_ms=12
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=36
+[2026-04-27 15:32:58] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t4] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=299, analysis_time_ms=38, total_time_ms=299, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-27 15:32:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] tool.call.end | step=1, tool="query_price_data", duration_ms=301, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "59054beb-6a6-t4", "duration_ms": 300}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:32:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:33:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] report.end | duration_ms=31272, chunk_count=667, used_fallback=false, report_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：..."
+[2026-04-27 15:33:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t4] request.final | step=1, source="query_price_data", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=34774
+[2026-04-27 15:38:22] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] request.start | session_id="59054beb-6a6", turn=5, user_message="混凝土c30", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:38:22] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:38:25] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] react.step.llm_response | step=1, duration_ms=2889, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:38:25] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-27 15:38:25] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=59054beb-6a6-t5, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="混凝土c30"
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.quick_check.start | channel="information_price"
+[2026-04-27 15:38:25] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:38:25] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:38:25] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:38:25] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.quick_check.end | total_count=35, duration_ms=132
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.query_data.start | channel="information_price"
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-27 15:38:25] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:38:25] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:38:25] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:38:25] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] api.query.success | channel="information_price", total_count=35, duration_ms=109
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.query_data.end | success=true, total_count=35, duration_ms=110
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.filter.end | original_count=35, filtered_count=35, duration_ms=6
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=37
+[2026-04-27 15:38:25] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t5] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=288, analysis_time_ms=38, total_time_ms=288, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-27 15:38:25] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] tool.call.end | step=1, tool="query_price_data", duration_ms=290, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "59054beb-6a6-t5", "duration_ms": 290}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:38:25] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:38:57] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] report.end | duration_ms=31278, chunk_count=667, used_fallback=false, report_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：..."
+[2026-04-27 15:38:57] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t5] request.final | step=1, source="query_price_data", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=34464
+[2026-04-27 15:48:27] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] request.start | session_id="59054beb-6a6", turn=6, user_message="混凝土c30", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:48:27] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:48:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] react.step.llm_response | step=1, duration_ms=2901, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:48:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-27 15:48:30] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=59054beb-6a6-t6, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="混凝土c30"
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.quick_check.start | channel="information_price"
+[2026-04-27 15:48:30] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:48:30] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:48:30] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:48:30] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.quick_check.end | total_count=35, duration_ms=127
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.query_data.start | channel="information_price"
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-27 15:48:30] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 15:48:30] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 15:48:30] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-27 15:48:30] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] api.query.success | channel="information_price", total_count=35, duration_ms=112
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.query_data.end | success=true, total_count=35, duration_ms=112
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.filter.end | original_count=35, filtered_count=35, duration_ms=12
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=26
+[2026-04-27 15:48:30] INFO     [rag_service.py:147] [Price Trace][59054beb-6a6-t6] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=281, analysis_time_ms=27, total_time_ms=281, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-27 15:48:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] tool.call.end | step=1, tool="query_price_data", duration_ms=283, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "59054beb-6a6-t6", "duration_ms": 283}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:48:30] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:49:01] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] report.end | duration_ms=31325, chunk_count=667, used_fallback=false, report_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：..."
+[2026-04-27 15:49:01] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t6] request.final | step=1, source="query_price_data", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=34516
+[2026-04-27 15:52:49] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t7] request.start | session_id="59054beb-6a6", turn=7, user_message="混凝土c30的单价", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:52:49] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t7] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:52:55] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t7] react.step.llm_response | step=1, duration_ms=6035, has_tool_calls=false, tool_call_count=0, content_preview="C30混凝土在广东省的推荐单价为 **112.38元/立方米（m³）**。这是基于市场数据的中位数价格，具有良好的市场代表性。\\n\\n### 价格区间参考：\\n- **最低价**：96.15元/m³\\n- **最高价**：122.61元/m³\\n- **平均价**：109.41元/m³\\n\\n如果您需要更具体的区域价格（如广州、深圳等），或想了解品牌厂商报价，可以告诉我，我会进一步为您查询！"
+[2026-04-27 15:52:55] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t7] request.final | step=1, source="llm_direct_reply", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=6036
+[2026-04-27 15:54:08] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] request.start | session_id="59054beb-6a6", turn=8, user_message="普工人工费", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:54:08] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:54:10] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] react.step.llm_response | step=1, duration_ms=2044, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:54:10] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] tool.call.start | step=1, tool="quick_search_materials", params={"material_keywords": "普工人工费"}
+[2026-04-27 15:54:10] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] tool.call.end | step=1, tool="quick_search_materials", duration_ms=0, result={"status": "error", "message": "缺少 keyword 参数"}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:54:10] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:54:16] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] react.step.llm_response | step=2, duration_ms=5832, has_tool_calls=false, tool_call_count=0, content_preview="未找到与“普工人工费”相关的材料信息。可能原因包括：\\n\\n1. 该关键词不属于建筑材料的常规分类；\\n2. 人工费通常不以材料形式记录，而是以工种或工程类别进行分类；\\n3. 当前系统未收录人工费相关数据。\\n\\n建议您：\\n- 查询具体工种的人工费（如“混凝土工日工资”、“钢筋工工资”等）；\\n- 提供更具体的工程类别或地区，以便进一步协助您。\\n\\n是否需要我帮您查询特定工种的人工费？"
+[2026-04-27 15:54:16] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t8] request.final | step=2, source="llm_direct_reply", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=5832
+[2026-04-27 15:56:18] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] request.start | session_id="59054beb-6a6", turn=9, user_message="天花式分体变频空调2HP", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:56:18] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:56:20] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] react.step.llm_response | step=1, duration_ms=1794, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 15:56:20] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] tool.call.start | step=1, tool="quick_search_materials", params={"material_keywords": "天花式分体变频空调2HP"}
+[2026-04-27 15:56:20] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] tool.call.end | step=1, tool="quick_search_materials", duration_ms=0, result={"status": "error", "message": "缺少 keyword 参数"}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:56:20] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-27 15:56:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] react.step.llm_response | step=2, duration_ms=37690, has_tool_calls=false, tool_call_count=0, content_preview="\"天花式分体变频空调2HP\" 是一种常见的空调类型，适用于家庭或小型商业空间。由于您没有提供具体的省份、城市、品牌或时间范围，我无法直接查询到准确的价格信息。\\n\\n为了帮助您更精确地查询价格，请提供以下信息：\\n1. **省份或城市**（例如：广东省、深圳市）。\\n2. **品牌**（例如：格力、美的）。\\n3. **是否需要厂商报价或信息价**（信息价为政府指导价，厂商报价为品牌实际售价）。\\..."
+[2026-04-27 15:56:58] INFO     [agent.py:272] [Agent Trace][59054beb-6a6-t9] request.final | step=2, source="llm_direct_reply", final_text_preview="根据提供的材料价格数据，我们对广东省范围内C30混凝土的价格进行了统计分析，以下是详细的市场分析结果：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集到 **35个样本数据**，其中经过异常值过滤后，保留了 **32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场价格水平。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：C30混凝土的价格范围为 **96.15元/m³ 至 122.61元/m³**，...", total_step_duration_ms=37691
+[2026-04-27 16:00:02] INFO     [conversation_manager.py:516] 创建新会话: 809ba77e-268 (类型: price_query, 用户: 1)
+[2026-04-27 16:00:02] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] request.start | session_id="809ba77e-268", turn=1, user_message="普工人工费", entities={}
+[2026-04-27 16:00:02] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-27 16:00:04] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.llm_response | step=1, duration_ms=1133, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:00:04] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "普工人工费"}
+[2026-04-27 16:00:04] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "普工人工费"}
+[2026-04-27 16:00:04] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=555, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "普工人工费"}
+[2026-04-27 16:00:04] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "普工人工费"}
+[2026-04-27 16:00:06] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.llm_response | step=2, duration_ms=1568, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:00:06] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] tool.call.start | step=2, tool="query_price_data", params={"channel": "information_price", "material_name": "普工人工费"}
+[2026-04-27 16:00:06] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=809ba77e-268-t1, channel=information_price, material=普工人工费, province=, city=
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "普工人工费"}, user_question="普工人工费"
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.quick_check.start | channel="information_price"
+[2026-04-27 16:00:06] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:00:06] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:00:06] INFO     [rag_service.py:1583] 第 1 页获取 21 条数据，累计 21 条
+[2026-04-27 16:00:06] INFO     [rag_service.py:1603] 分页拉取完成，共 21 条数据
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] api.quick_check.success | channel="information_price", total_count=21
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.quick_check.end | total_count=21, duration_ms=197
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.volume_check | total_count=21, estimated_tokens=2520, can_process=true
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.query_data.start | channel="information_price"
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] api.query.start | channel="information_price", entities={"materialName": "普工人工费"}
+[2026-04-27 16:00:06] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:00:06] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:00:06] INFO     [rag_service.py:1583] 第 1 页获取 21 条数据，累计 21 条
+[2026-04-27 16:00:06] INFO     [rag_service.py:1603] 分页拉取完成，共 21 条数据
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] api.query.success | channel="information_price", total_count=21, duration_ms=109
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.query_data.end | success=true, total_count=21, duration_ms=109
+[2026-04-27 16:00:06] INFO     [rag_service.py:147] [Price Trace][809ba77e-268-t1] phase.filter.end | original_count=21, filtered_count=0, duration_ms=10
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1027] ================================================================================
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1028] ⚠️  查询结果为空
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1029] ================================================================================
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1030] 🔍 查询条件: {'materialName': '普工人工费', 'province': '', 'city': '', 'materialModelSpec': '', 'brand': '', 'startReleaseDate': '', 'endReleaseDate': ''}
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1031] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1032] ⏱️  响应时间: 0.319s
+[2026-04-27 16:00:06] WARNING  [rag_service.py:1033] ================================================================================
+[2026-04-27 16:00:06] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] tool.call.end | step=2, tool="query_price_data", duration_ms=320, result={"status": "error", "message": "查询条件没有符合的样本", "success": false, "intent": "price_recommendation", "total_count": 0, "error_message": "查询条件没有符合的样本"}, entities_after={"materialName": "普工人工费"}
+[2026-04-27 16:00:06] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "普工人工费"}
+[2026-04-27 16:00:09] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] react.step.llm_response | step=3, duration_ms=2512, has_tool_calls=false, tool_call_count=0, content_preview="未查询到“普工人工费”的相关价格信息，可能原因包括：材料名称不匹配、当前渠道无相关数据等。建议您检查材料名称是否准确，或尝试其他查询条件。如果有其他需求，欢迎继续咨询！"
+[2026-04-27 16:00:09] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t1] request.final | step=3, source="llm_direct_reply", final_text_preview="未查询到“普工人工费”的相关价格信息，可能原因包括：材料名称不匹配、当前渠道无相关数据等。建议您检查材料名称是否准确，或尝试其他查询条件。如果有其他需求，欢迎继续咨询！", total_step_duration_ms=2513
+[2026-04-27 16:00:37] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] request.start | session_id="809ba77e-268", turn=2, user_message="天花式分体变频空调2HP", entities={"materialName": "普工人工费"}
+[2026-04-27 16:00:37] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "普工人工费"}
+[2026-04-27 16:00:39] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.llm_response | step=1, duration_ms=1383, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:00:39] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] tool.call.start | step=1, tool="extract_entities", params={"question": "天花式分体变频空调2HP"}
+[2026-04-27 16:00:40] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:00:40] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] tool.call.end | step=1, tool="extract_entities", duration_ms=1120, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:00:40] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:00:42] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.llm_response | step=2, duration_ms=1883, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:00:42] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] tool.call.start | step=2, tool="quick_search_materials", params={"material_name": "天花式分体变频空调", "material_model_spec": "2HP"}
+[2026-04-27 16:00:42] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=天花式分体变频空调, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-27 16:00:42] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "天花式分体变频空调"}
+[2026-04-27 16:00:42] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "天花式分体变频空调"}
+[2026-04-27 16:00:42] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:00:42] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:00:42] INFO     [rag_service.py:1583] 第 1 页获取 312 条数据，累计 312 条
+[2026-04-27 16:00:42] INFO     [rag_service.py:1603] 分页拉取完成，共 312 条数据
+[2026-04-27 16:00:42] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=312, duration_ms=147
+[2026-04-27 16:00:42] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "天花式分体变频空调"}
+[2026-04-27 16:00:42] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:00:42] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:00:43] INFO     [rag_service.py:1583] 第 1 页获取 127 条数据，累计 127 条
+[2026-04-27 16:00:43] INFO     [rag_service.py:1603] 分页拉取完成，共 127 条数据
+[2026-04-27 16:00:43] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=127, duration_ms=241
+[2026-04-27 16:00:43] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:00:43] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:00:43] INFO     [rag_service.py:1583] 第 1 页获取 396 条数据，累计 396 条
+[2026-04-27 16:00:43] INFO     [rag_service.py:1603] 分页拉取完成，共 396 条数据
+[2026-04-27 16:00:43] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] tool.call.end | step=2, tool="quick_search_materials", duration_ms=1256, result={"status": "success", "message": "找到 3 个相关材料，常见省份：广东省", "candidate_count": 3, "metadata": {"total_candidates": 3, "has_exact_match": false}}, entities_after={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:00:43] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:00:45] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] react.step.llm_response | step=3, duration_ms=2273, has_tool_calls=false, tool_call_count=0, content_preview="找到相关材料：天花式分体变频空调2HP（匹配度80%）。当前查询渠道：厂商报价。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）"
+[2026-04-27 16:00:45] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t2] request.final | step=3, source="llm_direct_reply", final_text_preview="找到相关材料：天花式分体变频空调2HP（匹配度80%）。当前查询渠道：厂商报价。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）", total_step_duration_ms=2274
+[2026-04-27 16:01:41] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] request.start | session_id="809ba77e-268", turn=3, user_message="水泥32.5的耽搁", entities={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:01:41] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "天花式分体变频空调", "materialModelSpec": "2HP"}
+[2026-04-27 16:01:42] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.llm_response | step=1, duration_ms=1377, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:01:42] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] tool.call.start | step=1, tool="extract_entities", params={"question": "水泥32.5的耽搁"}
+[2026-04-27 16:01:43] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:01:43] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] tool.call.end | step=1, tool="extract_entities", duration_ms=935, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:01:43] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:01:45] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.llm_response | step=2, duration_ms=1703, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:01:45] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] tool.call.start | step=2, tool="quick_search_materials", params={"material_name": "水泥", "material_model_spec": "32.5"}
+[2026-04-27 16:01:45] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=水泥, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-27 16:01:45] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "水泥"}
+[2026-04-27 16:01:45] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "水泥"}
+[2026-04-27 16:01:45] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:01:45] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:01:45] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-27 16:01:45] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-27 16:01:45] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=414, duration_ms=173
+[2026-04-27 16:01:45] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "水泥"}
+[2026-04-27 16:01:45] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:01:45] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:01:45] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-27 16:01:45] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=0, duration_ms=109
+[2026-04-27 16:01:45] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:01:45] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:01:46] INFO     [rag_service.py:1583] 第 1 页获取 1241 条数据，累计 1241 条
+[2026-04-27 16:01:46] INFO     [rag_service.py:1603] 分页拉取完成，共 1241 条数据
+[2026-04-27 16:01:46] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] tool.call.end | step=2, tool="quick_search_materials", duration_ms=976, result={"status": "success", "message": "找到 3 个相关材料，常见省份：广东省", "candidate_count": 3, "metadata": {"total_candidates": 3, "has_exact_match": false}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:01:46] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:01:49] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] react.step.llm_response | step=3, duration_ms=3060, has_tool_calls=false, tool_call_count=0, content_preview="找到相关材料：普通硅酸盐水泥（匹配度60%）、白水泥（匹配度60%）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）"
+[2026-04-27 16:01:49] INFO     [agent.py:272] [Agent Trace][809ba77e-268-t3] request.final | step=3, source="llm_direct_reply", final_text_preview="找到相关材料：普通硅酸盐水泥（匹配度60%）、白水泥（匹配度60%）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）", total_step_duration_ms=3061
+[2026-04-27 16:02:22] INFO     [conversation_manager.py:516] 创建新会话: c69f16fd-d33 (类型: price_query, 用户: 1)
+[2026-04-27 16:02:22] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] request.start | session_id="c69f16fd-d33", turn=1, user_message="水泥32.5的耽搁", entities={}
+[2026-04-27 16:02:22] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-27 16:02:24] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] react.step.llm_response | step=1, duration_ms=1319, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:02:24] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "水泥32.5的耽搁"}
+[2026-04-27 16:02:25] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:02:25] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=926, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:02:25] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:02:28] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] react.step.llm_response | step=2, duration_ms=2881, has_tool_calls=false, tool_call_count=0, content_preview="您提到的“耽搁”可能是指水泥32.5的某些问题或延迟情况。能否请您进一步说明具体需求或问题？例如，您是想查询水泥32.5的价格信息，还是关于其供应或使用中的问题？这样我可以更好地为您提供帮助。"
+[2026-04-27 16:02:28] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t1] request.final | step=2, source="llm_direct_reply", final_text_preview="您提到的“耽搁”可能是指水泥32.5的某些问题或延迟情况。能否请您进一步说明具体需求或问题？例如，您是想查询水泥32.5的价格信息，还是关于其供应或使用中的问题？这样我可以更好地为您提供帮助。", total_step_duration_ms=2882
+[2026-04-27 16:02:59] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] request.start | session_id="c69f16fd-d33", turn=2, user_message="单价信息", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:02:59] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:00] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] react.step.llm_response | step=1, duration_ms=1330, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:03:00] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] tool.call.start | step=1, tool="identify_channel", params={"question": "水泥32.5的单价信息"}
+[2026-04-27 16:03:00] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: unknown
+[2026-04-27 16:03:00] INFO     [rag_service.py:413] LLM 渠道识别原始结果: unknown
+[2026-04-27 16:03:00] INFO     [rag_service.py:430] LLM 识别为 unknown，启用智能推断...
+[2026-04-27 16:03:00] INFO     [rag_service.py:437] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-27 16:03:00] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] tool.call.end | step=1, tool="identify_channel", duration_ms=134, result={"status": "success", "message": "识别到渠道: unknown"}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:00] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:05] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] react.step.llm_response | step=2, duration_ms=5006, has_tool_calls=false, tool_call_count=0, content_preview="您查询的是“水泥32.5的单价信息”，但未明确查询渠道。请告知您需要哪种渠道的价格信息：\\n\\n1. **信息价**：政府或行业发布的指导价，适合用于工程预算参考。\\n2. **厂商报价**：品牌厂商的直接报价，适合有品牌需求的采购场景。\\n3. **智诚价**：市场综合价格，反映当前市场行情。\\n\\n另外，如果方便的话，请补充省份或城市信息，以便更精准地查询。"
+[2026-04-27 16:03:05] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t2] request.final | step=2, source="llm_direct_reply", final_text_preview="您查询的是“水泥32.5的单价信息”，但未明确查询渠道。请告知您需要哪种渠道的价格信息：\\n\\n1. **信息价**：政府或行业发布的指导价，适合用于工程预算参考。\\n2. **厂商报价**：品牌厂商的直接报价，适合有品牌需求的采购场景。\\n3. **智诚价**：市场综合价格，反映当前市场行情。\\n\\n另外，如果方便的话，请补充省份或城市信息，以便更精准地查询。", total_step_duration_ms=5007
+[2026-04-27 16:03:24] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] request.start | session_id="c69f16fd-d33", turn=3, user_message="信息价", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:24] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:25] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] react.step.llm_response | step=1, duration_ms=1366, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:03:25] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] tool.call.start | step=1, tool="quick_search_materials", params={"material_name": "水泥32.5"}
+[2026-04-27 16:03:25] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=水泥32.5, limit=10, ignored_params={'channel': 'unknown'}
+[2026-04-27 16:03:26] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:26] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "水泥32.5"}
+[2026-04-27 16:03:26] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:03:26] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:03:26] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-27 16:03:26] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-27 16:03:26] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=414, duration_ms=191
+[2026-04-27 16:03:26] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "水泥32.5"}
+[2026-04-27 16:03:26] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:03:26] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:03:26] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-27 16:03:26] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=0, duration_ms=99
+[2026-04-27 16:03:26] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] tool.call.end | step=1, tool="quick_search_materials", duration_ms=1220, result={"status": "success", "message": "找到 0 个相关材料，常见省份：无", "candidate_count": 0, "metadata": {"total_candidates": 0, "has_exact_match": false}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:26] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:03:30] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] react.step.llm_response | step=2, duration_ms=3557, has_tool_calls=false, tool_call_count=0, content_preview="未找到与“水泥32.5”直接匹配的材料信息。可能的原因包括：材料名称不准确、该材料数据暂未收录或查询条件需要进一步明确。\\n\\n建议您检查材料名称是否正确，或尝试使用更通用的名称（如“水泥”）。如果需要，也可以提供更多背景信息，我将尽力协助您！"
+[2026-04-27 16:03:30] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t3] request.final | step=2, source="llm_direct_reply", final_text_preview="未找到与“水泥32.5”直接匹配的材料信息。可能的原因包括：材料名称不准确、该材料数据暂未收录或查询条件需要进一步明确。\\n\\n建议您检查材料名称是否正确，或尝试使用更通用的名称（如“水泥”）。如果需要，也可以提供更多背景信息，我将尽力协助您！", total_step_duration_ms=3558
+[2026-04-27 16:04:38] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] request.start | session_id="c69f16fd-d33", turn=4, user_message="空心六角钢", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:04:38] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:04:40] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] react.step.llm_response | step=1, duration_ms=1229, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:04:40] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] tool.call.start | step=1, tool="identify_channel", params={"question": "空心六角钢"}
+[2026-04-27 16:04:40] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: unknown
+[2026-04-27 16:04:40] INFO     [rag_service.py:413] LLM 渠道识别原始结果: unknown
+[2026-04-27 16:04:40] INFO     [rag_service.py:430] LLM 识别为 unknown，启用智能推断...
+[2026-04-27 16:04:40] INFO     [rag_service.py:437] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-27 16:04:40] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] tool.call.end | step=1, tool="identify_channel", duration_ms=134, result={"status": "success", "message": "识别到渠道: unknown"}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:04:40] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:04:45] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] react.step.llm_response | step=2, duration_ms=4895, has_tool_calls=false, tool_call_count=0, content_preview="您查询的是“空心六角钢”，但未明确查询渠道。请告知您需要哪种渠道的价格信息：\\n\\n1. **信息价**：政府或行业发布的指导价，适合用于工程预算参考。\\n2. **厂商报价**：品牌厂商的直接报价，适合有品牌需求的采购场景。\\n3. **智诚价**：市场综合价格，反映当前市场行情。\\n\\n另外，如果方便的话，请补充省份或城市信息，以便更精准地查询。"
+[2026-04-27 16:04:45] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t4] request.final | step=2, source="llm_direct_reply", final_text_preview="您查询的是“空心六角钢”，但未明确查询渠道。请告知您需要哪种渠道的价格信息：\\n\\n1. **信息价**：政府或行业发布的指导价，适合用于工程预算参考。\\n2. **厂商报价**：品牌厂商的直接报价，适合有品牌需求的采购场景。\\n3. **智诚价**：市场综合价格，反映当前市场行情。\\n\\n另外，如果方便的话，请补充省份或城市信息，以便更精准地查询。", total_step_duration_ms=4896
+[2026-04-27 16:05:12] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] request.start | session_id="c69f16fd-d33", turn=5, user_message="智诚价", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:12] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:13] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] react.step.llm_response | step=1, duration_ms=1364, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:05:13] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] tool.call.start | step=1, tool="quick_search_materials", params={"material_name": "空心六角钢"}
+[2026-04-27 16:05:13] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=空心六角钢, limit=10, ignored_params={'channel': 'unknown'}
+[2026-04-27 16:05:14] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "空心六角钢"}
+[2026-04-27 16:05:14] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "空心六角钢"}
+[2026-04-27 16:05:14] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:05:14] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:05:14] INFO     [rag_service.py:1583] 第 1 页获取 2000 条数据，累计 2000 条
+[2026-04-27 16:05:14] INFO     [rag_service.py:1562] 请求第 2 页，每页 2000 条...
+[2026-04-27 16:05:14] INFO     [rag_service.py:1583] 第 2 页获取 517 条数据，累计 2517 条
+[2026-04-27 16:05:14] INFO     [rag_service.py:1603] 分页拉取完成，共 2517 条数据
+[2026-04-27 16:05:14] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=2517, duration_ms=583
+[2026-04-27 16:05:14] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "空心六角钢"}
+[2026-04-27 16:05:14] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:05:14] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:05:15] INFO     [rag_service.py:1583] 第 1 页获取 437 条数据，累计 437 条
+[2026-04-27 16:05:15] INFO     [rag_service.py:1603] 分页拉取完成，共 437 条数据
+[2026-04-27 16:05:15] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=437, duration_ms=468
+[2026-04-27 16:05:15] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] tool.call.end | step=1, tool="quick_search_materials", duration_ms=1654, result={"status": "success", "message": "找到 0 个相关材料，常见省份：无", "candidate_count": 0, "metadata": {"total_candidates": 0, "has_exact_match": false}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:15] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:18] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] react.step.llm_response | step=2, duration_ms=3648, has_tool_calls=false, tool_call_count=0, content_preview="未找到与“空心六角钢”直接匹配的材料信息。可能的原因包括：材料名称不准确、该材料数据暂未收录或查询条件需要进一步明确。\\n\\n建议您检查材料名称是否正确，或尝试使用更通用的名称（如“六角钢”）。如果需要，也可以提供更多背景信息，我将尽力协助您！"
+[2026-04-27 16:05:18] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t5] request.final | step=2, source="llm_direct_reply", final_text_preview="未找到与“空心六角钢”直接匹配的材料信息。可能的原因包括：材料名称不准确、该材料数据暂未收录或查询条件需要进一步明确。\\n\\n建议您检查材料名称是否正确，或尝试使用更通用的名称（如“六角钢”）。如果需要，也可以提供更多背景信息，我将尽力协助您！", total_step_duration_ms=3649
+[2026-04-27 16:05:33] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] request.start | session_id="c69f16fd-d33", turn=6, user_message="信息价", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:33] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:35] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] react.step.llm_response | step=1, duration_ms=1364, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:05:35] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] tool.call.start | step=1, tool="quick_search_materials", params={"material_name": "空心六角钢"}
+[2026-04-27 16:05:35] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=空心六角钢, limit=10, ignored_params={'channel': 'unknown'}
+[2026-04-27 16:05:35] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "空心六角钢"}
+[2026-04-27 16:05:35] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "空心六角钢"}
+[2026-04-27 16:05:35] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:05:35] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:05:36] INFO     [rag_service.py:1583] 第 1 页获取 2000 条数据，累计 2000 条
+[2026-04-27 16:05:36] INFO     [rag_service.py:1562] 请求第 2 页，每页 2000 条...
+[2026-04-27 16:05:36] INFO     [rag_service.py:1583] 第 2 页获取 517 条数据，累计 2517 条
+[2026-04-27 16:05:36] INFO     [rag_service.py:1603] 分页拉取完成，共 2517 条数据
+[2026-04-27 16:05:36] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=2517, duration_ms=520
+[2026-04-27 16:05:36] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "空心六角钢"}
+[2026-04-27 16:05:36] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-27 16:05:36] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-27 16:05:36] INFO     [rag_service.py:1583] 第 1 页获取 437 条数据，累计 437 条
+[2026-04-27 16:05:36] INFO     [rag_service.py:1603] 分页拉取完成，共 437 条数据
+[2026-04-27 16:05:36] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=437, duration_ms=429
+[2026-04-27 16:05:36] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] tool.call.end | step=1, tool="quick_search_materials", duration_ms=1557, result={"status": "success", "message": "找到 0 个相关材料，常见省份：无", "candidate_count": 0, "metadata": {"total_candidates": 0, "has_exact_match": false}}, entities_after={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:36] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:05:41] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] react.step.llm_response | step=2, duration_ms=4282, has_tool_calls=false, tool_call_count=0, content_preview="仍未找到与“空心六角钢”直接匹配的材料信息。建议您尝试以下方法：\\n\\n1. 检查材料名称是否准确，是否存在拼写错误。\\n2. 使用更通用的名称（如“六角钢”）进行查询。\\n3. 提供更多背景信息，例如用途或相关行业，以便我更好地协助您。\\n\\n如果您有其他材料需要查询，也欢迎随时告诉我！"
+[2026-04-27 16:05:41] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t6] request.final | step=2, source="llm_direct_reply", final_text_preview="仍未找到与“空心六角钢”直接匹配的材料信息。建议您尝试以下方法：\\n\\n1. 检查材料名称是否准确，是否存在拼写错误。\\n2. 使用更通用的名称（如“六角钢”）进行查询。\\n3. 提供更多背景信息，例如用途或相关行业，以便我更好地协助您。\\n\\n如果您有其他材料需要查询，也欢迎随时告诉我！", total_step_duration_ms=4283
+[2026-04-27 16:13:32] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] request.start | session_id="c69f16fd-d33", turn=7, user_message="房建类总包工程学校的中标下浮率多少", entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:13:32] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "水泥", "materialModelSpec": "32.5"}
+[2026-04-27 16:13:33] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] react.step.llm_response | step=1, duration_ms=1574, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-27 16:13:33] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] tool.call.start | step=1, tool="extract_entities", params={"question": "房建类总包工程学校的中标下浮率多少"}
+[2026-04-27 16:13:34] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "房建类总包工程学校"}
+[2026-04-27 16:13:34] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] tool.call.end | step=1, tool="extract_entities", duration_ms=700, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "房建类总包工程学校", "materialModelSpec": "32.5"}
+[2026-04-27 16:13:34] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "房建类总包工程学校", "materialModelSpec": "32.5"}
+[2026-04-27 16:13:37] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] react.step.llm_response | step=2, duration_ms=3013, has_tool_calls=false, tool_call_count=0, content_preview="您提到的“房建类总包工程学校”可能需要进一步明确，因为这听起来像是一个机构名称，而不是材料。如果您是想查询与房建类总包工程相关的中标下浮率信息，请提供更多背景或具体材料/项目信息，以便我更好地协助您。"
+[2026-04-27 16:13:37] INFO     [agent.py:272] [Agent Trace][c69f16fd-d33-t7] request.final | step=2, source="llm_direct_reply", final_text_preview="您提到的“房建类总包工程学校”可能需要进一步明确，因为这听起来像是一个机构名称，而不是材料。如果您是想查询与房建类总包工程相关的中标下浮率信息，请提供更多背景或具体材料/项目信息，以便我更好地协助您。", total_step_duration_ms=3014
+[2026-04-27 16:14:06] INFO     [conversation_manager.py:516] 创建新会话: 66483f30-f0d (类型: knowledge_qa, 用户: 1)
+[2026-04-27 16:14:08] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 39 个文档
+[2026-04-27 16:14:39] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 16:14:39] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 10454, query: 房建类总包工程学校的中标下浮率多少
+[2026-04-27 16:14:39] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 10907
+[2026-04-27 16:14:39] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+[2026-04-27 16:14:42] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 34 个 chunk
+[2026-04-27 16:22:21] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 39 个文档
+[2026-04-27 16:22:51] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 16:22:51] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 7143, query: 关于评审智诚的文件有哪些
+[2026-04-27 16:22:51] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 7591
+[2026-04-27 16:22:51] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 4
+[2026-04-27 16:22:52] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 12 个 chunk
+[2026-04-27 16:23:55] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 38 个文档
+[2026-04-27 16:24:15] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 16:24:15] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 4988, query: 关于评审职称的文件有哪些
+[2026-04-27 16:24:15] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 5436
+[2026-04-27 16:24:15] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 6
+[2026-04-27 16:24:32] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 329 个 chunk
+[2026-04-27 16:27:21] INFO     [query_rewriter.py:187] 开始查询重写: '《广东省建筑工程技术人才职称评价标准条件》 这个文件有效期是纪念...' (包含指代词'这个')
+[2026-04-27 16:27:21] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: 《广东省建筑工程技术人才职称评价标准条件》这个文件的有效期是多久？
+[2026-04-27 16:27:21] ERROR    [query_rewriter.py:219] 查询重写失败: object str can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/tpc/suda/rag/rag_agent/app/utils/query_rewriter.py", line 190, in rewrite
+    rewritten = await self.llm.predict_prompt(
+TypeError: object str can't be used in 'await' expression
+[2026-04-27 16:27:22] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 32 个文档
+[2026-04-27 16:27:26] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 16:27:26] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 2407, query: 《广东省建筑工程技术人才职称评价标准条件》 这个文件有效期是纪念
+[2026-04-27 16:27:26] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 2875
+[2026-04-27 16:27:26] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 8
+[2026-04-27 16:27:29] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 61 个 chunk
+[2026-04-27 16:27:51] INFO     [query_rewriter.py:187] 开始查询重写: '《广东省建筑工程技术人才职称评价标准条件》 这个文件有效期是几年...' (包含指代词'这个')
+[2026-04-27 16:27:52] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: 《广东省建筑工程技术人才职称评价标准条件》这个文件的有效期是几年？
+[2026-04-27 16:27:52] ERROR    [query_rewriter.py:219] 查询重写失败: object str can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/tpc/suda/rag/rag_agent/app/utils/query_rewriter.py", line 190, in rewrite
+    rewritten = await self.llm.predict_prompt(
+TypeError: object str can't be used in 'await' expression
+[2026-04-27 16:27:52] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 32 个文档
+[2026-04-27 16:27:56] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 16:27:56] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 2413, query: 《广东省建筑工程技术人才职称评价标准条件》 这个文件有效期是几年
+[2026-04-27 16:27:56] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 2881
+[2026-04-27 16:27:56] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 10
+[2026-04-27 16:27:58] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 27 个 chunk
+[2026-04-27 17:06:05] INFO     [conversation_manager.py:516] 创建新会话: 0d1bc70a-b2e (类型: knowledge_qa, 用户: 1)
+[2026-04-27 17:06:05] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 33 个文档
+[2026-04-27 17:06:12] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-27 17:06:12] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 2718, query: 天安门事件
+[2026-04-27 17:06:12] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 3159
+[2026-04-27 17:06:12] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 2
+[2026-04-27 17:06:13] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 12 个 chunk
+[2026-04-28 09:32:51] INFO     [conversation_manager.py:516] 创建新会话: 055fba27-ac4 (类型: price_query, 用户: 1)
+[2026-04-28 09:32:51] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] request.start | session_id="055fba27-ac4", turn=1, user_message="混凝土c30", entities={}
+[2026-04-28 09:32:51] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-28 09:32:52] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.llm_response | step=1, duration_ms=1347, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:32:52] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "混凝土c30"}
+[2026-04-28 09:32:53] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:32:53] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=997, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:32:53] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:32:55] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.llm_response | step=2, duration_ms=1633, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:32:55] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] tool.call.start | step=2, tool="quick_search_materials", params={"material_name": "混凝土", "material_model_spec": "C30"}
+[2026-04-28 09:32:55] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=混凝土, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-28 09:32:55] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "混凝土"}
+[2026-04-28 09:32:55] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "混凝土"}
+[2026-04-28 09:32:55] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:32:55] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:32:56] INFO     [rag_service.py:1583] 第 1 页获取 1975 条数据，累计 1975 条
+[2026-04-28 09:32:56] INFO     [rag_service.py:1603] 分页拉取完成，共 1975 条数据
+[2026-04-28 09:32:56] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=1975, duration_ms=435
+[2026-04-28 09:32:56] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "混凝土"}
+[2026-04-28 09:32:56] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:32:56] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:32:56] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-28 09:32:56] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=0, duration_ms=115
+[2026-04-28 09:32:56] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:32:56] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:32:56] INFO     [rag_service.py:1583] 第 1 页获取 2000 条数据，累计 2000 条
+[2026-04-28 09:32:56] INFO     [rag_service.py:1562] 请求第 2 页，每页 2000 条...
+[2026-04-28 09:32:57] INFO     [rag_service.py:1583] 第 2 页获取 943 条数据，累计 2943 条
+[2026-04-28 09:32:57] INFO     [rag_service.py:1603] 分页拉取完成，共 2943 条数据
+[2026-04-28 09:32:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] tool.call.end | step=2, tool="quick_search_materials", duration_ms=1524, result={"status": "success", "message": "找到 3 个相关材料，常见省份：广东省", "candidate_count": 3, "metadata": {"total_candidates": 3, "has_exact_match": false}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:32:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:33:00] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] react.step.llm_response | step=3, duration_ms=3233, has_tool_calls=false, tool_call_count=0, content_preview="找到相关材料：普通混凝土空心砌块、预应力高强混凝土管桩、承插式钢筋混凝土排水管（Ⅱ级）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）"
+[2026-04-28 09:33:00] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t1] request.final | step=3, source="llm_direct_reply", final_text_preview="找到相关材料：普通混凝土空心砌块、预应力高强混凝土管桩、承插式钢筋混凝土排水管（Ⅱ级）。当前查询渠道：信息价（推断）。如果您想查询厂商报价，请告诉我。另外还缺少省份信息，请问是哪个省份？（如：广东省、江苏省）", total_step_duration_ms=3234
+[2026-04-28 09:33:30] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] request.start | session_id="055fba27-ac4", turn=2, user_message="广东省", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:33:30] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:33:33] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] react.step.llm_response | step=1, duration_ms=2166, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:33:33] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30"}
+[2026-04-28 09:33:33] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=055fba27-ac4-t2, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}, user_question="广东省"
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.quick_check.start | channel="information_price"
+[2026-04-28 09:33:33] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:33:33] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:33:33] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-28 09:33:33] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] api.quick_check.success | channel="information_price", total_count=35
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.quick_check.end | total_count=35, duration_ms=112
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.volume_check | total_count=35, estimated_tokens=4200, can_process=true
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.query_data.start | channel="information_price"
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30"}
+[2026-04-28 09:33:33] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:33:33] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:33:33] INFO     [rag_service.py:1583] 第 1 页获取 35 条数据，累计 35 条
+[2026-04-28 09:33:33] INFO     [rag_service.py:1603] 分页拉取完成，共 35 条数据
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] api.query.success | channel="information_price", total_count=35, duration_ms=129
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.query_data.end | success=true, total_count=35, duration_ms=130
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.filter.end | original_count=35, filtered_count=35, duration_ms=16
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=69
+[2026-04-28 09:33:33] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t2] request.success | original_count=35, filtered_count=35, returned_count=35, estimated_tokens=4200, filtered_data_tokens=4200, llm_input_tokens=252, token_optimization_rate="94.0%", check_time_ms=331, analysis_time_ms=70, total_time_ms=331, summary_metrics={"total_count": 35, "most_common_unit": "m", "valid_count": 32, "min_price": 96.15, "max_price": 122.61, "mean_price": 109.40937499999998, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.72, gap_ratio=0.14, 小簇=False"}
+[2026-04-28 09:33:33] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] tool.call.end | step=1, tool="query_price_data", duration_ms=334, result={"status": "success", "message": "查询到 35 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 35, "most_common_unit": "m", "price_data_count": 35, "metadata": {"channel": "information_price", "total_count": 35, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "055fba27-ac4-t2", "duration_ms": 334}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:33:33] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:34:00] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] report.end | duration_ms=26577, chunk_count=569, used_fallback=false, report_preview="根据对广东省C30混凝土价格的统计分析结果，结合K-means聚类算法的推荐结果，现对价格分布特征及市场情况作如下分析：\\n\\n### 一、样本概况\\n本次统计共收集到**35个样本数据**，其中经过异常值过滤后，保留了**32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n### 二、价格分布特征\\n- **价格区间**：C30混凝土的价格范围为**..."
+[2026-04-28 09:34:00] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t2] request.final | step=1, source="query_price_data", final_text_preview="根据对广东省C30混凝土价格的统计分析结果，结合K-means聚类算法的推荐结果，现对价格分布特征及市场情况作如下分析：\\n\\n### 一、样本概况\\n本次统计共收集到**35个样本数据**，其中经过异常值过滤后，保留了**32个有效样本**，样本数量充足，具备一定的代表性，能够反映广东省C30混凝土的市场行情。\\n\\n### 二、价格分布特征\\n- **价格区间**：C30混凝土的价格范围为**96.15元/m³至122.61元/m³**，整体价格波动幅度约为**26.46...", total_step_duration_ms=29087
+[2026-04-28 09:36:53] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] request.start | session_id="055fba27-ac4", turn=3, user_message="时间选择2019年以后的", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:36:53] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:36:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] react.step.llm_response | step=1, duration_ms=3485, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:36:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30", "start_release_date": "2019-01-01"}
+[2026-04-28 09:36:57] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=055fba27-ac4-t3, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30", "startReleaseDate": "2019-01-01"}, user_question="时间选择2019年以后的"
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.quick_check.start | channel="information_price"
+[2026-04-28 09:36:57] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:36:57] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:36:57] INFO     [rag_service.py:1583] 第 1 页获取 20 条数据，累计 20 条
+[2026-04-28 09:36:57] INFO     [rag_service.py:1603] 分页拉取完成，共 20 条数据
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] api.quick_check.success | channel="information_price", total_count=20
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.quick_check.end | total_count=20, duration_ms=110
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.volume_check | total_count=20, estimated_tokens=2400, can_process=true
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.query_data.start | channel="information_price"
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30", "startReleaseDate": "2019-01-01"}
+[2026-04-28 09:36:57] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:36:57] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:36:57] INFO     [rag_service.py:1583] 第 1 页获取 20 条数据，累计 20 条
+[2026-04-28 09:36:57] INFO     [rag_service.py:1603] 分页拉取完成，共 20 条数据
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] api.query.success | channel="information_price", total_count=20, duration_ms=124
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.query_data.end | success=true, total_count=20, duration_ms=125
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.filter.end | original_count=20, filtered_count=20, duration_ms=10
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] phase.analyze.end | most_common_unit="m", result_unit_count=1, duration_ms=33
+[2026-04-28 09:36:57] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t3] request.success | original_count=20, filtered_count=20, returned_count=20, estimated_tokens=2400, filtered_data_tokens=2400, llm_input_tokens=257, token_optimization_rate="89.3%", check_time_ms=281, analysis_time_ms=34, total_time_ms=281, summary_metrics={"total_count": 20, "most_common_unit": "m", "valid_count": 15, "min_price": 106.36, "max_price": 116.25, "mean_price": 111.95133333333334, "median_price": 112.38, "recommend_mode": "single", "recommended_prices": [112.38], "recommend_reason": "条件不足: silhouette=0.87, gap_ratio=0.06, 小簇=False"}
+[2026-04-28 09:36:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] tool.call.end | step=1, tool="query_price_data", duration_ms=283, result={"status": "success", "message": "查询到 20 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 20, "most_common_unit": "m", "price_data_count": 20, "metadata": {"channel": "information_price", "total_count": 20, "entities": {"materialName": "混凝土", "province": "广东省", "city": "", "materialModelSpec": "C30", "brand": "", "startReleaseDate": "2019-01-01", "endReleaseDate": ""}, "trace_id": "055fba27-ac4-t3", "duration_ms": 282}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:36:57] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] report.start | parsed_entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 09:37:19] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] report.end | duration_ms=21688, chunk_count=461, used_fallback=false, report_preview="根据2019年以后广东省范围内C30混凝土的价格数据统计与分析结果，可对当前市场情况进行如下解读：\\n\\n### 一、样本概况\\n在所收集的20个样本中，经过异常值过滤后，共有15个有效样本参与分析，说明数据质量较高，具有一定的代表性。\\n\\n### 二、价格分布特征\\n- **价格区间**：C30混凝土的价格范围为 **106.36元/m³ 至 116.25元/m³**，整体价格波动幅度较小，表..."
+[2026-04-28 09:37:19] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t3] request.final | step=1, source="query_price_data", final_text_preview="根据2019年以后广东省范围内C30混凝土的价格数据统计与分析结果，可对当前市场情况进行如下解读：\\n\\n### 一、样本概况\\n在所收集的20个样本中，经过异常值过滤后，共有15个有效样本参与分析，说明数据质量较高，具有一定的代表性。\\n\\n### 二、价格分布特征\\n- **价格区间**：C30混凝土的价格范围为 **106.36元/m³ 至 116.25元/m³**，整体价格波动幅度较小，表明市场相对稳定。\\n- **平均价格**：样本的平均价格为 **111.95元/...", total_step_duration_ms=25463
+[2026-04-28 09:55:04] INFO     [conversation_manager.py:516] 创建新会话: f5877db9-899 (类型: price_query, 用户: 1)
+[2026-04-28 09:55:04] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] request.start | session_id="f5877db9-899", turn=1, user_message="请查一下白水泥的信息价", entities={}
+[2026-04-28 09:55:04] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-28 09:55:05] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.llm_response | step=1, duration_ms=1315, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:55:05] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "请查一下白水泥的信息价"}
+[2026-04-28 09:55:06] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:06] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=807, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "channel"], "missing_fields": ["province", "city"]}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:06] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:07] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.llm_response | step=2, duration_ms=1192, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:55:07] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.start | step=2, tool="quick_search_materials", params={"material_name": "白水泥"}
+[2026-04-28 09:55:07] INFO     [tools.py:293] [MCP Tool] quick_search_materials: keyword=白水泥, limit=10, ignored_params={'channel': 'information_price'}
+[2026-04-28 09:55:08] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "白水泥"}
+[2026-04-28 09:55:08] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="information_price", entities={"materialName": "白水泥"}
+[2026-04-28 09:55:08] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:55:08] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:55:08] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-28 09:55:08] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-28 09:55:08] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="information_price", total_count=414, duration_ms=277
+[2026-04-28 09:55:08] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.start | channel="manufacturer_price", entities={"materialName": "白水泥"}
+[2026-04-28 09:55:08] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:55:08] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:55:08] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-28 09:55:08] INFO     [rag_service.py:147] [Price Trace][no-trace] api.query.success | channel="manufacturer_price", total_count=0, duration_ms=121
+[2026-04-28 09:55:08] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:55:08] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:55:08] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-28 09:55:08] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-28 09:55:08] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.end | step=2, tool="quick_search_materials", duration_ms=1051, result={"status": "success", "message": "找到 1 个相关材料，常见省份：广东省", "candidate_count": 1, "metadata": {"total_candidates": 1, "has_exact_match": true}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:08] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:10] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] react.step.llm_response | step=3, duration_ms=1760, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:55:10] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.start | step=3, tool="query_price_data", params={"channel": "information_price", "material_name": "白水泥", "province": "广东省"}
+[2026-04-28 09:55:10] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=f5877db9-899-t1, channel=information_price, material=白水泥, province=广东省, city=
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] request.start | channel="information_price", generate_report=false, entities={"materialName": "白水泥", "province": "广东省"}, user_question="请查一下白水泥的信息价"
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.quick_check.start | channel="information_price"
+[2026-04-28 09:55:10] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:55:10] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:55:10] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-28 09:55:10] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] api.quick_check.success | channel="information_price", total_count=414
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.quick_check.end | total_count=414, duration_ms=198
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.volume_check | total_count=414, estimated_tokens=49680, can_process=true
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.query_data.start | channel="information_price"
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] api.query.start | channel="information_price", entities={"materialName": "白水泥", "province": "广东省"}
+[2026-04-28 09:55:10] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:55:10] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:55:10] INFO     [rag_service.py:1583] 第 1 页获取 414 条数据，累计 414 条
+[2026-04-28 09:55:10] INFO     [rag_service.py:1603] 分页拉取完成，共 414 条数据
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] api.query.success | channel="information_price", total_count=414, duration_ms=169
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.query_data.end | success=true, total_count=414, duration_ms=170
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.filter.end | original_count=414, filtered_count=78, duration_ms=40
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] phase.analyze.end | most_common_unit="t", result_unit_count=1, duration_ms=28
+[2026-04-28 09:55:10] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t1] request.success | original_count=414, filtered_count=78, returned_count=78, estimated_tokens=49680, filtered_data_tokens=9360, llm_input_tokens=256, token_optimization_rate="99.5%", check_time_ms=440, analysis_time_ms=30, total_time_ms=440, summary_metrics={"total_count": 78, "most_common_unit": "t", "valid_count": 78, "min_price": 628.0, "max_price": 1129.0, "mean_price": 881.3717948717949, "median_price": 855.0, "recommend_mode": "two-tier", "recommended_prices": [715.67, 1047.08], "recommend_reason": "轮廓系数=0.79 >= 0.5, 差距比例=0.38 >= 0.3, 两簇规模均衡"}
+[2026-04-28 09:55:10] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] tool.call.end | step=3, tool="query_price_data", duration_ms=442, result={"status": "success", "message": "查询到 78 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 78, "most_common_unit": "t", "price_data_count": 78, "metadata": {"channel": "information_price", "total_count": 78, "entities": {"materialName": "白水泥", "province": "广东省", "city": "", "materialModelSpec": "", "brand": "", "startReleaseDate": "", "endReleaseDate": ""}, "trace_id": "f5877db9-899-t1", "duration_ms": 442}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:10] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] report.start | parsed_entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:55:42] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] report.end | duration_ms=31440, chunk_count=666, used_fallback=false, report_preview="根据对广东省白水泥市场价格的统计分析结果，结合K-means聚类算法的推荐结果，现对白水泥的价格分布特征及市场情况作如下分析，供市场决策参考：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集白水泥价格样本 **78条**，经异常值过滤后，全部 **78条数据均有效**，说明数据质量较高，具有较强的代表性。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：..."
+[2026-04-28 09:55:42] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t1] request.final | step=3, source="query_price_data", final_text_preview="根据对广东省白水泥市场价格的统计分析结果，结合K-means聚类算法的推荐结果，现对白水泥的价格分布特征及市场情况作如下分析，供市场决策参考：\\n\\n---\\n\\n### 一、样本概况\\n\\n本次统计共收集白水泥价格样本 **78条**，经异常值过滤后，全部 **78条数据均有效**，说明数据质量较高，具有较强的代表性。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：白水泥在广东省的市场价范围为 **628元/吨 至 1129元/吨**，价格跨度...", total_step_duration_ms=33653
+[2026-04-28 09:56:18] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] request.start | session_id="f5877db9-899", turn=2, user_message="查询一下2021年以后的白水泥信息价", entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:56:18] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:56:21] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] react.step.llm_response | step=1, duration_ms=3052, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 09:56:21] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "白水泥", "province": "广东省", "start_release_date": "2021-01-01"}
+[2026-04-28 09:56:21] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=f5877db9-899-t2, channel=information_price, material=白水泥, province=广东省, city=
+[2026-04-28 09:56:21] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] request.start | channel="information_price", generate_report=false, entities={"materialName": "白水泥", "province": "广东省", "startReleaseDate": "2021-01-01"}, user_question="查询一下2021年以后的白水泥信息价"
+[2026-04-28 09:56:21] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.quick_check.start | channel="information_price"
+[2026-04-28 09:56:21] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:56:21] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:56:22] INFO     [rag_service.py:1583] 第 1 页获取 217 条数据，累计 217 条
+[2026-04-28 09:56:22] INFO     [rag_service.py:1603] 分页拉取完成，共 217 条数据
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] api.quick_check.success | channel="information_price", total_count=217
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.quick_check.end | total_count=217, duration_ms=142
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.volume_check | total_count=217, estimated_tokens=26040, can_process=true
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.query_data.start | channel="information_price"
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] api.query.start | channel="information_price", entities={"materialName": "白水泥", "province": "广东省", "startReleaseDate": "2021-01-01"}
+[2026-04-28 09:56:22] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 09:56:22] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 09:56:22] INFO     [rag_service.py:1583] 第 1 页获取 217 条数据，累计 217 条
+[2026-04-28 09:56:22] INFO     [rag_service.py:1603] 分页拉取完成，共 217 条数据
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] api.query.success | channel="information_price", total_count=217, duration_ms=133
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.query_data.end | success=true, total_count=217, duration_ms=133
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.filter.end | original_count=217, filtered_count=42, duration_ms=22
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] phase.analyze.end | most_common_unit="t", result_unit_count=1, duration_ms=27
+[2026-04-28 09:56:22] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t2] request.success | original_count=217, filtered_count=42, returned_count=42, estimated_tokens=26040, filtered_data_tokens=5040, llm_input_tokens=255, token_optimization_rate="99.0%", check_time_ms=329, analysis_time_ms=29, total_time_ms=329, summary_metrics={"total_count": 42, "most_common_unit": "t", "valid_count": 34, "min_price": 977.0, "max_price": 1129.0, "mean_price": 1067.264705882353, "median_price": 1062.5, "recommend_mode": "single", "recommended_prices": [1062.5], "recommend_reason": "条件不足: silhouette=0.61, gap_ratio=0.05, 小簇=False"}
+[2026-04-28 09:56:22] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] tool.call.end | step=1, tool="query_price_data", duration_ms=331, result={"status": "success", "message": "查询到 42 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 42, "most_common_unit": "t", "price_data_count": 42, "metadata": {"channel": "information_price", "total_count": 42, "entities": {"materialName": "白水泥", "province": "广东省", "city": "", "materialModelSpec": "", "brand": "", "startReleaseDate": "2021-01-01", "endReleaseDate": ""}, "trace_id": "f5877db9-899-t2", "duration_ms": 331}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:56:22] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] report.start | parsed_entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 09:56:47] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] report.end | duration_ms=25494, chunk_count=540, used_fallback=false, report_preview="根据2021年1月1日至今广东省白水泥的价格数据统计与分析，现对市场情况作如下解读，供市场参与者参考：\\n\\n### 一、数据概况\\n\\n在所收集的42条价格数据中，经过异常值过滤后，共保留34条有效样本。这些样本覆盖了广东省多个地区，但未限定具体城市、品牌及规格型号，因此具有一定的市场代表性。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：白水泥的价格范围为 **977元/吨至1..."
+[2026-04-28 09:56:47] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t2] request.final | step=1, source="query_price_data", final_text_preview="根据2021年1月1日至今广东省白水泥的价格数据统计与分析，现对市场情况作如下解读，供市场参与者参考：\\n\\n### 一、数据概况\\n\\n在所收集的42条价格数据中，经过异常值过滤后，共保留34条有效样本。这些样本覆盖了广东省多个地区，但未限定具体城市、品牌及规格型号，因此具有一定的市场代表性。\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：白水泥的价格范围为 **977元/吨至1129元/吨**，整体价格波动幅度较小，显示出市场相对稳定。\\n2. **平均价...", total_step_duration_ms=28886
+[2026-04-28 10:01:41] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] request.start | session_id="f5877db9-899", turn=3, user_message="2023年以后", entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 10:01:41] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 10:01:44] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] react.step.llm_response | step=1, duration_ms=3554, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 10:01:44] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "白水泥", "province": "广东省", "start_release_date": "2023-01-01"}
+[2026-04-28 10:01:44] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=f5877db9-899-t3, channel=information_price, material=白水泥, province=广东省, city=
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] request.start | channel="information_price", generate_report=false, entities={"materialName": "白水泥", "province": "广东省", "startReleaseDate": "2023-01-01"}, user_question="2023年以后"
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.quick_check.start | channel="information_price"
+[2026-04-28 10:01:44] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 10:01:44] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 10:01:44] INFO     [rag_service.py:1583] 第 1 页获取 97 条数据，累计 97 条
+[2026-04-28 10:01:44] INFO     [rag_service.py:1603] 分页拉取完成，共 97 条数据
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] api.quick_check.success | channel="information_price", total_count=97
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.quick_check.end | total_count=97, duration_ms=130
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.volume_check | total_count=97, estimated_tokens=11640, can_process=true
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.query_data.start | channel="information_price"
+[2026-04-28 10:01:44] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] api.query.start | channel="information_price", entities={"materialName": "白水泥", "province": "广东省", "startReleaseDate": "2023-01-01"}
+[2026-04-28 10:01:44] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 10:01:44] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 10:01:45] INFO     [rag_service.py:1583] 第 1 页获取 97 条数据，累计 97 条
+[2026-04-28 10:01:45] INFO     [rag_service.py:1603] 分页拉取完成，共 97 条数据
+[2026-04-28 10:01:45] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] api.query.success | channel="information_price", total_count=97, duration_ms=119
+[2026-04-28 10:01:45] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.query_data.end | success=true, total_count=97, duration_ms=120
+[2026-04-28 10:01:45] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.filter.end | original_count=97, filtered_count=18, duration_ms=9
+[2026-04-28 10:01:45] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] phase.analyze.end | most_common_unit="t", result_unit_count=1, duration_ms=28
+[2026-04-28 10:01:45] INFO     [rag_service.py:147] [Price Trace][f5877db9-899-t3] request.success | original_count=97, filtered_count=18, returned_count=18, estimated_tokens=11640, filtered_data_tokens=2160, llm_input_tokens=250, token_optimization_rate="97.9%", check_time_ms=291, analysis_time_ms=29, total_time_ms=291, summary_metrics={"total_count": 18, "most_common_unit": "t", "valid_count": 18, "min_price": 1035.0, "max_price": 1129.0, "mean_price": 1083.0, "median_price": 1086.0, "recommend_mode": "single", "recommended_prices": [1086.0], "recommend_reason": "条件不足: silhouette=0.66, gap_ratio=0.05, 小簇=False"}
+[2026-04-28 10:01:45] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] tool.call.end | step=1, tool="query_price_data", duration_ms=293, result={"status": "success", "message": "查询到 18 条价格数据", "success": true, "intent": "price_recommendation", "total_count": 18, "most_common_unit": "t", "price_data_count": 18, "metadata": {"channel": "information_price", "total_count": 18, "entities": {"materialName": "白水泥", "province": "广东省", "city": "", "materialModelSpec": "", "brand": "", "startReleaseDate": "2023-01-01", "endReleaseDate": ""}, "trace_id": "f5877db9-899-t3", "duration_ms": 292}}, entities_after={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 10:01:45] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] report.start | parsed_entities={"materialName": "白水泥", "channel": "information_price"}
+[2026-04-28 10:02:13] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] report.end | duration_ms=28822, chunk_count=611, used_fallback=false, report_preview="根据2023年1月1日至今广东省白水泥市场的价格数据统计与分析，现对价格分布特征及推荐价格进行如下解读，供市场分析与采购决策参考：\\n\\n---\\n\\n### 一、样本概况\\n\\n在2023年1月1日至2023年12月31日期间，共收集到白水泥价格样本18条，全部样本均通过异常值过滤，有效样本数量为18条，说明数据质量较高，具有较强的代表性。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1..."
+[2026-04-28 10:02:13] INFO     [agent.py:272] [Agent Trace][f5877db9-899-t3] request.final | step=1, source="query_price_data", final_text_preview="根据2023年1月1日至今广东省白水泥市场的价格数据统计与分析，现对价格分布特征及推荐价格进行如下解读，供市场分析与采购决策参考：\\n\\n---\\n\\n### 一、样本概况\\n\\n在2023年1月1日至2023年12月31日期间，共收集到白水泥价格样本18条，全部样本均通过异常值过滤，有效样本数量为18条，说明数据质量较高，具有较强的代表性。\\n\\n---\\n\\n### 二、价格分布特征\\n\\n1. **价格区间**：白水泥价格在**1035.0元/吨至1129.0元/吨**...", total_step_duration_ms=32676
+[2026-04-28 10:06:32] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] request.start | session_id="055fba27-ac4", turn=4, user_message="2021年以后的价格", entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 10:06:32] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] react.step.start | step=1, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 10:06:36] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] react.step.llm_response | step=1, duration_ms=3985, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 10:06:36] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] tool.call.start | step=1, tool="query_price_data", params={"channel": "information_price", "material_name": "混凝土", "province": "广东省", "material_model_spec": "C30", "start_release_date": "2021-01-01"}
+[2026-04-28 10:06:36] INFO     [tools.py:378] [MCP Tool] query_price_data start: trace_id=055fba27-ac4-t4, channel=information_price, material=混凝土, province=广东省, city=
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] request.start | channel="information_price", generate_report=false, entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30", "startReleaseDate": "2021-01-01"}, user_question="2021年以后的价格"
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.quick_check.start | channel="information_price"
+[2026-04-28 10:06:36] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 10:06:36] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 10:06:36] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] api.quick_check.success | channel="information_price", total_count=0
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.quick_check.end | total_count=0, duration_ms=120
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.volume_check | total_count=0, estimated_tokens=0, can_process=true
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.query_data.start | channel="information_price"
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] api.query.start | channel="information_price", entities={"materialName": "混凝土", "province": "广东省", "materialModelSpec": "C30", "startReleaseDate": "2021-01-01"}
+[2026-04-28 10:06:36] INFO     [rag_service.py:1502] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/infoRelatedMaterials/getRelatedMaterial
+[2026-04-28 10:06:36] INFO     [rag_service.py:1562] 请求第 1 页，每页 2000 条...
+[2026-04-28 10:06:36] INFO     [rag_service.py:1603] 分页拉取完成，共 0 条数据
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] api.query.success | channel="information_price", total_count=0, duration_ms=105
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.query_data.end | success=true, total_count=0, duration_ms=106
+[2026-04-28 10:06:36] INFO     [rag_service.py:147] [Price Trace][055fba27-ac4-t4] phase.filter.end | original_count=0, filtered_count=0, duration_ms=0
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1027] ================================================================================
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1028] ⚠️  查询结果为空
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1029] ================================================================================
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1030] 🔍 查询条件: {'materialName': '混凝土', 'province': '广东省', 'city': '', 'materialModelSpec': 'C30', 'brand': '', 'startReleaseDate': '2021-01-01', 'endReleaseDate': ''}
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1031] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1032] ⏱️  响应时间: 0.227s
+[2026-04-28 10:06:36] WARNING  [rag_service.py:1033] ================================================================================
+[2026-04-28 10:06:36] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] tool.call.end | step=1, tool="query_price_data", duration_ms=229, result={"status": "error", "message": "查询条件没有符合的样本", "success": false, "intent": "price_recommendation", "total_count": 0, "error_message": "查询条件没有符合的样本"}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 10:06:36] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 10:06:41] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] react.step.llm_response | step=2, duration_ms=4459, has_tool_calls=false, tool_call_count=0, content_preview="未查询到符合2021年以后的广东省C30混凝土价格数据，可能原因包括：\\n1. 该时间段内无相关价格发布记录；\\n2. 材料名称或规格描述不完全匹配；\\n3. 数据来源有限，建议尝试放宽查询条件（如省份或时间范围）。\\n\\n如需进一步帮助，请提供更多细节或调整查询条件。"
+[2026-04-28 10:06:41] INFO     [agent.py:272] [Agent Trace][055fba27-ac4-t4] request.final | step=2, source="llm_direct_reply", final_text_preview="未查询到符合2021年以后的广东省C30混凝土价格数据，可能原因包括：\\n1. 该时间段内无相关价格发布记录；\\n2. 材料名称或规格描述不完全匹配；\\n3. 数据来源有限，建议尝试放宽查询条件（如省份或时间范围）。\\n\\n如需进一步帮助，请提供更多细节或调整查询条件。", total_step_duration_ms=4460
+[2026-04-28 10:14:37] INFO     [rag_service.py:1874] 混合检索完成（基于重写问题），methods=['bm25', 'emb']，返回 35 个文档
+[2026-04-28 10:14:43] INFO     [rag_service.py:1908] rerank 完成，返回 10 个文档
+[2026-04-28 10:14:43] INFO     [llm_deepseek.py:275] stream_predict 开始，context长度: 1558, query: 增值税综合应纳税费率
+[2026-04-28 10:14:43] INFO     [llm_deepseek.py:284] prompt构建成功，长度: 2004
+[2026-04-28 10:14:43] INFO     [llm_deepseek.py:291] 开始调用 openai_chat_by_api_as_astream，messages数量: 8
+[2026-04-28 10:14:50] INFO     [llm_deepseek.py:302] openai_chat_by_api_as_astream 完成，共 124 个 chunk
+[2026-04-28 15:28:38] INFO     [conversation_manager.py:516] 创建新会话: 20d60fc6-792 (类型: price_query, 用户: 1)
+[2026-04-28 15:28:38] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] request.start | session_id="20d60fc6-792", turn=1, user_message="混凝土C30", entities={}
+[2026-04-28 15:28:38] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.start | step=1, available_tools=["extract_entities", "quick_search_materials", "get_material_candidates"], entities={}
+[2026-04-28 15:28:39] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.llm_response | step=1, duration_ms=1357, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 15:28:39] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] tool.call.start | step=1, tool="extract_entities", params={"question": "混凝土C30"}
+[2026-04-28 15:28:40] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: {"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 15:28:40] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] tool.call.end | step=1, tool="extract_entities", duration_ms=1004, result={"status": "success", "message": "实体提取完成", "metadata": {"extracted_fields": ["materialName", "materialModelSpec"], "missing_fields": ["province", "city", "channel"]}}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 15:28:40] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.start | step=2, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 15:28:41] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.llm_response | step=2, duration_ms=1186, has_tool_calls=true, tool_call_count=1, content_preview=""
+[2026-04-28 15:28:41] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] tool.call.start | step=2, tool="identify_channel", params={"question": "混凝土C30"}
+[2026-04-28 15:28:41] INFO     [llm_deepseek.py:176] LLM API 同步调用响应: unknown
+[2026-04-28 15:28:41] INFO     [rag_service.py:413] LLM 渠道识别原始结果: unknown
+[2026-04-28 15:28:41] INFO     [rag_service.py:430] LLM 识别为 unknown，启用智能推断...
+[2026-04-28 15:28:41] INFO     [rag_service.py:437] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-28 15:28:41] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] tool.call.end | step=2, tool="identify_channel", duration_ms=167, result={"status": "success", "message": "识别到渠道: unknown"}, entities_after={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 15:28:41] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.start | step=3, available_tools=["extract_entities", "identify_channel", "query_price_data"], entities={"materialName": "混凝土", "materialModelSpec": "C30"}
+[2026-04-28 15:28:43] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] react.step.llm_response | step=3, duration_ms=1898, has_tool_calls=false, tool_call_count=0, content_preview="您想查询的是“信息价”（政府指导价）还是“厂商报价”（品牌厂商实际报价）呢？请告诉我您的需求，以便我为您提供更准确的信息。"
+[2026-04-28 15:28:43] INFO     [agent.py:272] [Agent Trace][20d60fc6-792-t1] request.final | step=3, source="llm_direct_reply", final_text_preview="您想查询的是“信息价”（政府指导价）还是“厂商报价”（品牌厂商实际报价）呢？请告诉我您的需求，以便我为您提供更准确的信息。", total_step_duration_ms=1899

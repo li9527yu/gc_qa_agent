@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 import requests
-from typing import Dict, Any, Optional,Tuple
+from typing import Dict, Any, Optional, Tuple, List
 import json
 
 from app.llm_deepseek import LLMPredictor
@@ -27,7 +27,7 @@ from app.embedding_config import (
     RERANKER_DEVICE
 )
 from app.utils.generate_signature import generate_signature
-from app.utils.prompt_template import Price_Channel_TEMPLATE, Entity_Extract_TEMPLATE, DIRECT_QUERY_EXTRACTION_TEMPLATE, better_template
+from app.utils.prompt_template import Price_Channel_TEMPLATE, Entity_Extract_TEMPLATE, DIRECT_QUERY_EXTRACTION_TEMPLATE, better_template, Price_Answer_TEMPLATE
 from app.utils.price_tools import remove_outliers, analyze_prices, analyze_by_unit
 from app.utils.fillter_tools import filter_items
 from app.utils.data_filter_helper import check_data_volume_and_guide, TokenEstimator
@@ -48,6 +48,7 @@ from app.utils.conversation_manager import (
     ConversationType
 )
 from app.utils.query_rewriter import QueryRewriter, create_query_rewriter, RewriteResult
+from app.services.kb_manager import get_kb_manager
 # 画图函数：区间频数分布图
 # from app.tools import plot_price_distribution
 from datetime import datetime
@@ -86,12 +87,64 @@ class RAGService:
         self.dialogue_manager = get_dialogue_manager()
         # 新增：统一会话管理器
         self.conversation_manager = get_conversation_manager()
+        # 新增：知识库索引管理器
+        self.kb_manager = get_kb_manager()
         # 新增：知识库重建状态管理
         self._is_rebuilding = False
         self._rebuild_lock = asyncio.Lock()
         self._rebuild_progress = {"stage": "idle", "message": "就绪", "percent": 100}
         # 新增：查询重写器
         self.query_rewriter = None
+
+    def _safe_json(self, value: Any) -> str:
+        try:
+            return json.dumps(value, ensure_ascii=False, default=str)
+        except Exception:
+            return str(value)
+
+    def _summarize_price_entities(self, entities: Dict[str, Any]) -> Dict[str, Any]:
+        keys = [
+            "materialName",
+            "province",
+            "city",
+            "materialModelSpec",
+            "brand",
+            "startReleaseDate",
+            "endReleaseDate",
+        ]
+        return {
+            key: value for key, value in entities.items()
+            if key in keys and value not in (None, "", [], {})
+        }
+
+    def _normalize_price_query_entities(self, entities: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+        """统一价格查询时间字段，兼容历史别名。"""
+        normalized = dict(entities or {})
+
+        alias_map = {
+            "startReleaseTime": "startReleaseDate",
+            "endReleaseTime": "endReleaseDate",
+            "start_release_date": "startReleaseDate",
+            "end_release_date": "endReleaseDate",
+        }
+        for old_key, new_key in alias_map.items():
+            if normalized.get(old_key) and not normalized.get(new_key):
+                normalized[new_key] = normalized[old_key]
+
+        release_date = normalized.get("releaseDate")
+        if release_date and not normalized.get("startReleaseDate"):
+            normalized["startReleaseDate"] = release_date
+
+        return normalized
+
+    def _price_trace_log(self, trace_id: Optional[str], stage: str, **kwargs):
+        prefix = f"[Price Trace][{trace_id or 'no-trace'}] {stage}"
+        detail = ", ".join(
+            f"{key}={self._safe_json(value)}"
+            for key, value in kwargs.items()
+            if value is not None
+        )
+        self.logger.info(f"{prefix} | {detail}" if detail else prefix)
 
     # 获取服务状态（用于前端检查知识库重建状态）
     def get_service_status(self) -> Dict[str, Any]:
@@ -140,6 +193,11 @@ class RAGService:
                     if self.llm is None:
                         self.llm = LLMPredictor(logger=self.logger)
                         self.logger.info("LLM初始化完成")
+
+                    # 初始化查询重写器（依赖 LLM）- 必须在 return 前完成
+                    if self.query_rewriter is None:
+                        self.query_rewriter = create_query_rewriter(self.llm)
+                        self.logger.info("查询重写器初始化完成")
                     
                     # 初始化模板（如果是首次初始化）- 必须在 return 前完成
                     if self.intent_template is None:
@@ -205,6 +263,13 @@ class RAGService:
                             device=RERANKER_DEVICE
                         )
                         self.logger.info("Reranker加载完成")
+
+                    kb_sync_stats = self.kb_manager.sync_with_corpus(self.corpus)
+                    self.logger.info(
+                        f"知识库索引同步完成: old_files={kb_sync_stats['old_files']}, "
+                        f"new_files={kb_sync_stats['new_files']}, "
+                        f"skipped_files={len(kb_sync_stats['skipped_files'])}"
+                    )
                     
                     self._is_rebuilding = False
                     self._rebuild_progress = {"stage": "idle", "message": "就绪", "percent": 100}
@@ -285,6 +350,12 @@ class RAGService:
                 self.corpus = new_corpus
                 self.retriever = new_retriever
                 self.reranker = new_reranker
+                kb_sync_stats = self.kb_manager.sync_with_corpus(self.corpus)
+                self.logger.info(
+                    f"知识库索引同步完成: old_files={kb_sync_stats['old_files']}, "
+                    f"new_files={kb_sync_stats['new_files']}, "
+                    f"skipped_files={len(kb_sync_stats['skipped_files'])}"
+                )
                 
                 # 8. 延迟清理旧资源（给正在进行的请求一些时间完成）
                 # 注意：这里不立即清理，因为 Python 的垃圾回收机制会在之后处理
@@ -540,6 +611,7 @@ class RAGService:
             )
             # 解析实体提取结果
             parsed_entities = self._parse_llm_output(entities)
+            parsed_entities = self._normalize_price_query_entities(parsed_entities)
             if not parsed_entities:
                 raise Exception("实体解析失败")
             #  检查是否包含时间字段： # 如果没有时间字段，则传递默认时间参数：近一年
@@ -557,15 +629,297 @@ class RAGService:
         except Exception as e:
             self.logger.error(f"实体抽取失败: {e}")
             return {}       
+
+    def _build_price_query_description(self, parsed_entities: Dict[str, Any], channel: str) -> str:
+        """构造用于报告生成的查询描述"""
+        channel_labels = {
+            ChannelType.INFORMATION_PRICE.value: "信息价",
+            ChannelType.MANUFACTURER_PRICE.value: "厂商报价",
+            ChannelType.ZC_PRICE.value: "智诚价",
+        }
+        parts = [f"查询{channel_labels.get(channel, channel)}"]
+        if parsed_entities.get("province"):
+            parts.append(str(parsed_entities["province"]))
+        if parsed_entities.get("city"):
+            parts.append(str(parsed_entities["city"]))
+        if parsed_entities.get("brand"):
+            parts.append(f"{parsed_entities['brand']}品牌")
+        if parsed_entities.get("materialName"):
+            parts.append(str(parsed_entities["materialName"]))
+        if parsed_entities.get("materialModelSpec"):
+            parts.append(f"规格{parsed_entities['materialModelSpec']}")
+        return "".join(parts)
+
+    def _build_summary_metrics(
+        self,
+        analysis_results: Dict[str, Any],
+        most_common_unit: str,
+        total_count: int
+    ) -> Dict[str, Any]:
+        """提取前端直接可用的摘要指标"""
+        unit_metrics = analysis_results.get(most_common_unit, {}) if most_common_unit else {}
+        recommend = unit_metrics.get("recommend_kmeans", {})
+        return {
+            "total_count": total_count,
+            "most_common_unit": most_common_unit,
+            "valid_count": unit_metrics.get("valid_count", 0),
+            "min_price": self._safe_number_from_range(unit_metrics.get("price_range"), 0),
+            "max_price": self._safe_number_from_range(unit_metrics.get("price_range"), 1),
+            "mean_price": unit_metrics.get("mean_price"),
+            "median_price": unit_metrics.get("median_price"),
+            "recommend_mode": recommend.get("mode"),
+            "recommended_prices": recommend.get("prices", []),
+            "recommend_reason": recommend.get("reason", ""),
+        }
+
+    def _safe_number_from_range(self, value_range: Any, index: int) -> Optional[float]:
+        if isinstance(value_range, (list, tuple)) and len(value_range) > index:
+            try:
+                return float(value_range[index])
+            except (TypeError, ValueError):
+                return None
+        return None
+
+    def _build_chart_data(
+        self,
+        records: List[Dict[str, Any]],
+        analysis_results: Dict[str, Any],
+        most_common_unit: str
+    ) -> Dict[str, Any]:
+        """构造前端可直接消费的图表数据"""
+        chart_data: Dict[str, Any] = {
+            "summary": {"labels": [], "values": [], "unit": most_common_unit},
+            "histogram": {"bins": [], "counts": [], "unit": most_common_unit},
+            "unit_distribution": {"labels": [], "values": []},
+            "time_trend": {"labels": [], "values": [], "unit": most_common_unit},
+        }
+
+        unit_metrics = analysis_results.get(most_common_unit, {}) if most_common_unit else {}
+        summary_pairs = [
+            ("最低价", self._safe_number_from_range(unit_metrics.get("price_range"), 0)),
+            ("平均价", unit_metrics.get("mean_price")),
+            ("中位价", unit_metrics.get("median_price")),
+            ("最高价", self._safe_number_from_range(unit_metrics.get("price_range"), 1)),
+        ]
+        chart_data["summary"] = {
+            "labels": [label for label, _ in summary_pairs],
+            "values": [value for _, value in summary_pairs],
+            "unit": most_common_unit,
+        }
+
+        unit_counts: Dict[str, int] = {}
+        prices: List[float] = []
+        trend_values: Dict[str, List[float]] = {}
+        time_field_candidates = ["releaseDate", "releaseTime", "publishTime", "date"]
+
+        for record in records:
+            unit = str(record.get("unit") or "UNKNOWN")
+            unit_counts[unit] = unit_counts.get(unit, 0) + 1
+
+            try:
+                prices.append(float(record.get("price")))
+            except (TypeError, ValueError):
+                pass
+
+            time_value = None
+            for field_name in time_field_candidates:
+                if record.get(field_name):
+                    time_value = str(record.get(field_name))
+                    break
+            if time_value:
+                time_key = time_value[:7]
+                try:
+                    trend_price = float(record.get("price"))
+                    trend_values.setdefault(time_key, []).append(trend_price)
+                except (TypeError, ValueError):
+                    pass
+
+        chart_data["unit_distribution"] = {
+            "labels": list(unit_counts.keys()),
+            "values": list(unit_counts.values()),
+        }
+
+        if prices:
+            counts, bin_edges = np.histogram(prices, bins=min(8, max(1, len(set(prices)))))
+            chart_data["histogram"] = {
+                "bins": [round(float(edge), 2) for edge in bin_edges.tolist()],
+                "counts": [int(count) for count in counts.tolist()],
+                "unit": most_common_unit,
+            }
+
+        if trend_values:
+            sorted_keys = sorted(trend_values.keys())
+            chart_data["time_trend"] = {
+                "labels": sorted_keys,
+                "values": [
+                    round(sum(trend_values[key]) / len(trend_values[key]), 2)
+                    for key in sorted_keys
+                ],
+                "unit": most_common_unit,
+            }
+
+        return chart_data
+
+    def _build_table_data(self, records: List[Dict[str, Any]], limit: int = 20) -> Dict[str, Any]:
+        """构造前端表格数据"""
+        rows = records[:limit]
+        columns = [
+            "materialName",
+            "materialModelSpec",
+            "brand",
+            "price",
+            "unit",
+            "province",
+            "city",
+            "releaseDate",
+        ]
+        return {
+            "columns": columns,
+            "rows": rows,
+            "total_rows": len(records),
+            "display_rows": len(rows),
+        }
+
+    def _build_price_report_fallback(
+        self,
+        parsed_entities: Dict[str, Any],
+        channel_result: str,
+        summary_metrics: Dict[str, Any],
+        total_count: int
+    ) -> str:
+        """LLM 失败时使用的回退报告"""
+        channel_labels = {
+            ChannelType.INFORMATION_PRICE.value: "信息价",
+            ChannelType.MANUFACTURER_PRICE.value: "厂商报价",
+            ChannelType.ZC_PRICE.value: "智诚价",
+        }
+        material_name = parsed_entities.get("materialName", "该材料")
+        location = "".join([
+            str(parsed_entities.get("province", "")),
+            str(parsed_entities.get("city", "")),
+        ]) or "指定范围"
+        unit = summary_metrics.get("most_common_unit") or "-"
+        mean_price = summary_metrics.get("mean_price")
+        median_price = summary_metrics.get("median_price")
+        min_price = summary_metrics.get("min_price")
+        max_price = summary_metrics.get("max_price")
+        recommend_mode = summary_metrics.get("recommend_mode")
+        recommended_prices = summary_metrics.get("recommended_prices", [])
+
+        lines = [
+            f"{channel_labels.get(channel_result, channel_result)}价格分析报告",
+            f"查询对象：{location}{material_name}",
+            f"样本数量：共筛选出 {total_count} 条有效记录，主单位为 {unit}。",
+        ]
+        if None not in (mean_price, median_price, min_price, max_price):
+            lines.append(
+                f"核心指标：平均价 {mean_price:.2f}，中位价 {median_price:.2f}，"
+                f"价格区间 {min_price:.2f} 至 {max_price:.2f}。"
+            )
+        if recommend_mode == "two-tier" and len(recommended_prices) >= 2:
+            lines.append(
+                f"推荐结论：当前价格呈现双峰分层，可参考两个代表价位 "
+                f"{recommended_prices[0]:.2f} 和 {recommended_prices[1]:.2f} 元/{unit}。"
+            )
+        elif recommended_prices:
+            lines.append(f"推荐结论：当前可参考代表价 {recommended_prices[0]:.2f} 元/{unit}。")
+        recommend_reason = summary_metrics.get("recommend_reason")
+        if recommend_reason:
+            lines.append(f"判定依据：{recommend_reason}")
+        return "\n".join(lines)
+
+    async def _generate_price_report(
+        self,
+        user_question: Optional[str],
+        parsed_entities: Dict[str, Any],
+        detail_answer_json: str,
+        summary_metrics: Dict[str, Any],
+        channel_result: str,
+        total_count: int,
+        trace_id: Optional[str] = None,
+    ) -> str:
+        """基于统计结果生成价格报告"""
+        if not self.llm:
+            return self._build_price_report_fallback(
+                parsed_entities, channel_result, summary_metrics, total_count
+            )
+
+        prompt_question = user_question or self._build_price_query_description(parsed_entities, channel_result)
+        parsed_entities_str = json.dumps(parsed_entities, ensure_ascii=False, indent=2)
+        started_at = time.time()
+        self._price_trace_log(
+            trace_id,
+            "report.generate.start",
+            channel=channel_result,
+            total_count=total_count,
+            entities=self._summarize_price_entities(parsed_entities),
+        )
+        try:
+            report = await asyncio.to_thread(
+                self.llm.predict_prompt,
+                Price_Answer_TEMPLATE,
+                {
+                    "user_question": prompt_question,
+                    "parsed_entities": parsed_entities_str,
+                    "detail_answer": detail_answer_json,
+                },
+                False,
+                None,
+                1000,
+                8.0,
+                0
+            )
+            if report:
+                self._price_trace_log(
+                    trace_id,
+                    "report.generate.success",
+                    duration_ms=int((time.time() - started_at) * 1000),
+                    report_length=len(report),
+                )
+                return report
+        except Exception as e:
+            self.logger.error(f"[Price Trace][{trace_id or 'no-trace'}] report.generate.error | error={self._safe_json(str(e))}")
+
+        self._price_trace_log(
+            trace_id,
+            "report.generate.fallback",
+            duration_ms=int((time.time() - started_at) * 1000),
+        )
+        return self._build_price_report_fallback(
+            parsed_entities, channel_result, summary_metrics, total_count
+        )
+
     # 价格推荐处理入口
-    async def process_price_recommendation(self, channel_result:str,parsed_entities:dict) -> Dict[str, Any]:
+    async def process_price_recommendation(
+        self,
+        channel_result: str,
+        parsed_entities: dict,
+        user_question: Optional[str] = None,
+        generate_report: bool = True,
+        trace_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
         """处理价格推荐查询"""
         start_time = time.time()
+        parsed_entities = self._normalize_price_query_entities(parsed_entities)
+        self._price_trace_log(
+            trace_id,
+            "request.start",
+            channel=channel_result,
+            generate_report=generate_report,
+            entities=self._summarize_price_entities(parsed_entities),
+            user_question=(user_question[:120] + "...") if user_question and len(user_question) > 120 else user_question,
+        )
         try:
             # ✅ 阶段1：先快速检查数据总数（不获取具体数据，节省时间和带宽）
-            self.logger.info("阶段1: 快速检查数据总数...")
-            total_count = await self._quick_check_data_count(channel_result, parsed_entities)
-            self.logger.info(f"数据总数: {total_count} 条")
+            phase_started_at = time.time()
+            self._price_trace_log(trace_id, "phase.quick_check.start", channel=channel_result)
+            total_count = await self._quick_check_data_count(channel_result, parsed_entities, trace_id=trace_id)
+            self._price_trace_log(
+                trace_id,
+                "phase.quick_check.end",
+                total_count=total_count,
+                duration_ms=int((time.time() - phase_started_at) * 1000),
+            )
             
             # ✅ 数据量检查和引导
             volume_check = check_data_volume_and_guide(
@@ -574,10 +928,12 @@ class RAGService:
                 channel=channel_result
             )
             
-            self.logger.info(
-                f"数据量评估: {total_count} 条记录, "
-                f"预计 {volume_check['estimated_tokens']:,} tokens, "
-                f"可处理: {volume_check['can_process']}"
+            self._price_trace_log(
+                trace_id,
+                "phase.volume_check",
+                total_count=total_count,
+                estimated_tokens=volume_check["estimated_tokens"],
+                can_process=volume_check["can_process"],
             )
             
             # 如果数据量过大，返回引导消息，不进行后续处理
@@ -617,13 +973,23 @@ class RAGService:
             #     }
             
             # ✅ 阶段2：数据量可控，获取具体数据
-            self.logger.info(f"阶段2: 数据量可控，开始获取具体数据...")
-            price_data = await self._query_price_data(channel_result, parsed_entities)
+            phase_started_at = time.time()
+            self._price_trace_log(trace_id, "phase.query_data.start", channel=channel_result)
+            price_data = await self._query_price_data(channel_result, parsed_entities, trace_id=trace_id)
+            self._price_trace_log(
+                trace_id,
+                "phase.query_data.end",
+                success=price_data.get("success"),
+                total_count=price_data.get("total_count"),
+                error=price_data.get("error"),
+                duration_ms=int((time.time() - phase_started_at) * 1000),
+            )
             # self.logger.info(f"返回的查询结果: {price_data['totalCount']}")
             if not price_data or not price_data.get("success"):
                 raise Exception(f"价格查询失败: {price_data.get('error', '未知错误')}")
 
             # 对于模糊查询的结果进行匹配过滤
+            phase_started_at = time.time()
             filtered_items =self.fillter_items(
                 query=parsed_entities.get("materialName", ""),
                 items=price_data.get("data", []),
@@ -633,6 +999,13 @@ class RAGService:
             )
             price_data["data"] = filtered_items
             price_data["total_count"] = len(filtered_items)
+            self._price_trace_log(
+                trace_id,
+                "phase.filter.end",
+                original_count=total_count,
+                filtered_count=price_data["total_count"],
+                duration_ms=int((time.time() - phase_started_at) * 1000),
+            )
 
             # # 过滤模糊匹配的结果，只保留完全匹配的
             # filtered_records = []
@@ -679,25 +1052,23 @@ class RAGService:
             # 价格分析和推荐
             analysis_start = time.time()
             try:
-                
                 unit_result = self.analyze_by_unit(price_data["data"], unit_col="unit")
+                self._price_trace_log(
+                    trace_id,
+                    "phase.analyze.end",
+                    most_common_unit=unit_result.get("most_common_unit"),
+                    result_unit_count=len(unit_result.get("results", {})),
+                    duration_ms=int((time.time() - analysis_start) * 1000),
+                )
             except Exception as e:
-                self.logger.error(f"按照unit分组处理失败: {e}")
+                self.logger.error(f"[Price Trace][{trace_id or 'no-trace'}] phase.analyze.error | error={self._safe_json(str(e))}")
+                raise
 
             # 获得可视化内容：区间频数分布图 and md 原始数据展示
             if price_data and price_data['total_count'] >0:
-
                 md_table = self.parse_material_response(channel_result, unit_result['most_common_records'])
             
-            # 生成结构化回答
-            answer=""
-            # try:
-            #     answer =await self._generate_price_answer(unit_result['results'], price_data, channel_result,parsed_entities)
-            # except Exception as e:
-            #     self.logger.error(f"生成结构化回答失败:{e}")
-            
             # 获得展示的数据
-            # show_data = unit_result['most_common_records'][:20] if len(unit_result['most_common_records'])>20 else unit_result['most_common_records']
             show_data = unit_result['most_common_records']
             
             # ✅ 计算最终的性能指标
@@ -713,38 +1084,63 @@ class RAGService:
             detail_answer_json = json.dumps(unit_result['results'], ensure_ascii=False, indent=2)
             llm_input_text = f"{parsed_entities_json}\n{detail_answer_json}"
             llm_input_tokens = len(llm_input_text) // 2  # 粗略估算
+
+            summary_metrics = self._build_summary_metrics(
+                unit_result["results"],
+                unit_result["most_common_unit"],
+                price_data["total_count"]
+            )
+            chart_data = self._build_chart_data(
+                show_data,
+                unit_result["results"],
+                unit_result["most_common_unit"]
+            )
+            table_data = self._build_table_data(show_data)
+            report = None
+            if generate_report:
+                report = await self._generate_price_report(
+                    user_question=user_question,
+                    parsed_entities=parsed_entities,
+                    detail_answer_json=detail_answer_json,
+                    summary_metrics=summary_metrics,
+                    channel_result=channel_result,
+                    total_count=price_data["total_count"],
+                    trace_id=trace_id,
+                )
             
-            # ✅ 打印详细的性能统计
-            self.logger.info("=" * 80)
-            self.logger.info("📊 价格查询数据处理统计")
-            self.logger.info("=" * 80)
-            self.logger.info(f"🔍 查询条件: {parsed_entities}")
-            self.logger.info(f"📈 数据统计:")
-            self.logger.info(f"   - 原始数据量: {total_count:,} 条")
-            self.logger.info(f"   - 过滤后数量: {price_data['total_count']:,} 条")
-            self.logger.info(f"   - 返回数量: {len(show_data)} 条")
-            self.logger.info(f"🎫 Token 分析:")
-            self.logger.info(f"   - 原始数据 Token: {volume_check['estimated_tokens']:,} tokens (如果全部处理)")
-            self.logger.info(f"   - 过滤后数据 Token: {actual_tokens:,} tokens (实际保留的数据)")
-            self.logger.info(f"   - 传给 LLM 的 Token: ~{llm_input_tokens:,} tokens (统计结果，非原始数据)")
-            self.logger.info(f"   - Token 优化率: {(1 - llm_input_tokens/volume_check['estimated_tokens'])*100:.1f}%")
-            self.logger.info(f"⏱️  数据处理时间:")
-            self.logger.info(f"   - 数据检查: {check_time:.3f}s")
-            self.logger.info(f"   - 数据分析: {analysis_time:.3f}s")
-            self.logger.info(f"   - 总耗时: {total_time:.3f}s")
-            self.logger.info(f"💡 提示: LLM 生成时间将在流式响应中单独统计")
-            self.logger.info("=" * 80)
+            self._price_trace_log(
+                trace_id,
+                "request.success",
+                original_count=total_count,
+                filtered_count=price_data["total_count"],
+                returned_count=len(show_data),
+                estimated_tokens=volume_check["estimated_tokens"],
+                filtered_data_tokens=actual_tokens,
+                llm_input_tokens=llm_input_tokens,
+                token_optimization_rate=f"{(1 - llm_input_tokens/volume_check['estimated_tokens'])*100:.1f}%",
+                check_time_ms=int(check_time * 1000),
+                analysis_time_ms=int(analysis_time * 1000),
+                total_time_ms=int(total_time * 1000),
+                summary_metrics=summary_metrics,
+            )
             
             return {
-                "answer": answer,
+                "answer": report,
+                "report": report,
                 "parsed_entities": json.dumps(parsed_entities, ensure_ascii=False, indent=2),
                 "detail_answer": json.dumps(unit_result['results'], ensure_ascii=False, indent=2),
                 "contexts": [],  # 价格推荐不需要检索上下文
+                "summary_metrics": summary_metrics,
+                "chart_data": chart_data,
+                "table_data": table_data,
                 "metadata": {
                     "channel": channel_result,
                     "entities": parsed_entities,
                     "price_analysis": unit_result['results'],
                     "md_table": md_table if 'md_table' in locals() else None,
+                    "summary_metrics": summary_metrics,
+                    "chart_data": chart_data,
+                    "table_data": table_data,
                     "performance": {
                         "data_processing": {
                             "total_time": total_time,
@@ -765,7 +1161,7 @@ class RAGService:
                 "success": True,
                 "intent": "price_recommendation",
                 "total_count": price_data['total_count'],
-                "price_data": show_data,  # 返回前20条数据
+                "price_data": show_data,
                 "most_common_unit": unit_result['most_common_unit']
             }
             
@@ -773,14 +1169,13 @@ class RAGService:
         except Exception as e:
             total_time = time.time() - start_time
             
-            # ✅ 打印错误信息和性能统计
-            self.logger.error("=" * 80)
-            self.logger.error("❌ 价格推荐处理失败")
-            self.logger.error("=" * 80)
-            self.logger.error(f"🔍 查询条件: {parsed_entities}")
-            self.logger.error(f"❌ 错误信息: {str(e)}")
-            self.logger.error(f"⏱️  已耗时: {total_time:.3f}s")
-            self.logger.error("=" * 80)
+            self.logger.error(
+                f"[Price Trace][{trace_id or 'no-trace'}] request.error | "
+                f"channel={self._safe_json(channel_result)}, "
+                f"entities={self._safe_json(self._summarize_price_entities(parsed_entities))}, "
+                f"duration_ms={int(total_time * 1000)}, "
+                f"error={self._safe_json(str(e))}"
+            )
             
             # 安全获取 total_count
             total_count_safe = 0
@@ -954,7 +1349,7 @@ class RAGService:
             return {}
 
     # 快速检查数据总数（不返回具体数据，仅用于数据量判断）
-    async def _quick_check_data_count(self, channel: str, entities: dict) -> int:
+    async def _quick_check_data_count(self, channel: str, entities: dict, trace_id: Optional[str] = None) -> int:
         """快速检查数据总数，不返回具体数据"""
         try:
             # 创建副本，设置只返回总数不返回具体数据
@@ -972,19 +1367,35 @@ class RAGService:
             if result.get("code") == 200:
                 data = result.get("data", {})
                 total_count = data.get("totalCount", 0)
-                self.logger.info(f"快速检查成功，总数: {total_count} 条")
+                self._price_trace_log(
+                    trace_id,
+                    "api.quick_check.success",
+                    channel=channel,
+                    total_count=total_count,
+                )
                 return total_count
             else:
-                self.logger.warning(f"快速检查返回非200状态码: {result.get('code')}, {result.get('message')}")
+                self.logger.warning(
+                    f"[Price Trace][{trace_id or 'no-trace'}] api.quick_check.non_200 | "
+                    f"channel={self._safe_json(channel)}, code={self._safe_json(result.get('code'))}, "
+                    f"message={self._safe_json(result.get('message'))}"
+                )
                 return 0
         except Exception as e:
-            self.logger.error(f"快速检查数据总数失败: {e}")
+            self.logger.error(f"[Price Trace][{trace_id or 'no-trace'}] api.quick_check.error | error={self._safe_json(str(e))}")
             return 0
     
     # 根据渠道查询价格数据
-    async def _query_price_data(self, channel: str, entities: dict) -> dict:
+    async def _query_price_data(self, channel: str, entities: dict, trace_id: Optional[str] = None) -> dict:
         """根据渠道查询价格数据"""
+        started_at = time.time()
         try:
+            self._price_trace_log(
+                trace_id,
+                "api.query.start",
+                channel=channel,
+                entities=self._summarize_price_entities(entities),
+            )
             # 渠道意图识别
             if channel == ChannelType.INFORMATION_PRICE:
                 result = await asyncio.to_thread(self._get_infor_material, entities)
@@ -1000,18 +1411,36 @@ class RAGService:
 
             if result.get("code") == 200:
                 data = result.get("data", {})
+                self._price_trace_log(
+                    trace_id,
+                    "api.query.success",
+                    channel=channel,
+                    total_count=data.get("totalCount", 0),
+                    duration_ms=int((time.time() - started_at) * 1000),
+                )
                 return {
                     "success": True,
                     "data": data.get("list", []),
                     "total_count": data.get("totalCount", 0)
                 }
             else:
+                self.logger.warning(
+                    f"[Price Trace][{trace_id or 'no-trace'}] api.query.non_200 | "
+                    f"channel={self._safe_json(channel)}, code={self._safe_json(result.get('code'))}, "
+                    f"message={self._safe_json(result.get('message'))}, "
+                    f"duration_ms={int((time.time() - started_at) * 1000)}"
+                )
                 return {
                     "success": False, 
                     "error": result.get("message", "API调用失败")
                 }
                 
         except Exception as e:
+            self.logger.error(
+                f"[Price Trace][{trace_id or 'no-trace'}] api.query.error | "
+                f"channel={self._safe_json(channel)}, duration_ms={int((time.time() - started_at) * 1000)}, "
+                f"error={self._safe_json(str(e))}"
+            )
             return {"success": False, "error": str(e)}
 
     #   信息价查询接口
@@ -1058,7 +1487,18 @@ class RAGService:
         Returns:
             合并后的结果字典
         """
-        url = f"{REAL_API_BASE_URL}/material/factoryRelatedMaterials/getRelatedMaterial"
+        channel_configs = {
+            "information": {
+                "path": "/material/infoRelatedMaterials/getRelatedMaterial",
+                "service": "infoRelatedMaterials",
+            },
+            "factory": {
+                "path": "/material/factoryRelatedMaterials/getRelatedMaterial",
+                "service": "factoryRelatedMaterials",
+            },
+        }
+        config = channel_configs.get(channel_type, channel_configs["factory"])
+        url = f"{REAL_API_BASE_URL}{config['path']}"
         self.logger.info(f"使用真实 API (分页拉取): {url}")
         
         page_size = 2000  # 每页最多2000条
@@ -1099,18 +1539,20 @@ class RAGService:
                 "enterpriseName": None,
                 "queryAccountId": None,
                 "accountName": None,
-                "brand": data.get("brand", None) if data.get("brand") else None,
-                "supplyName": data.get("supplyName", None) if data.get("supplyName") else None,
                 "page": page,
                 "pageSize": page_size
             }
+
+            if channel_type == "factory":
+                payload["brand"] = data.get("brand", None) if data.get("brand") else None
+                payload["supplyName"] = data.get("supplyName", None) if data.get("supplyName") else None
             
             # 生成签名
             signature = generate_signature(
                 secret_key=API_SECRET_KEY,
                 params=payload,
                 module="material",
-                service="factoryRelatedMaterials",
+                service=config["service"],
                 operator="getRelatedMaterial",
                 debug=False
             )
@@ -1262,9 +1704,15 @@ class RAGService:
                 retrieval_start = time.time()
                 # 使用 run_in_executor 替代 to_thread 以避免潜在的线程问题
                 loop = asyncio.get_event_loop()
-                retrieval_res = await loop.run_in_executor(None, self.retriever.retrieval, question)
+                retrieval_methods = ["bm25", "emb"]
+                retrieval_res = await loop.run_in_executor(
+                    None,
+                    self.retriever.retrieval,
+                    question,
+                    retrieval_methods
+                )
                 retrieval_time = time.time() - retrieval_start
-                self.logger.info(f"检索完成，返回 {len(retrieval_res)} 个文档")
+                self.logger.info(f"混合检索完成，methods={retrieval_methods}，返回 {len(retrieval_res)} 个文档")
                 if not retrieval_res:
                     raise Exception("检索结果为空")
 
@@ -1414,14 +1862,18 @@ class RAGService:
                 loop = asyncio.get_event_loop()
                 
                 # 使用重写后的问题进行检索
+                retrieval_methods = ["bm25", "emb"]
                 retrieval_res = await loop.run_in_executor(
-                    None, 
-                    self.retriever.retrieval, 
-                    search_question  # 关键：使用重写后的问题
+                    None,
+                    self.retriever.retrieval,
+                    search_question,
+                    retrieval_methods
                 )
                 retrieval_time = time.time() - retrieval_start
                 
-                self.logger.info(f"检索完成（基于重写问题），返回 {len(retrieval_res)} 个文档")
+                self.logger.info(
+                    f"混合检索完成（基于重写问题），methods={retrieval_methods}，返回 {len(retrieval_res)} 个文档"
+                )
                 
                 if not retrieval_res:
                     self.logger.warning("检索结果为空")
@@ -1429,11 +1881,14 @@ class RAGService:
                     if rewrite_result.was_rewritten:
                         self.logger.info("尝试使用原问题重新检索...")
                         retrieval_res = await loop.run_in_executor(
-                            None, 
-                            self.retriever.retrieval, 
-                            question
+                            None,
+                            self.retriever.retrieval,
+                            question,
+                            retrieval_methods
                         )
-                        self.logger.info(f"原问题检索返回 {len(retrieval_res)} 个文档")
+                        self.logger.info(
+                            f"原问题混合检索返回 {len(retrieval_res)} 个文档，methods={retrieval_methods}"
+                        )
                 
                 # ========== 步骤3: 重排序 ==========
                 rerank_start = time.time()
@@ -1615,12 +2070,16 @@ class RAGService:
             self.logger.info(f"直接价格查询参数: channel={channel.value}, entities={parsed_entities}")
             
             # 调用价格推荐处理逻辑
-            result = await self.process_price_recommendation(channel.value, parsed_entities)
+            result = await self.process_price_recommendation(
+                channel.value,
+                parsed_entities,
+                user_question=question
+            )
 
-            answer = result.get("answer", "")
+            answer = result.get("report") or result.get("answer", "")
 
-            # ✅ 关键：如果查询成功，用 LLM 生成自然语言
-            if result.get("success") and result.get("total_count", 0) > 0:
+            # 兼容旧流程：如果底层还没有生成报告，再补做一次自然语言生成
+            if result.get("success") and result.get("total_count", 0) > 0 and not answer:
                 try:
                     parsed_entities_str = json.dumps(parsed_entities, ensure_ascii=False, indent=2)
                     detail_answer_str = result.get("detail_answer", "")

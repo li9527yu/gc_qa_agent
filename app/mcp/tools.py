@@ -4,10 +4,12 @@ MCP 工具定义 - 材料价格查询相关工具
 
 import json
 import asyncio
+import time
 from typing import Dict, Any, List, Optional, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
+from collections import Counter, defaultdict
 
 logger = logging.getLogger("easy_rag_api")
 
@@ -90,6 +92,11 @@ class MaterialPriceTools:
                     "type": "string",
                     "description": "用户输入的关键词（如：钢筋、水泥、铝合金）"
                 },
+                "channel": {
+                    "type": "string",
+                    "description": "当前查询渠道，仅用于兼容上下文参数，不影响快速搜索结果",
+                    "enum": ["information_price", "manufacturer_price", "zc_price"]
+                },
                 "limit": {
                     "type": "integer",
                     "description": "返回结果数量上限",
@@ -133,6 +140,14 @@ class MaterialPriceTools:
                 "brand": {
                     "type": "string",
                     "description": "品牌（可选，厂商价渠道有效）"
+                },
+                "start_release_date": {
+                    "type": "string",
+                    "description": "开始发布日期（格式：YYYY-MM-DD，可选）"
+                },
+                "end_release_date": {
+                    "type": "string",
+                    "description": "结束发布日期（格式：YYYY-MM-DD，可选）"
                 }
             },
             required=["channel", "material_name"],
@@ -142,6 +157,11 @@ class MaterialPriceTools:
                     "material_name": "钢筋",
                     "province": "广东省",
                     "city": "深圳市"
+                },
+                {
+                    "channel": "information_price",
+                    "material_name": "白水泥",
+                    "start_release_date": "2021-01-01"
                 }
             ]
         )
@@ -238,8 +258,11 @@ class MaterialPriceTools:
     
     async def quick_search_materials(
         self, 
-        keyword: str, 
-        limit: int = 10
+        keyword: Optional[str] = None,
+        limit: int = 10,
+        channel: Optional[str] = None,
+        material_name: Optional[str] = None,
+        **kwargs
     ) -> ToolResult:
         """
         快速搜索材料 - 用于首次查询，返回候选材料和常见统计信息
@@ -252,13 +275,31 @@ class MaterialPriceTools:
             ToolResult: 包含匹配的材料名称、常见省份、常见规格和相关关键词建议
         """
         try:
-            self.logger.info(f"[MCP Tool] quick_search_materials: keyword={keyword}, limit={limit}")
+            keyword = keyword or material_name
+            if not keyword:
+                return ToolResult(
+                    status=ToolStatus.ERROR,
+                    message="缺少 keyword 参数",
+                    suggested_next_steps=["请提供材料关键词后重试"]
+                )
+
+            ignored_params = {
+                key: value for key, value in kwargs.items()
+                if value is not None and value != ""
+            }
+            if channel:
+                ignored_params["channel"] = channel
+
+            self.logger.info(
+                f"[MCP Tool] quick_search_materials: keyword={keyword}, limit={limit}, "
+                f"ignored_params={ignored_params}"
+            )
             
             # 1. 提取可能的实体（用于后续精确查询）
             entities = await self.rag_service.extract_entities(keyword)
             
             # 2. 获取候选材料名称
-            candidates = await self._get_material_name_candidates(keyword, limit)
+            candidates = await self._get_material_name_candidates(keyword, limit, channel)
             
             # 3. 基于候选获取统计数据（省份、规格等）
             common_provinces = []
@@ -313,6 +354,8 @@ class MaterialPriceTools:
         city: Optional[str] = None,
         material_model_spec: Optional[str] = None,
         brand: Optional[str] = None,
+        start_release_date: Optional[str] = None,
+        end_release_date: Optional[str] = None,
         **kwargs
     ) -> ToolResult:
         """
@@ -330,7 +373,12 @@ class MaterialPriceTools:
             ToolResult: 包含价格数据和分析结果
         """
         try:
-            self.logger.info(f"[MCP Tool] query_price_data: channel={channel}, material={material_name}")
+            started_at = time.time()
+            trace_id = kwargs.get("trace_id")
+            self.logger.info(
+                f"[MCP Tool] query_price_data start: trace_id={trace_id}, "
+                f"channel={channel}, material={material_name}, province={province}, city={city}"
+            )
             
             # 构建查询实体
             entities = {
@@ -338,11 +386,19 @@ class MaterialPriceTools:
                 "province": province or "",
                 "city": city or "",
                 "materialModelSpec": material_model_spec or "",
-                "brand": brand or ""
+                "brand": brand or "",
+                "startReleaseDate": start_release_date or "",
+                "endReleaseDate": end_release_date or "",
             }
             
             # 调用价格查询
-            result = await self.rag_service.process_price_recommendation(channel, entities)
+            result = await self.rag_service.process_price_recommendation(
+                channel,
+                entities,
+                user_question=kwargs.get("user_question"),
+                generate_report=kwargs.get("generate_report", True),
+                trace_id=trace_id,
+            )
             
             if not result.get("success"):
                 return ToolResult(
@@ -369,13 +425,15 @@ class MaterialPriceTools:
                 metadata={
                     "channel": channel,
                     "total_count": total_count,
-                    "entities": entities
+                    "entities": entities,
+                    "trace_id": trace_id,
+                    "duration_ms": int((time.time() - started_at) * 1000),
                 },
                 suggested_next_steps=suggested_steps
             )
             
         except Exception as e:
-            self.logger.error(f"价格查询失败: {e}")
+            self.logger.error(f"价格查询失败: trace_id={kwargs.get('trace_id')}, error={e}")
             return ToolResult(
                 status=ToolStatus.ERROR,
                 message=f"查询失败: {str(e)}"
@@ -556,17 +614,13 @@ class MaterialPriceTools:
         """
         # 简化实现：调用API获取数据后提取材料名
         try:
-            # 先尝试精确匹配
-            from app.utils.fillter_tools import filter_items
-            
             # 构建基础查询实体
             entities = {"materialName": keyword}
             
-            # 尝试从各渠道获取数据
-            candidates = []
-            channels = [channel] if channel else ["information_price", "manufacturer_price", "zc_price"]
-            
-            material_names = set()
+            # 候选名称搜索固定同时查询信息价和厂商报价，避免单渠道漏召回。
+            channels = ["information_price", "manufacturer_price"]
+            name_counter: Counter[str] = Counter()
+            source_counter: Dict[str, set] = defaultdict(set)
             for ch in channels:
                 try:
                     result = await self._quick_query(ch, entities, return_limit=50)
@@ -574,21 +628,22 @@ class MaterialPriceTools:
                         for item in result.get("data", []):
                             name = item.get("materialName", "")
                             if name and keyword.lower() in name.lower():
-                                material_names.add(name)
+                                name_counter[name] += 1
+                                source_counter[name].add(ch)
                 except Exception as e:
                     self.logger.warning(f"从 {ch} 获取候选失败: {e}")
             
-            # 格式化候选列表
-            for name in list(material_names)[:limit]:
-                score = 1.0 if name == keyword else 0.8 if name.startswith(keyword) else 0.6
+            candidates = []
+            for name, count in name_counter.most_common(min(limit, 3)):
+                starts_with_keyword = name.startswith(keyword)
+                score = 1.0 if name == keyword else 0.8 if starts_with_keyword else 0.6
                 candidates.append({
                     "name": name,
+                    "count": count,
                     "match_score": score,
-                    "exact_match": name == keyword
+                    "exact_match": name == keyword,
+                    "sources": sorted(source_counter[name]),
                 })
-            
-            # 按匹配分数排序
-            candidates.sort(key=lambda x: x["match_score"], reverse=True)
             
             return candidates
             
@@ -627,7 +682,7 @@ class MaterialPriceTools:
             query_entities = entities.copy()
             query_entities["returnNumber"] = return_limit
             
-            result = await self.rag_service.process_price_recommendation(channel, query_entities)
+            result = await self.rag_service._query_price_data(channel, query_entities)
             return result
         except Exception as e:
             self.logger.error(f"快速查询失败: {e}")

@@ -371,11 +371,13 @@ class ConversationSession:
 
 
 class ConversationManager:
-    """对话管理器 - 统一管理知识问答和价格查询的会话"""
+    """对话管理器 - 统一管理知识问答和价格查询的会话（支持数据库持久化）"""
     
     def __init__(self):
         self.sessions: Dict[str, ConversationSession] = {}
         self.logger = logging.getLogger("easy_rag_api")
+        self.db = None
+        self._conversation_service = None
         
         self.TOPIC_SWITCH_THRESHOLD = {
             "enable_keyword_detection": True,
@@ -390,6 +392,33 @@ class ConversationManager:
             "llm_switches": 0,
             "llm_calls": 0
         }
+    
+    def set_db_session(self, db_session):
+        """设置数据库会话（在服务启动后注入，仅用于初始化等单线程场景）"""
+        self.db = db_session
+        if db_session:
+            from app.services.conversation_service import ConversationService
+            self._conversation_service = ConversationService(db_session)
+    
+    def set_db_session_maker(self, session_maker):
+        """设置数据库会话工厂（推荐：请求级自动创建和关闭session）"""
+        self._session_maker = session_maker
+    
+    def _has_db(self) -> bool:
+        """检查是否配置了数据库"""
+        return (self._conversation_service is not None or
+                (hasattr(self, "_session_maker") and self._session_maker is not None))
+    
+    async def _with_db_service(self, operation):
+        """使用独立的session执行数据库操作"""
+        if self._conversation_service:
+            return await operation(self._conversation_service)
+        if hasattr(self, "_session_maker") and self._session_maker:
+            from app.services.conversation_service import ConversationService
+            async with self._session_maker() as session:
+                service = ConversationService(session)
+                return await operation(service)
+        return None
     
     def get_stats(self) -> Dict[str, Any]:
         """获取话题切换检测统计信息"""
@@ -449,7 +478,7 @@ class ConversationManager:
         return False
     
     def create_session(self, conversation_type: ConversationType) -> ConversationSession:
-        """创建新会话"""
+        """创建新会话（同步版本，不操作数据库）"""
         session_id = str(uuid.uuid4())[:12]
         session = ConversationSession(
             session_id=session_id,
@@ -458,6 +487,89 @@ class ConversationManager:
         self.sessions[session_id] = session
         self.logger.info(f"创建新会话: {session_id} (类型: {conversation_type.value})")
         return session
+    
+    async def _create_new_session(
+        self,
+        user_id: Optional[int],
+        conversation_type: ConversationType,
+        title: str = "新会话"
+    ) -> ConversationSession:
+        """创建新会话（异步版本，支持数据库持久化）"""
+        session_id = str(uuid.uuid4())[:12]
+        session = ConversationSession(
+            session_id=session_id,
+            conversation_type=conversation_type
+        )
+        self.sessions[session_id] = session
+        
+        # 持久化到数据库
+        if self._has_db() and user_id:
+            async def _create(service):
+                return await service.create_conversation(
+                    user_id=user_id,
+                    session_id=session_id,
+                    conv_type=conversation_type.value,
+                    title=title
+                )
+            await self._with_db_service(_create)
+        
+        self.logger.info(f"创建新会话: {session_id} (类型: {conversation_type.value}, 用户: {user_id})")
+        return session
+    
+    def _convert_db_to_session(self, db_conversation) -> ConversationSession:
+        """将数据库会话转换为内存会话对象"""
+        session = ConversationSession(
+            session_id=db_conversation.session_id,
+            conversation_type=ConversationType(db_conversation.type)
+        )
+        
+        # 恢复消息历史
+        if db_conversation.messages:
+            for msg in db_conversation.messages:
+                metadata = {}
+                if msg.metadata_json:
+                    try:
+                        metadata = json.loads(msg.metadata_json)
+                    except Exception:
+                        pass
+                session.messages.append(Message(
+                    role=msg.role,
+                    content=msg.content,
+                    timestamp=msg.created_at.isoformat() if msg.created_at else datetime.now().isoformat(),
+                    metadata=metadata
+                ))
+        
+        # 从数据库恢复时，重置内存TTL时间戳为当前时间
+        # 因为数据库持久化就是为了跨时间保留对话，只要用户传了session_id就允许继续
+        session.update_timestamp()
+        
+        return session
+    
+    async def save_message(
+        self,
+        session_id: str,
+        role: str,
+        content: str,
+        metadata: Dict = None,
+        user_id: int = None
+    ):
+        """保存消息（内存 + 数据库）"""
+        # 1. 更新内存
+        if session_id in self.sessions:
+            self.sessions[session_id].add_message(role, content, metadata)
+        
+        # 2. 持久化到数据库
+        if self._has_db() and user_id:
+            async def _save(service):
+                conversation = await service.get_conversation(user_id, session_id)
+                if conversation:
+                    await service.save_message(
+                        conversation_id=conversation.id,
+                        role=role,
+                        content=content,
+                        metadata=metadata
+                    )
+            await self._with_db_service(_save)
     
     def get_session(self, session_id: Optional[str]) -> Optional[ConversationSession]:
         """获取会话"""
@@ -477,16 +589,17 @@ class ConversationManager:
         return session
     
     async def get_or_create_session(
-        self, 
-        session_id: Optional[str], 
+        self,
+        session_id: Optional[str],
         conversation_type: ConversationType,
         force_new: bool = False,
         new_question: str = None,
         llm_predictor = None,
-        extracted_entities: Dict[str, Any] = None
+        extracted_entities: Dict[str, Any] = None,
+        user_id: Optional[int] = None
     ) -> ConversationSession:
         """
-        获取或创建会话（支持话题切换检测）
+        获取或创建会话（支持话题切换检测和数据库持久化）
         
         Args:
             session_id: 会话ID（可选）
@@ -495,14 +608,34 @@ class ConversationManager:
             new_question: 新的用户问题（用于话题切换检测）
             llm_predictor: LLM预测器实例（用于LLM话题检测）
             extracted_entities: 新提取的实体（价格查询话题切换检测用）
+            user_id: 用户ID（可选，提供时启用数据库持久化）
         
         Returns:
             ConversationSession: 会话对象
         """
+        # 1. 强制创建新会话
         if force_new:
             self.logger.info(f"用户请求强制创建新会话（force_new=True）")
-            return self.create_session(conversation_type)
+            title = new_question[:200] if new_question else "新会话"
+            return await self._create_new_session(user_id, conversation_type, title=title)
         
+        # 2. 检查内存缓存
+        if session_id and session_id in self.sessions:
+            session = self.sessions[session_id]
+            if not session.is_expired():
+                return session
+        
+        # 3. 从数据库加载（如果提供了 user_id 和 db）
+        if self._has_db() and user_id and session_id:
+            db_conversation = await self._with_db_service(
+                lambda service: service.get_conversation(user_id, session_id)
+            )
+            if db_conversation:
+                session = self._convert_db_to_session(db_conversation)
+                self.sessions[session_id] = session
+                return session
+        
+        # 4. 内存中有但可能过期了，或者新建
         session = self.get_session(session_id)
         if session:
             if session.conversation_type != conversation_type:
@@ -510,7 +643,8 @@ class ConversationManager:
                     f"会话 {session_id} 类型为 {session.conversation_type.value}，"
                     f"但请求类型为 {conversation_type.value}，将创建新会话"
                 )
-                return self.create_session(conversation_type)
+                title = new_question[:200] if new_question else "新会话"
+                return await self._create_new_session(user_id, conversation_type, title=title)
             
             if conversation_type == ConversationType.KNOWLEDGE_QA and new_question:
                 is_topic_switch = await self.detect_topic_switch(
@@ -518,7 +652,8 @@ class ConversationManager:
                 )
                 if is_topic_switch:
                     self.logger.info(f"检测到话题切换，创建新会话")
-                    return self.create_session(conversation_type)
+                    title = new_question[:200] if new_question else "新会话"
+                    return await self._create_new_session(user_id, conversation_type, title=title)
             
             # 价格查询话题切换检测
             if conversation_type == ConversationType.PRICE_QUERY and new_question:
@@ -527,10 +662,14 @@ class ConversationManager:
                 )
                 if is_price_topic_switch:
                     self.logger.info(f"检测到价格查询话题切换（材料变化），创建新会话")
-                    return self.create_session(conversation_type)
+                    title = new_question[:200] if new_question else "新会话"
+                    return await self._create_new_session(user_id, conversation_type, title=title)
             
             return session
-        return self.create_session(conversation_type)
+        
+        # 5. 创建新会话
+        title = new_question[:200] if new_question else "新会话"
+        return await self._create_new_session(user_id, conversation_type, title=title)
     
     async def detect_price_topic_switch(
         self,

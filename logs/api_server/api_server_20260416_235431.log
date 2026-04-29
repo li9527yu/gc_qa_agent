@@ -1,0 +1,1626 @@
+[2026-04-16 23:54:31] INFO     [api_server.py:37] 启动Easy-RAG API服务...
+[2026-04-16 23:54:31] INFO     [api_server.py:40] 初始化数据库...
+[2026-04-16 23:54:31] INFO     [api_server.py:48] 管理员账号初始化完成: id=1, username=admin
+[2026-04-16 23:54:31] INFO     [api_server.py:56] ConversationManager数据库会话注入完成
+[2026-04-16 23:54:31] INFO     [rag_service.py:109] 开始初始化RAG服务...
+[2026-04-16 23:54:31] INFO     [rag_service.py:120] 语料库加载完成，共1327个文档
+[2026-04-16 23:54:31] INFO     [rag_service.py:134] 语料库未发生变化，使用现有缓存
+[2026-04-16 23:54:31] INFO     [llm_deepseek.py:90] 🤖 初始化 LLM 客户端
+[2026-04-16 23:54:31] INFO     [llm_deepseek.py:91]    模式: local
+[2026-04-16 23:54:31] INFO     [llm_deepseek.py:92]    Base URL: http://localhost:9839/v1
+[2026-04-16 23:54:31] INFO     [llm_deepseek.py:93]    Model: Qwen3-32B
+[2026-04-16 23:54:31] INFO     [rag_service.py:142] LLM初始化完成
+[2026-04-16 23:54:31] INFO     [rag_service.py:309] 价格推荐模板加载成功
+[2026-04-16 23:54:31] INFO     [rag_service.py:147] 价格推荐模板初始化完成
+[2026-04-16 23:54:31] INFO     [rag_service.py:151] 语料库未变化，但Retriever未初始化，正在加载...
+[2026-04-16 23:54:35] INFO     [rag_service.py:197] Retriever加载完成
+[2026-04-16 23:54:35] INFO     [rag_service.py:201] 语料库未变化，但Reranker未初始化，正在加载...
+[2026-04-16 23:54:36] INFO     [rag_service.py:207] Reranker加载完成
+[2026-04-16 23:54:36] INFO     [mcp_endpoints.py:404] MCP端点初始化完成
+[2026-04-16 23:54:36] INFO     [api_server.py:73] MCP和Agent服务初始化完成
+[2026-04-16 23:57:29] INFO     [conversation_manager.py:516] 创建新会话: 81f9893f-323 (类型: knowledge_qa, 用户: 1)
+[2026-04-16 23:57:29] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-16 23:57:29] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-16 23:57:34] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-16 23:57:34] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-16 23:57:34] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3582
+[2026-04-16 23:57:34] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-16 23:57:34] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3582, query: 你好 
+[2026-04-16 23:57:34] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4023
+[2026-04-16 23:57:34] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-16 23:57:37] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 21 个 chunk
+[2026-04-17 03:23:29] INFO     [conversation_manager.py:516] 创建新会话: 142a1fb8-266 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 03:23:29] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 03:23:29] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 03:23:38] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 03:23:38] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 03:23:38] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 03:23:38] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 03:23:38] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 03:23:38] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 03:23:38] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 03:23:40] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 03:34:50] INFO     [conversation_manager.py:516] 创建新会话: b060d6e4-d31 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 03:34:50] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 03:34:50] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 03:34:56] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 03:34:56] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 03:34:56] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 03:34:56] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 03:34:56] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 03:34:56] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 03:34:56] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 03:34:57] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:20:13] INFO     [conversation_manager.py:516] 创建新会话: eb250bc3-faf (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:20:13] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:20:13] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:20:19] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:20:19] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:20:19] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:20:19] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:20:19] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:20:19] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:20:19] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:20:21] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:27:22] INFO     [conversation_manager.py:516] 创建新会话: c418d39f-f0c (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:27:22] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:27:22] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:27:27] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:27:27] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:27:27] INFO     [rag_service.py:1289] 上下文构建成功，长度: 4485
+[2026-04-17 04:27:27] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:27:27] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 4485, query: 介绍下easy_rag系统
+[2026-04-17 04:27:27] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4937
+[2026-04-17 04:27:27] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:27:39] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 233 个 chunk
+[2026-04-17 04:29:28] INFO     [conversation_manager.py:516] 创建新会话: 26181106-6c7 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:29:28] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:29:28] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:29:33] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:29:33] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:29:33] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:29:33] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:29:33] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:29:33] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:29:33] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:29:34] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:31:38] INFO     [conversation_manager.py:516] 创建新会话: 1dc7dfa4-3a6 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:31:38] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:31:38] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:31:42] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:31:42] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:31:42] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:31:42] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:31:42] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:31:42] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:31:42] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:31:44] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:37:53] INFO     [conversation_manager.py:516] 创建新会话: d6050718-fe2 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:37:53] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:37:53] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:37:57] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:37:57] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:37:57] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:37:57] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:37:57] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:37:57] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:37:57] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:37:59] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:40:12] INFO     [conversation_manager.py:516] 创建新会话: d6d079b4-e9e (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:40:12] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:40:12] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:40:17] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:40:17] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:40:17] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:40:17] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:40:17] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:40:17] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:40:17] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:40:18] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:40:42] INFO     [conversation_manager.py:516] 创建新会话: cd58106e-d7f (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:40:42] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:40:42] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:40:47] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:40:47] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:40:47] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:40:47] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:40:47] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:40:47] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:40:47] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:40:48] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:49:19] INFO     [conversation_manager.py:516] 创建新会话: f3a1432b-441 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:49:19] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:49:19] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:49:23] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:49:23] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:49:23] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:49:23] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:49:23] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:49:23] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:49:23] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:49:25] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:50:01] INFO     [conversation_manager.py:516] 创建新会话: 270642a6-665 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:50:01] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:50:01] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:50:06] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:50:06] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:50:06] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:50:06] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:50:06] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:50:06] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:50:06] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:50:08] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:52:02] INFO     [conversation_manager.py:516] 创建新会话: a6256f2a-7c5 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:52:02] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:52:02] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:52:07] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:52:07] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:52:07] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:52:07] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:52:07] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:52:07] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:52:07] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:52:08] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:54:06] INFO     [conversation_manager.py:516] 创建新会话: 00074e32-78f (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:54:06] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:54:06] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:54:10] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:54:10] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:54:10] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:54:10] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:54:10] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:54:10] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:54:10] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:54:12] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 04:55:09] INFO     [conversation_manager.py:516] 创建新会话: 2375ac6e-e07 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 04:55:09] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 04:55:09] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 04:55:13] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 04:55:13] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 04:55:13] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 04:55:13] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 04:55:13] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 04:55:13] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 04:55:13] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 04:55:15] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:00:06] INFO     [conversation_manager.py:516] 创建新会话: bd0e6a64-305 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:00:06] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:00:06] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:00:10] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:00:10] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:00:10] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:00:10] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:00:10] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:00:10] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:00:10] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:00:12] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:00:34] INFO     [conversation_manager.py:516] 创建新会话: f5d2116a-9a8 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:00:34] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:00:34] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:00:38] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:00:38] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:00:38] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:00:38] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:00:38] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:00:38] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:00:38] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:00:40] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:04:42] INFO     [conversation_manager.py:516] 创建新会话: 8429e421-18b (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:04:42] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:04:42] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:04:46] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:04:46] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:04:46] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:04:46] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:04:46] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:04:46] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:04:46] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:04:48] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:04:51] INFO     [conversation_manager.py:516] 创建新会话: 7145093b-276 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:04:51] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:04:51] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:04:56] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:04:56] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:04:56] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:04:56] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:04:56] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:04:56] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:04:56] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:04:57] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:11:16] INFO     [conversation_manager.py:516] 创建新会话: 75bc64e0-def (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:11:16] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:11:16] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:11:21] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:11:21] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:11:21] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:11:21] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:11:21] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:11:21] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:11:21] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:11:22] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:11:28] INFO     [conversation_manager.py:516] 创建新会话: 45019120-e2c (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:11:28] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:11:28] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:11:32] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:11:32] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:11:32] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:11:32] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:11:32] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:11:32] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:11:32] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:11:33] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:13:20] INFO     [conversation_manager.py:516] 创建新会话: 9e3bc5f8-4db (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:13:20] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:13:20] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:13:24] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:13:24] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:13:24] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:13:24] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:13:24] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:13:24] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:13:24] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:13:26] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:15:26] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:15:26] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:15:30] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:15:30] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:15:30] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3582
+[2026-04-17 05:15:30] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:15:30] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3582, query: ·你好
+[2026-04-17 05:15:30] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4024
+[2026-04-17 05:15:30] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 7
+[2026-04-17 05:15:32] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 05:15:47] INFO     [conversation_manager.py:516] 创建新会话: 76f0ab66-517 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 05:15:47] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 05:15:47] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 05:15:51] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 05:15:51] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 05:15:51] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 05:15:51] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 05:15:51] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 05:15:51] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 05:15:51] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 05:15:52] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 13:52:27] INFO     [conversation_manager.py:516] 创建新会话: bb891a25-aad (类型: knowledge_qa, 用户: 1)
+[2026-04-17 13:52:27] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 13:52:27] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 13:52:31] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 13:52:31] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 13:52:31] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 13:52:31] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 13:52:31] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 13:52:31] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 13:52:31] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 13:52:33] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 13:52:48] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 13:52:49] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: information_price
+[2026-04-17 13:52:49] INFO     [rag_service.py:342] LLM 渠道识别原始结果: information_price
+[2026-04-17 13:52:49] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:52:49] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:52:49] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:52:49] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:52:49] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:52:49] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 13:52:49] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 13:52:49] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 13:52:49] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:52:49] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:52:49] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:52:50] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:52:50] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:52:50] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 13:52:50] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 13:52:50] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 13:52:50] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'channel': 'information_price'}
+[2026-04-17 13:52:50] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 13:52:50] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 13:52:50] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 13:52:50] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 13:52:50] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 13:52:50] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 13:52:50] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 13:52:50] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~384 tokens (统计结果，非原始数据)
+[2026-04-17 13:52:50] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 13:52:50] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 13:52:50] INFO     [rag_service.py:732]    - 数据检查: 1.326s
+[2026-04-17 13:52:50] INFO     [rag_service.py:733]    - 数据分析: 0.296s
+[2026-04-17 13:52:50] INFO     [rag_service.py:734]    - 总耗时: 1.326s
+[2026-04-17 13:52:50] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 13:52:50] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 13:52:50] INFO     [endpoints.py:789] ⚡ TTFT (首个Token响应): 0.222s
+[2026-04-17 13:53:34] INFO     [endpoints.py:55] ================================================================================
+[2026-04-17 13:53:34] INFO     [endpoints.py:56] 🤖 LLM 生成性能统计
+[2026-04-17 13:53:34] INFO     [endpoints.py:57] ================================================================================
+[2026-04-17 13:53:34] INFO     [endpoints.py:58] 🎫 Token 统计:
+[2026-04-17 13:53:34] INFO     [endpoints.py:59]    - 输入 Token (估算): 390 tokens
+[2026-04-17 13:53:34] INFO     [endpoints.py:60]    - 输出 Token (估算): 932 tokens
+[2026-04-17 13:53:34] INFO     [endpoints.py:61]    - 总 Token: 1,322 tokens
+[2026-04-17 13:53:34] INFO     [endpoints.py:62] ⏱️  生成时间:
+[2026-04-17 13:53:34] INFO     [endpoints.py:63]    - TTFT (首个Token): 0.222s
+[2026-04-17 13:53:34] INFO     [endpoints.py:64]    - 总生成时间: 43.667s
+[2026-04-17 13:53:34] INFO     [endpoints.py:65]    - 生成速度: 21.3 tokens/s
+[2026-04-17 13:53:34] INFO     [endpoints.py:66] ================================================================================
+[2026-04-17 13:53:34] INFO     [endpoints.py:79] ================================================================================
+[2026-04-17 13:53:34] INFO     [endpoints.py:80] 📊 完整请求性能统计
+[2026-04-17 13:53:34] INFO     [endpoints.py:81] ================================================================================
+[2026-04-17 13:53:34] INFO     [endpoints.py:82] ⏱️  总耗时: 45.209s
+[2026-04-17 13:53:34] INFO     [endpoints.py:83]    - LLM 生成: 43.667s
+[2026-04-17 13:53:34] INFO     [endpoints.py:84]    - TTFT: 0.222s
+[2026-04-17 13:53:34] INFO     [endpoints.py:85] ================================================================================
+[2026-04-17 13:56:44] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "铝合金幕墙型材", "channel": "information_price"}
+[2026-04-17 13:56:44] INFO     [conversation_manager.py:516] 创建新会话: e77da8bd-1a9 (类型: price_query, 用户: 1)
+[2026-04-17 13:56:45] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: information_price
+[2026-04-17 13:56:45] INFO     [rag_service.py:342] LLM 渠道识别原始结果: information_price
+[2026-04-17 13:56:45] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:56:45] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:56:45] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:56:45] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 13:56:45] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 13:56:45] INFO     [rag_service.py:975] 快速检查成功，总数: 38 条
+[2026-04-17 13:56:45] INFO     [rag_service.py:568] 数据总数: 38 条
+[2026-04-17 13:56:45] INFO     [rag_service.py:577] 数据量评估: 38 条记录, 预计 4,560 tokens, 可处理: True
+[2026-04-17 13:56:45] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:56:45] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:56:45] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:56:45] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 13:56:45] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 13:56:45] WARNING  [rag_service.py:654] ================================================================================
+[2026-04-17 13:56:45] WARNING  [rag_service.py:655] ⚠️  查询结果为空
+[2026-04-17 13:56:45] WARNING  [rag_service.py:656] ================================================================================
+[2026-04-17 13:56:45] WARNING  [rag_service.py:657] 🔍 查询条件: {'materialName': '铝合金幕墙型材', 'channel': 'information_price'}
+[2026-04-17 13:56:45] WARNING  [rag_service.py:658] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-17 13:56:45] WARNING  [rag_service.py:659] ⏱️  响应时间: 0.329s
+[2026-04-17 13:56:45] WARNING  [rag_service.py:660] ================================================================================
+[2026-04-17 13:58:15] INFO     [conversation_manager.py:516] 创建新会话: 64823cac-f2f (类型: price_query, 用户: 1)
+[2026-04-17 13:58:15] INFO     [agent.py:288] [Agent Stream] 开始处理: session=64823cac-f2f, turn=1, entities={}
+[2026-04-17 13:58:15] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 13:58:16] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价中电缆的价格'}
+[2026-04-17 13:58:17] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 13:58:17] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 13:58:18] INFO     [agent.py:364] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-17 13:58:18] INFO     [tools.py:255] [MCP Tool] quick_search_materials: keyword=电缆, limit=10
+[2026-04-17 13:58:19] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-17 13:58:19] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:58:19] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:19] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:19] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:19] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:19] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 13:58:19] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 13:58:19] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 13:58:19] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:58:19] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:19] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:19] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:19] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:20] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 13:58:20] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 13:58:20] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 13:58:20] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 13:58:20] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 13:58:20] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 13:58:20] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 13:58:20] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 13:58:20] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 13:58:20] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 13:58:20] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 13:58:20] INFO     [rag_service.py:732]    - 数据检查: 0.921s
+[2026-04-17 13:58:20] INFO     [rag_service.py:733]    - 数据分析: 0.123s
+[2026-04-17 13:58:20] INFO     [rag_service.py:734]    - 总耗时: 0.921s
+[2026-04-17 13:58:20] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 13:58:20] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 13:58:20] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:58:20] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:20] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:20] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:20] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 13:58:20] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:58:20] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:20] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:20] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:20] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:21] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 13:58:21] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 13:58:21] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 13:58:21] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 13:58:21] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 13:58:21] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 13:58:21] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 13:58:21] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 13:58:21] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 13:58:21] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 13:58:21] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 13:58:21] INFO     [rag_service.py:732]    - 数据检查: 0.942s
+[2026-04-17 13:58:21] INFO     [rag_service.py:733]    - 数据分析: 0.116s
+[2026-04-17 13:58:21] INFO     [rag_service.py:734]    - 总耗时: 0.942s
+[2026-04-17 13:58:21] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 13:58:21] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 13:58:21] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:58:21] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:21] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:21] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:21] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 13:58:21] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:58:21] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:21] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:21] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:21] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 13:58:21] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 13:58:21] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 13:58:21] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 13:58:21] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 13:58:21] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 13:58:21] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 13:58:21] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 13:58:21] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 13:58:21] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 13:58:21] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 13:58:21] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 13:58:21] INFO     [rag_service.py:732]    - 数据检查: 0.866s
+[2026-04-17 13:58:21] INFO     [rag_service.py:733]    - 数据分析: 0.102s
+[2026-04-17 13:58:21] INFO     [rag_service.py:734]    - 总耗时: 0.866s
+[2026-04-17 13:58:21] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 13:58:21] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 13:58:21] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 13:58:25] INFO     [agent.py:428] [Agent Stream] 最终回复: 未找到与"电缆"直接匹配的材料。这可能是因为材料名称不够具体或系统中暂无相关数据。您可以尝试提供更详细的材料名称，例如"电力电缆"、"通信电缆"等，或者提供更多查询条件（如省份、城市、规格等），以便我更好地帮助您查询。
+[2026-04-17 13:58:46] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 13:58:46] INFO     [conversation_manager.py:516] 创建新会话: 2257db75-7b3 (类型: price_query, 用户: 1)
+[2026-04-17 13:58:46] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: information_price
+[2026-04-17 13:58:46] INFO     [rag_service.py:342] LLM 渠道识别原始结果: information_price
+[2026-04-17 13:58:46] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 13:58:46] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:46] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:46] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:46] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:46] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 13:58:46] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 13:58:46] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 13:58:46] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 13:58:46] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 13:58:46] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 13:58:47] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 13:58:47] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 13:58:47] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 13:58:47] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 13:58:47] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 13:58:47] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'channel': 'information_price'}
+[2026-04-17 13:58:47] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 13:58:47] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 13:58:47] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 13:58:47] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 13:58:47] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 13:58:47] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 13:58:47] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 13:58:47] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~384 tokens (统计结果，非原始数据)
+[2026-04-17 13:58:47] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 13:58:47] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 13:58:47] INFO     [rag_service.py:732]    - 数据检查: 1.091s
+[2026-04-17 13:58:47] INFO     [rag_service.py:733]    - 数据分析: 0.106s
+[2026-04-17 13:58:47] INFO     [rag_service.py:734]    - 总耗时: 1.091s
+[2026-04-17 13:58:47] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 13:58:47] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 13:58:47] INFO     [endpoints.py:789] ⚡ TTFT (首个Token响应): 0.237s
+[2026-04-17 13:59:29] INFO     [endpoints.py:55] ================================================================================
+[2026-04-17 13:59:29] INFO     [endpoints.py:56] 🤖 LLM 生成性能统计
+[2026-04-17 13:59:29] INFO     [endpoints.py:57] ================================================================================
+[2026-04-17 13:59:29] INFO     [endpoints.py:58] 🎫 Token 统计:
+[2026-04-17 13:59:29] INFO     [endpoints.py:59]    - 输入 Token (估算): 390 tokens
+[2026-04-17 13:59:29] INFO     [endpoints.py:60]    - 输出 Token (估算): 905 tokens
+[2026-04-17 13:59:29] INFO     [endpoints.py:61]    - 总 Token: 1,295 tokens
+[2026-04-17 13:59:29] INFO     [endpoints.py:62] ⏱️  生成时间:
+[2026-04-17 13:59:29] INFO     [endpoints.py:63]    - TTFT (首个Token): 0.237s
+[2026-04-17 13:59:29] INFO     [endpoints.py:64]    - 总生成时间: 42.378s
+[2026-04-17 13:59:29] INFO     [endpoints.py:65]    - 生成速度: 21.4 tokens/s
+[2026-04-17 13:59:29] INFO     [endpoints.py:66] ================================================================================
+[2026-04-17 13:59:29] INFO     [endpoints.py:79] ================================================================================
+[2026-04-17 13:59:29] INFO     [endpoints.py:80] 📊 完整请求性能统计
+[2026-04-17 13:59:29] INFO     [endpoints.py:81] ================================================================================
+[2026-04-17 13:59:29] INFO     [endpoints.py:82] ⏱️  总耗时: 43.696s
+[2026-04-17 13:59:29] INFO     [endpoints.py:83]    - LLM 生成: 42.378s
+[2026-04-17 13:59:29] INFO     [endpoints.py:84]    - TTFT: 0.237s
+[2026-04-17 13:59:29] INFO     [endpoints.py:85] ================================================================================
+[2026-04-17 14:02:48] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 14:02:48] INFO     [conversation_manager.py:516] 创建新会话: 53ad209d-e4a (类型: price_query, 用户: 1)
+[2026-04-17 14:02:48] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: information_price
+[2026-04-17 14:02:48] INFO     [rag_service.py:342] LLM 渠道识别原始结果: information_price
+[2026-04-17 14:02:48] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:02:48] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:02:48] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:02:48] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:02:48] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:02:48] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 14:02:48] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 14:02:48] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 14:02:48] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:02:48] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:02:48] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:02:49] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:02:49] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:02:49] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 14:02:49] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 14:02:49] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 14:02:49] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'channel': 'information_price'}
+[2026-04-17 14:02:49] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 14:02:49] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 14:02:49] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 14:02:49] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 14:02:49] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 14:02:49] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 14:02:49] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 14:02:49] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~384 tokens (统计结果，非原始数据)
+[2026-04-17 14:02:49] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 14:02:49] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 14:02:49] INFO     [rag_service.py:732]    - 数据检查: 0.986s
+[2026-04-17 14:02:49] INFO     [rag_service.py:733]    - 数据分析: 0.124s
+[2026-04-17 14:02:49] INFO     [rag_service.py:734]    - 总耗时: 0.986s
+[2026-04-17 14:02:49] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 14:02:49] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 14:02:49] INFO     [endpoints.py:789] ⚡ TTFT (首个Token响应): 0.129s
+[2026-04-17 14:03:57] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 14:03:57] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 14:04:05] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 14:04:05] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 14:04:05] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3705
+[2026-04-17 14:04:05] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 14:04:05] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3705, query: 查一下信息价中电缆的价格
+[2026-04-17 14:04:05] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4156
+[2026-04-17 14:04:05] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 7
+[2026-04-17 14:04:07] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 28 个 chunk
+[2026-04-17 14:13:20] INFO     [conversation_manager.py:516] 创建新会话: 2d1be8ac-a3c (类型: knowledge_qa, 用户: 1)
+[2026-04-17 14:13:20] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 14:13:20] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 14:13:24] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 14:13:24] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 14:13:24] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3705
+[2026-04-17 14:13:24] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 14:13:24] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3705, query: 查一下信息价中电缆的价格
+[2026-04-17 14:13:24] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4156
+[2026-04-17 14:13:24] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 14:13:26] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 28 个 chunk
+[2026-04-17 14:13:43] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 14:13:43] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 14:13:47] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 14:13:47] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 14:13:47] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3701
+[2026-04-17 14:13:47] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 14:13:47] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3701, query: 从信息价查铝合金幕墙型材的价格
+[2026-04-17 14:13:47] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 4155
+[2026-04-17 14:13:47] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 7
+[2026-04-17 14:13:56] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 165 个 chunk
+[2026-04-17 14:26:11] INFO     [agent.py:288] [Agent Stream] 开始处理: session=2d1be8ac-a3c, turn=1, entities={}
+[2026-04-17 14:26:11] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 14:26:12] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '从信息价查铝合金幕墙型材的价格'}
+[2026-04-17 14:26:13] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "铝合金幕墙型材", "channel": "information_price"}
+[2026-04-17 14:26:13] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 14:26:14] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '铝合金幕墙型材'}
+[2026-04-17 14:26:14] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=铝合金幕墙型材
+[2026-04-17 14:26:14] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:26:14] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:26:14] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:26:15] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 14:26:15] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 14:26:15] INFO     [rag_service.py:975] 快速检查成功，总数: 38 条
+[2026-04-17 14:26:15] INFO     [rag_service.py:568] 数据总数: 38 条
+[2026-04-17 14:26:15] INFO     [rag_service.py:577] 数据量评估: 38 条记录, 预计 4,560 tokens, 可处理: True
+[2026-04-17 14:26:15] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:26:15] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:26:15] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:26:15] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 14:26:15] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 14:26:15] WARNING  [rag_service.py:654] ================================================================================
+[2026-04-17 14:26:15] WARNING  [rag_service.py:655] ⚠️  查询结果为空
+[2026-04-17 14:26:15] WARNING  [rag_service.py:656] ================================================================================
+[2026-04-17 14:26:15] WARNING  [rag_service.py:657] 🔍 查询条件: {'materialName': '铝合金幕墙型材', 'province': '', 'city': '', 'materialModelSpec': '', 'brand': ''}
+[2026-04-17 14:26:15] WARNING  [rag_service.py:658] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-17 14:26:15] WARNING  [rag_service.py:659] ⏱️  响应时间: 0.398s
+[2026-04-17 14:26:15] WARNING  [rag_service.py:660] ================================================================================
+[2026-04-17 14:26:15] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 14:26:18] INFO     [agent.py:428] [Agent Stream] 最终回复: 未查询到铝合金幕墙型材的信息价，可能原因：1) 该材料在当前渠道下暂无数据，可尝试调整材料名称或查询渠道；2) 材料名称可能不准确，可尝试更具体的名称，如“铝合金型材6063-T5”。是否需要我为您进一步调整查询条件？
+[2026-04-17 14:26:34] INFO     [agent.py:288] [Agent Stream] 开始处理: session=2d1be8ac-a3c, turn=2, entities={'materialName': '铝合金幕墙型材', 'channel': 'information_price'}
+[2026-04-17 14:26:34] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 14:26:35] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价中电缆的价格'}
+[2026-04-17 14:26:36] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 14:26:36] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 14:26:38] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '电缆'}
+[2026-04-17 14:26:38] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=电缆
+[2026-04-17 14:26:38] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:26:38] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:26:38] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:26:38] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:26:38] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:26:38] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 14:26:38] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 14:26:38] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 14:26:38] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:26:38] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:26:38] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:26:39] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:26:39] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:26:39] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 14:26:39] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 14:26:39] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 14:26:39] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'province': '', 'city': '', 'materialModelSpec': '', 'brand': ''}
+[2026-04-17 14:26:39] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 14:26:39] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 14:26:39] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 14:26:39] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 14:26:39] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 14:26:39] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 14:26:39] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 14:26:39] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~404 tokens (统计结果，非原始数据)
+[2026-04-17 14:26:39] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 14:26:39] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 14:26:39] INFO     [rag_service.py:732]    - 数据检查: 1.044s
+[2026-04-17 14:26:39] INFO     [rag_service.py:733]    - 数据分析: 0.130s
+[2026-04-17 14:26:39] INFO     [rag_service.py:734]    - 总耗时: 1.044s
+[2026-04-17 14:26:39] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 14:26:39] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 14:26:39] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 14:27:05] INFO     [agent.py:428] [Agent Stream] 最终回复: 信息价渠道中电缆的价格范围较广，以下是一些关键信息：
+
+1. **价格范围**：
+   - 单位为“米”的电缆，价格范围为 **0.0 元/米 到 391.48 元/米**。
+   - 单位为“m”的电缆，价格范围为 **0.0 元/m 到 355.57 元/m**。
+
+2. **平均价格**：
+   - 单位为“米”的电缆，平均价格约为 **79.01 元/米**。
+   - 单位为“m”的电缆，平均价格约为 **69.61 元/m**。
+
+3. **中位数价格**：
+   - 单位为“米”的电缆，中位数价格为 **32.81 元/米**。
+   - 单位为“m”的电缆，中位数价格为 **21.1 元/m**。
+
+4. **典型价格区间**：
+   - 单位为“米”的电缆，推荐价格区间为 **63.28 元/米 和 516.42 元/米**。
+   - 单位为“m”的电缆，推荐价格区间为 **64.68 元/m 和 633.16 元/m**。
+
+5. **部分示例**：
+   - **BVV-35mm2** 电缆：35.18 元/米（江苏省苏州市）。
+   - **ZA-YJV22-0.6/1KV-4×240mm2** 电缆：722.89 元/米（广东省深圳市）。
+   - **ZA-YJV22-0.6/1KV-4×120mm2** 电缆：360.45 元/米（广东省深圳市）。
+
+如需更具体的电缆规格或地区的价格信息，请告诉我您需要查询的省份、城市或电缆型号！
+[2026-04-17 14:34:04] INFO     [conversation_manager.py:516] 创建新会话: b9acf265-03d (类型: price_query, 用户: 1)
+[2026-04-17 14:34:04] INFO     [agent.py:288] [Agent Stream] 开始处理: session=b9acf265-03d, turn=1, entities={}
+[2026-04-17 14:34:04] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 14:34:05] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价中电缆的价格'}
+[2026-04-17 14:34:06] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 14:34:06] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 14:34:07] INFO     [agent.py:364] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-17 14:34:07] INFO     [tools.py:255] [MCP Tool] quick_search_materials: keyword=电缆, limit=10
+[2026-04-17 14:34:07] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-17 14:34:07] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:34:07] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:07] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:08] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:08] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 14:34:08] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:34:08] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:08] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:08] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:08] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 14:34:08] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 14:34:08] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 14:34:08] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 14:34:08] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 14:34:08] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 14:34:08] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 14:34:08] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 14:34:08] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 14:34:08] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 14:34:08] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 14:34:08] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 14:34:08] INFO     [rag_service.py:732]    - 数据检查: 0.973s
+[2026-04-17 14:34:08] INFO     [rag_service.py:733]    - 数据分析: 0.159s
+[2026-04-17 14:34:08] INFO     [rag_service.py:734]    - 总耗时: 0.973s
+[2026-04-17 14:34:08] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 14:34:08] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 14:34:08] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:34:08] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:08] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:09] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:09] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:09] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 14:34:09] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 14:34:09] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 14:34:09] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:34:09] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:09] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:09] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:09] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:10] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 14:34:10] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 14:34:10] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 14:34:10] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 14:34:10] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 14:34:10] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 14:34:10] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 14:34:10] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 14:34:10] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 14:34:10] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 14:34:10] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 14:34:10] INFO     [rag_service.py:732]    - 数据检查: 1.139s
+[2026-04-17 14:34:10] INFO     [rag_service.py:733]    - 数据分析: 0.123s
+[2026-04-17 14:34:10] INFO     [rag_service.py:734]    - 总耗时: 1.139s
+[2026-04-17 14:34:10] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 14:34:10] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 14:34:10] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 14:34:10] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:10] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:10] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:10] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 14:34:10] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 14:34:10] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 14:34:10] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 14:34:10] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 14:34:11] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 14:34:11] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 14:34:11] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 14:34:11] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 14:34:11] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 14:34:11] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 14:34:11] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 14:34:11] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 14:34:11] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 14:34:11] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 14:34:11] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 14:34:11] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 14:34:11] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 14:34:11] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 14:34:11] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 14:34:11] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 14:34:11] INFO     [rag_service.py:732]    - 数据检查: 1.082s
+[2026-04-17 14:34:11] INFO     [rag_service.py:733]    - 数据分析: 0.127s
+[2026-04-17 14:34:11] INFO     [rag_service.py:734]    - 总耗时: 1.082s
+[2026-04-17 14:34:11] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 14:34:11] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 14:34:11] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 14:34:14] INFO     [agent.py:428] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能的原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称（如“电力电缆”、“控制电缆”等）或补充省份、城市等信息，以便我更好地帮助您查询。
+[2026-04-17 15:01:02] INFO     [conversation_manager.py:516] 创建新会话: fda4e35c-721 (类型: price_query, 用户: 1)
+[2026-04-17 15:01:02] INFO     [agent.py:288] [Agent Stream] 开始处理: session=fda4e35c-721, turn=1, entities={}
+[2026-04-17 15:01:02] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:01:03] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价中电缆的价格'}
+[2026-04-17 15:01:04] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 15:01:04] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:01:05] INFO     [agent.py:364] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-17 15:01:05] INFO     [tools.py:255] [MCP Tool] quick_search_materials: keyword=电缆, limit=10
+[2026-04-17 15:01:06] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-17 15:01:06] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:01:06] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:06] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:06] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:06] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:06] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:01:06] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:01:06] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:01:06] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:01:06] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:06] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:07] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:07] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:01:07] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:01:07] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:01:07] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:01:07] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:01:07] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:01:07] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:01:07] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:01:07] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:01:07] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:01:07] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:01:07] INFO     [rag_service.py:732]    - 数据检查: 0.905s
+[2026-04-17 15:01:07] INFO     [rag_service.py:733]    - 数据分析: 0.110s
+[2026-04-17 15:01:07] INFO     [rag_service.py:734]    - 总耗时: 0.905s
+[2026-04-17 15:01:07] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:01:07] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:01:07] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:01:07] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:07] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:07] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:07] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:01:07] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:01:07] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:07] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:07] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:07] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:08] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:01:08] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:01:08] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:01:08] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:01:08] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:01:08] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:01:08] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:01:08] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:01:08] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:01:08] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:01:08] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:01:08] INFO     [rag_service.py:732]    - 数据检查: 0.890s
+[2026-04-17 15:01:08] INFO     [rag_service.py:733]    - 数据分析: 0.123s
+[2026-04-17 15:01:08] INFO     [rag_service.py:734]    - 总耗时: 0.890s
+[2026-04-17 15:01:08] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:01:08] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:01:08] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:01:08] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:08] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:08] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:08] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:01:08] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:01:08] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:01:08] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:01:08] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:01:08] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:01:08] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:01:08] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:01:08] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:01:08] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:01:08] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:01:08] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:01:08] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:01:08] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:01:08] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:01:08] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:01:08] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:01:08] INFO     [rag_service.py:732]    - 数据检查: 0.906s
+[2026-04-17 15:01:08] INFO     [rag_service.py:733]    - 数据分析: 0.114s
+[2026-04-17 15:01:08] INFO     [rag_service.py:734]    - 总耗时: 0.906s
+[2026-04-17 15:01:08] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:01:08] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:01:08] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:01:12] INFO     [agent.py:428] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称（如“电力电缆”、“控制电缆”等）或补充其他条件（如省份、规格等），以便我更好地帮助您查询。
+[2026-04-17 15:07:09] INFO     [conversation_manager.py:516] 创建新会话: 9b91be2b-935 (类型: price_query, 用户: 1)
+[2026-04-17 15:07:09] INFO     [agent.py:288] [Agent Stream] 开始处理: session=9b91be2b-935, turn=1, entities={}
+[2026-04-17 15:07:09] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:07:11] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下信息价中电缆的价格'}
+[2026-04-17 15:07:11] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆", "channel": "information_price"}
+[2026-04-17 15:07:11] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:07:12] INFO     [agent.py:364] [Agent Stream] 调用工具: quick_search_materials, 参数: {'material_name': '电缆'}
+[2026-04-17 15:07:12] INFO     [tools.py:255] [MCP Tool] quick_search_materials: keyword=电缆, limit=10
+[2026-04-17 15:07:13] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "电缆"}
+[2026-04-17 15:07:13] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:07:13] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:13] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:13] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:13] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:13] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:07:13] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:07:13] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:07:13] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:07:13] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:13] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:14] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:14] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:07:14] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:07:14] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:07:14] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:07:14] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:07:14] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:07:14] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:07:14] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:07:14] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:07:14] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:07:14] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:07:14] INFO     [rag_service.py:732]    - 数据检查: 0.915s
+[2026-04-17 15:07:14] INFO     [rag_service.py:733]    - 数据分析: 0.092s
+[2026-04-17 15:07:14] INFO     [rag_service.py:734]    - 总耗时: 0.915s
+[2026-04-17 15:07:14] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:07:14] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:07:14] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:07:14] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:14] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:14] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:14] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:07:14] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:07:14] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:07:14] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:14] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:15] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:15] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:07:15] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:07:15] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:07:15] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:07:15] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:07:15] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:07:15] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:07:15] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:07:15] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:07:15] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:07:15] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:07:15] INFO     [rag_service.py:732]    - 数据检查: 0.987s
+[2026-04-17 15:07:15] INFO     [rag_service.py:733]    - 数据分析: 0.127s
+[2026-04-17 15:07:15] INFO     [rag_service.py:734]    - 总耗时: 0.987s
+[2026-04-17 15:07:15] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:07:15] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:07:15] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:07:15] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:15] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:15] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:15] INFO     [rag_service.py:975] 快速检查成功，总数: 402 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:568] 数据总数: 402 条
+[2026-04-17 15:07:15] INFO     [rag_service.py:577] 数据量评估: 402 条记录, 预计 48,240 tokens, 可处理: True
+[2026-04-17 15:07:15] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:07:15] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:15] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:16] INFO     [rag_service.py:1141] 第 1 页获取 402 条数据，累计 402 条
+[2026-04-17 15:07:16] INFO     [rag_service.py:1161] 分页拉取完成，共 402 条数据
+[2026-04-17 15:07:16] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:07:16] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:07:16] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:07:16] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '电缆', 'returnNumber': 50}
+[2026-04-17 15:07:16] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:07:16] INFO     [rag_service.py:723]    - 原始数据量: 402 条
+[2026-04-17 15:07:16] INFO     [rag_service.py:724]    - 过滤后数量: 324 条
+[2026-04-17 15:07:16] INFO     [rag_service.py:725]    - 返回数量: 257 条
+[2026-04-17 15:07:16] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:07:16] INFO     [rag_service.py:727]    - 原始数据 Token: 48,240 tokens (如果全部处理)
+[2026-04-17 15:07:16] INFO     [rag_service.py:728]    - 过滤后数据 Token: 38,880 tokens (实际保留的数据)
+[2026-04-17 15:07:16] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~378 tokens (统计结果，非原始数据)
+[2026-04-17 15:07:16] INFO     [rag_service.py:730]    - Token 优化率: 99.2%
+[2026-04-17 15:07:16] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:07:16] INFO     [rag_service.py:732]    - 数据检查: 1.017s
+[2026-04-17 15:07:16] INFO     [rag_service.py:733]    - 数据分析: 0.115s
+[2026-04-17 15:07:16] INFO     [rag_service.py:734]    - 总耗时: 1.017s
+[2026-04-17 15:07:16] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:07:16] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:07:16] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:07:19] INFO     [agent.py:428] [Agent Stream] 最终回复: 未找到与“电缆”直接匹配的材料信息。可能原因包括材料名称不准确或系统中暂无相关数据。建议您提供更具体的材料名称（如“电力电缆”、“通信电缆”等）或补充其他条件（如省份、规格等），以便我更好地帮助您查询。
+[2026-04-17 15:07:53] INFO     [conversation_manager.py:516] 创建新会话: 12a56dec-d52 (类型: price_query, 用户: 1)
+[2026-04-17 15:07:53] INFO     [agent.py:288] [Agent Stream] 开始处理: session=12a56dec-d52, turn=1, entities={}
+[2026-04-17 15:07:53] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:07:54] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '从信息价查铝合金幕墙型材的价格'}
+[2026-04-17 15:07:55] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "铝合金幕墙型材", "channel": "information_price"}
+[2026-04-17 15:07:55] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:07:57] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '铝合金幕墙型材'}
+[2026-04-17 15:07:57] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=铝合金幕墙型材
+[2026-04-17 15:07:57] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:07:57] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:57] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:57] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 15:07:57] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 15:07:57] INFO     [rag_service.py:975] 快速检查成功，总数: 38 条
+[2026-04-17 15:07:57] INFO     [rag_service.py:568] 数据总数: 38 条
+[2026-04-17 15:07:57] INFO     [rag_service.py:577] 数据量评估: 38 条记录, 预计 4,560 tokens, 可处理: True
+[2026-04-17 15:07:57] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:07:57] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:07:57] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:07:57] INFO     [rag_service.py:1141] 第 1 页获取 38 条数据，累计 38 条
+[2026-04-17 15:07:57] INFO     [rag_service.py:1161] 分页拉取完成，共 38 条数据
+[2026-04-17 15:07:57] WARNING  [rag_service.py:654] ================================================================================
+[2026-04-17 15:07:57] WARNING  [rag_service.py:655] ⚠️  查询结果为空
+[2026-04-17 15:07:57] WARNING  [rag_service.py:656] ================================================================================
+[2026-04-17 15:07:57] WARNING  [rag_service.py:657] 🔍 查询条件: {'materialName': '铝合金幕墙型材', 'province': '', 'city': '', 'materialModelSpec': '', 'brand': ''}
+[2026-04-17 15:07:57] WARNING  [rag_service.py:658] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-17 15:07:57] WARNING  [rag_service.py:659] ⏱️  响应时间: 0.293s
+[2026-04-17 15:07:57] WARNING  [rag_service.py:660] ================================================================================
+[2026-04-17 15:07:57] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:08:00] INFO     [agent.py:428] [Agent Stream] 最终回复: 未查询到铝合金幕墙型材的信息价，可能原因：1) 该材料在当前渠道下暂无数据，可尝试调整材料名称或查询渠道；2) 查询条件可能过于具体，可尝试简化规格或地区条件。是否需要我为您进一步调整查询条件？
+[2026-04-17 15:36:20] INFO     [conversation_manager.py:516] 创建新会话: cf9b26d5-4e8 (类型: price_query, 用户: 1)
+[2026-04-17 15:36:20] INFO     [agent.py:288] [Agent Stream] 开始处理: session=cf9b26d5-4e8, turn=1, entities={}
+[2026-04-17 15:36:20] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:36:21] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳方钢的价格'}
+[2026-04-17 15:36:22] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "方钢", "city": "深圳市"}
+[2026-04-17 15:36:22] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:36:23] INFO     [agent.py:364] [Agent Stream] 调用工具: identify_channel, 参数: {'question': '查一下深圳方钢的价格'}
+[2026-04-17 15:36:23] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: unknown
+[2026-04-17 15:36:23] INFO     [rag_service.py:342] LLM 渠道识别原始结果: unknown
+[2026-04-17 15:36:23] INFO     [rag_service.py:359] LLM 识别为 unknown，启用智能推断...
+[2026-04-17 15:36:23] INFO     [rag_service.py:366] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-17 15:36:23] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:36:26] INFO     [agent.py:428] [Agent Stream] 最终回复: 您想查询的是哪种渠道的价格呢？
+
+- **信息价**：政府发布的指导价，适合一般工程造价参考。
+- **厂商报价**：品牌厂商的实际报价，适合有品牌要求的场景。
+
+请告诉我您的需求，我会根据渠道进一步查询！
+[2026-04-17 15:37:49] INFO     [conversation_manager.py:516] 创建新会话: 562d3e01-844 (类型: price_query, 用户: 1)
+[2026-04-17 15:37:49] INFO     [agent.py:288] [Agent Stream] 开始处理: session=562d3e01-844, turn=1, entities={}
+[2026-04-17 15:37:49] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:37:51] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳市造价站 方钢的价格'}
+[2026-04-17 15:37:52] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "方钢", "city": "深圳市", "channel": "information_price"}
+[2026-04-17 15:37:52] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:37:54] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '方钢', 'city': '深圳市'}
+[2026-04-17 15:37:54] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=方钢
+[2026-04-17 15:37:54] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:37:54] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:37:54] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:37:54] INFO     [rag_service.py:1141] 第 1 页获取 384 条数据，累计 384 条
+[2026-04-17 15:37:54] INFO     [rag_service.py:1161] 分页拉取完成，共 384 条数据
+[2026-04-17 15:37:54] INFO     [rag_service.py:975] 快速检查成功，总数: 384 条
+[2026-04-17 15:37:54] INFO     [rag_service.py:568] 数据总数: 384 条
+[2026-04-17 15:37:54] INFO     [rag_service.py:577] 数据量评估: 384 条记录, 预计 46,080 tokens, 可处理: True
+[2026-04-17 15:37:54] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:37:54] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:37:54] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:37:55] INFO     [rag_service.py:1141] 第 1 页获取 384 条数据，累计 384 条
+[2026-04-17 15:37:55] INFO     [rag_service.py:1161] 分页拉取完成，共 384 条数据
+[2026-04-17 15:37:55] WARNING  [rag_service.py:654] ================================================================================
+[2026-04-17 15:37:55] WARNING  [rag_service.py:655] ⚠️  查询结果为空
+[2026-04-17 15:37:55] WARNING  [rag_service.py:656] ================================================================================
+[2026-04-17 15:37:55] WARNING  [rag_service.py:657] 🔍 查询条件: {'materialName': '方钢', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': ''}
+[2026-04-17 15:37:55] WARNING  [rag_service.py:658] 📈 数据量: 0 条 (过滤后无符合条件的数据)
+[2026-04-17 15:37:55] WARNING  [rag_service.py:659] ⏱️  响应时间: 0.954s
+[2026-04-17 15:37:55] WARNING  [rag_service.py:660] ================================================================================
+[2026-04-17 15:37:55] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:37:57] INFO     [agent.py:428] [Agent Stream] 最终回复: 未查询到深圳市的方钢价格，可能原因：1) 该地区暂无数据，可尝试放宽到广东省；2) 材料名称可能不准确，可尝试更具体的名称或规格。是否需要我进一步协助调整查询条件？
+[2026-04-17 15:40:02] INFO     [conversation_manager.py:516] 创建新会话: 7441ed35-fc3 (类型: price_query, 用户: 1)
+[2026-04-17 15:40:02] INFO     [agent.py:288] [Agent Stream] 开始处理: session=7441ed35-fc3, turn=1, entities={}
+[2026-04-17 15:40:02] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:40:03] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器价格'}
+[2026-04-17 15:40:04] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "brand": "天加"}
+[2026-04-17 15:40:04] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:40:06] INFO     [agent.py:364] [Agent Stream] 调用工具: identify_channel, 参数: {'question': '查一下深圳天加空调器价格'}
+[2026-04-17 15:40:06] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: unknown
+[2026-04-17 15:40:06] INFO     [rag_service.py:342] LLM 渠道识别原始结果: unknown
+[2026-04-17 15:40:06] INFO     [rag_service.py:359] LLM 识别为 unknown，启用智能推断...
+[2026-04-17 15:40:06] INFO     [rag_service.py:366] 智能推断结果: channel=unknown, confidence=0.00, reason=无法识别查询渠道
+[2026-04-17 15:40:06] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:40:08] INFO     [agent.py:428] [Agent Stream] 最终回复: 您想查询的是：
+- **信息价**（政府发布的指导价，适合一般工程造价参考）
+- **厂商报价**（品牌厂商的实际报价，适合有品牌要求的场景）
+
+请问您需要哪种类型的报价？
+[2026-04-17 15:40:34] INFO     [conversation_manager.py:516] 创建新会话: ec665888-0ea (类型: price_query, 用户: 1)
+[2026-04-17 15:40:34] INFO     [agent.py:288] [Agent Stream] 开始处理: session=ec665888-0ea, turn=1, entities={}
+[2026-04-17 15:40:34] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:40:35] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 15:40:37] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 15:40:37] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:40:39] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 15:40:39] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 15:40:39] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:40:39] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:40:39] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:40:39] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:40:39] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 15:40:39] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:40:39] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:40:39] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:40:39] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:40:39] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:40:39] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:40:39] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:40:39] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 15:40:39] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:40:39] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 15:40:39] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:40:39] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 15:40:39] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 15:40:39] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 15:40:39] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 15:40:39] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:40:39] INFO     [rag_service.py:732]    - 数据检查: 0.337s
+[2026-04-17 15:40:39] INFO     [rag_service.py:733]    - 数据分析: 0.031s
+[2026-04-17 15:40:39] INFO     [rag_service.py:734]    - 总耗时: 0.337s
+[2026-04-17 15:40:39] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:40:39] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:40:39] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:40:48] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，以下是深圳市天加空调器的信息价情况：
+
+- **价格范围**：2461.0元/台 至 79632.0元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.0元/台
+- **推荐价格区间**：
+  - 第一档：19158.45元/台
+  - 第二档：63265.0元/台
+
+具体价格会根据空调器的规格型号、制冷/制热能力、安装形式等不同而有所差异。如果您需要更详细的价格信息或特定型号的报价，可以告诉我，我会进一步协助您！
+[2026-04-17 15:52:23] INFO     [conversation_manager.py:516] 创建新会话: 8045dbc1-432 (类型: price_query, 用户: 1)
+[2026-04-17 15:52:23] INFO     [agent.py:288] [Agent Stream] 开始处理: session=8045dbc1-432, turn=1, entities={}
+[2026-04-17 15:52:23] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:52:25] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 15:52:26] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 15:52:26] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:52:28] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 15:52:28] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 15:52:28] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:52:28] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:52:28] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:52:28] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:52:28] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 15:52:28] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:52:28] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:52:28] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:52:28] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:52:28] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:52:28] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:52:28] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:52:28] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 15:52:28] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:52:28] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 15:52:28] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:52:28] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 15:52:28] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 15:52:28] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 15:52:28] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 15:52:28] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:52:28] INFO     [rag_service.py:732]    - 数据检查: 0.314s
+[2026-04-17 15:52:28] INFO     [rag_service.py:733]    - 数据分析: 0.032s
+[2026-04-17 15:52:28] INFO     [rag_service.py:734]    - 总耗时: 0.314s
+[2026-04-17 15:52:28] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:52:28] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:52:28] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:52:56] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **价格范围**：2461.0元/台 至 79632.0元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.0元/台
+- **推荐价格区间**：19158.45元/台 和 63265.0元/台（基于聚类分析）
+
+具体规格型号和价格明细如下：
+1. 空调室外机-SW-1-4：51679.0元/台
+2. 新风室外机XF-1-3：11835.0元/台
+3. 新风室外机SW-1-2：11835.0元/台
+4. 新风室外机SW-3-2：23968.0元/台
+5. 新风处理机X-1-1~2,4~6：2461.0元/台
+6. 空调室外机SW-W-1：51571.0元/台
+7. 空调室外机SW-1-1,2,5,6：23968.0元/台
+8. 新风室外机XF-1-1~2、4~6：8904.0元/台
+9. 空调室外机SW-1-1：79632.0元/台
+10. 空调室外机SW-1-3：29433.0元/台
+11. 新风处理机X-1-3：6477.0元/台
+12. 空调室外机SW-5-1,SW-6-4：54268.0元/台
+13. 空调室外机SW-5-4：79175.0元/台
+14. 空调室外机SW-3-3：32625.0元/台
+15. 空调室外机SW-3-1：29804.0元/台
+16. 空调室外机SW-1-1：29433.0元/台
+
+如需进一步分析或具体型号的详细信息，请告诉我！
+[2026-04-17 15:53:23] INFO     [agent.py:288] [Agent Stream] 开始处理: session=8045dbc1-432, turn=2, entities={'materialName': '空调器', 'city': '深圳市', 'channel': 'information_price', 'brand': '天加'}
+[2026-04-17 15:53:23] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 15:53:25] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 15:53:26] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 15:53:26] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 15:53:30] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 15:53:30] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 15:53:30] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 15:53:30] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:53:30] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:53:30] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:53:30] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 15:53:30] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 15:53:30] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 15:53:30] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 15:53:30] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 15:53:30] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 15:53:30] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 15:53:30] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 15:53:30] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 15:53:30] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 15:53:30] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 15:53:30] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 15:53:30] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 15:53:30] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 15:53:30] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 15:53:30] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 15:53:30] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 15:53:30] INFO     [rag_service.py:732]    - 数据检查: 0.443s
+[2026-04-17 15:53:30] INFO     [rag_service.py:733]    - 数据分析: 0.082s
+[2026-04-17 15:53:30] INFO     [rag_service.py:734]    - 总耗时: 0.443s
+[2026-04-17 15:53:30] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 15:53:30] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 15:53:30] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 15:54:00] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **价格范围**：2461.0元/台 至 79632.0元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.0元/台
+- **推荐价格区间**：19158.45元/台 和 63265.0元/台（基于聚类分析）
+
+具体规格型号和价格明细如下：
+1. 空调室外机-SW-1-4：51679.0元/台
+2. 新风室外机XF-1-3：11835.0元/台
+3. 新风室外机SW-1-2：11835.0元/台
+4. 新风室外机SW-3-2：23968.0元/台
+5. 新风处理机X-1-1~2,4~6：2461.0元/台
+6. 空调室外机SW-W-1：51571.0元/台
+7. 空调室外机SW-1-1,2,5,6：23968.0元/台
+8. 新风室外机XF-1-1~2、4~6：8904.0元/台
+9. 空调室外机SW-1-1：79632.0元/台
+10. 空调室外机SW-1-3：29433.0元/台
+11. 新风处理机X-1-3：6477.0元/台
+12. 空调室外机SW-5-1,SW-6-4：54268.0元/台
+13. 空调室外机SW-5-4：79175.0元/台
+14. 空调室外机SW-3-3：32625.0元/台
+15. 空调室外机SW-3-1：29804.0元/台
+16. 空调室外机SW-1-1：29433.0元/台
+
+如需进一步分析或具体型号的详细信息，请告诉我！
+[2026-04-17 16:02:20] INFO     [agent.py:288] [Agent Stream] 开始处理: session=8045dbc1-432, turn=3, entities={'materialName': '空调器', 'city': '深圳市', 'channel': 'information_price', 'brand': '天加'}
+[2026-04-17 16:02:20] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:02:23] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 16:02:25] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 16:02:25] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 16:02:27] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 16:02:27] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 16:02:27] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 16:02:27] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:02:27] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:02:27] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:02:27] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 16:02:27] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 16:02:27] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:02:27] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:02:27] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:02:27] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 16:02:27] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 16:02:27] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 16:02:27] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 16:02:27] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 16:02:27] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 16:02:27] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 16:02:27] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 16:02:27] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 16:02:27] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 16:02:27] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 16:02:27] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 16:02:27] INFO     [rag_service.py:732]    - 数据检查: 0.350s
+[2026-04-17 16:02:27] INFO     [rag_service.py:733]    - 数据分析: 0.066s
+[2026-04-17 16:02:27] INFO     [rag_service.py:734]    - 总耗时: 0.350s
+[2026-04-17 16:02:27] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 16:02:27] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 16:02:27] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 16:02:55] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **价格范围**：2461.0元/台 至 79632.0元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.0元/台
+- **推荐价格区间**：19158.45元/台 和 63265.0元/台（基于聚类分析）
+
+具体规格型号和价格明细如下：
+1. 空调室外机-SW-1-4：51679.0元/台
+2. 新风室外机XF-1-3：11835.0元/台
+3. 新风室外机SW-1-2：11835.0元/台
+4. 新风室外机SW-3-2：23968.0元/台
+5. 新风处理机X-1-1~2,4~6：2461.0元/台
+6. 空调室外机SW-W-1：51571.0元/台
+7. 空调室外机SW-1-1,2,5,6：23968.0元/台
+8. 新风室外机XF-1-1~2、4~6：8904.0元/台
+9. 空调室外机SW-1-1：79632.0元/台
+10. 空调室外机SW-1-3：29433.0元/台
+11. 新风处理机X-1-3：6477.0元/台
+12. 空调室外机SW-5-1,SW-6-4：54268.0元/台
+13. 空调室外机SW-5-4：79175.0元/台
+14. 空调室外机SW-3-3：32625.0元/台
+15. 空调室外机SW-3-1：29804.0元/台
+16. 空调室外机SW-1-1：29433.0元/台
+
+如需进一步分析或具体型号的详细信息，请告诉我！
+[2026-04-17 16:04:53] INFO     [agent.py:288] [Agent Stream] 开始处理: session=8045dbc1-432, turn=4, entities={'materialName': '空调器', 'city': '深圳市', 'channel': 'information_price', 'brand': '天加'}
+[2026-04-17 16:04:53] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:04:56] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 16:04:57] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 16:04:57] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 16:05:00] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 16:05:00] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 16:05:00] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 16:05:00] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:05:00] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:05:00] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:05:00] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 16:05:00] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 16:05:00] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:05:00] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:05:00] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:05:00] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 16:05:00] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 16:05:00] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 16:05:00] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 16:05:00] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 16:05:00] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 16:05:00] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 16:05:00] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 16:05:00] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 16:05:00] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 16:05:00] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 16:05:00] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 16:05:00] INFO     [rag_service.py:732]    - 数据检查: 0.315s
+[2026-04-17 16:05:00] INFO     [rag_service.py:733]    - 数据分析: 0.032s
+[2026-04-17 16:05:00] INFO     [rag_service.py:734]    - 总耗时: 0.315s
+[2026-04-17 16:05:00] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 16:05:00] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 16:05:00] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 16:05:27] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **价格范围**：2461.0元/台 至 79632.0元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.0元/台
+- **推荐价格区间**：19158.45元/台 和 63265.0元/台（基于聚类分析）
+
+具体规格型号和价格明细如下：
+1. 空调室外机-SW-1-4：51679.0元/台
+2. 新风室外机XF-1-3：11835.0元/台
+3. 新风室外机SW-1-2：11835.0元/台
+4. 新风室外机SW-3-2：23968.0元/台
+5. 新风处理机X-1-1~2,4~6：2461.0元/台
+6. 空调室外机SW-W-1：51571.0元/台
+7. 空调室外机SW-1-1,2,5,6：23968.0元/台
+8. 新风室外机XF-1-1~2、4~6：8904.0元/台
+9. 空调室外机SW-1-1：79632.0元/台
+10. 空调室外机SW-1-3：29433.0元/台
+11. 新风处理机X-1-3：6477.0元/台
+12. 空调室外机SW-5-1,SW-6-4：54268.0元/台
+13. 空调室外机SW-5-4：79175.0元/台
+14. 空调室外机SW-3-3：32625.0元/台
+15. 空调室外机SW-3-1：29804.0元/台
+16. 空调室外机SW-1-1：29433.0元/台
+
+如需进一步分析或具体型号的详细信息，请告诉我！
+[2026-04-17 16:12:11] INFO     [conversation_manager.py:516] 创建新会话: 90fd84d7-f16 (类型: knowledge_qa, 用户: 1)
+[2026-04-17 16:12:11] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 16:12:11] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 16:12:20] INFO     [rag_service.py:1281] rerank 完成，返回 3 个文档
+[2026-04-17 16:12:20] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 16:12:20] INFO     [rag_service.py:1289] 上下文构建成功，长度: 1410
+[2026-04-17 16:12:20] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 3
+[2026-04-17 16:12:20] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 1410, query: 你好
+[2026-04-17 16:12:20] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 1851
+[2026-04-17 16:12:20] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 3
+[2026-04-17 16:13:07] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 16:13:07] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 16:13:12] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 16:13:12] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 16:13:12] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 16:13:12] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 16:13:12] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 16:13:12] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 16:13:12] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 5
+[2026-04-17 16:13:14] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 29 个 chunk
+[2026-04-17 16:13:25] INFO     [agent.py:288] [Agent Stream] 开始处理: session=90fd84d7-f16, turn=1, entities={}
+[2026-04-17 16:13:25] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:13:26] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 16:13:27] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 16:13:27] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 16:13:29] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 16:13:29] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 16:13:29] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 16:13:29] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:13:29] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:13:29] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:13:29] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:13:29] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 16:13:29] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 16:13:29] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 16:13:29] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 16:13:29] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:13:29] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:13:30] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:13:30] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:13:30] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 16:13:30] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 16:13:30] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 16:13:30] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 16:13:30] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 16:13:30] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 16:13:30] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 16:13:30] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 16:13:30] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 16:13:30] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 16:13:30] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 16:13:30] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 16:13:30] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 16:13:30] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 16:13:30] INFO     [rag_service.py:732]    - 数据检查: 0.302s
+[2026-04-17 16:13:30] INFO     [rag_service.py:733]    - 数据分析: 0.034s
+[2026-04-17 16:13:30] INFO     [rag_service.py:734]    - 总耗时: 0.302s
+[2026-04-17 16:13:30] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 16:13:30] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 16:13:30] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 16:13:37] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据您的查询，以下是深圳市天加空调器的信息价数据：
+
+- **价格范围**：2461.00元/台 至 79632.00元/台
+- **平均价格**：32941.75元/台
+- **中位数价格**：29433.00元/台
+- **推荐价格区间**：
+  - 第一档：19158.45元/台
+  - 第二档：63265.00元/台
+
+这些价格数据是基于16条记录的统计分析，涵盖了不同规格和型号的空调器。如果您需要更详细的信息或有特定的型号需求，请告诉我！
+[2026-04-17 16:17:57] INFO     [conversation_manager.py:516] 创建新会话: 7163c6d8-0a5 (类型: price_query, 用户: 1)
+[2026-04-17 16:17:57] INFO     [agent.py:288] [Agent Stream] 开始处理: session=7163c6d8-0a5, turn=1, entities={}
+[2026-04-17 16:17:57] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:17:58] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 16:18:00] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 16:18:00] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 16:18:02] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 16:18:02] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 16:18:02] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 16:18:02] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:18:02] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:18:02] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:18:02] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 16:18:02] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 16:18:02] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:18:02] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:18:02] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:18:02] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 16:18:02] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 16:18:02] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 16:18:02] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 16:18:02] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 16:18:02] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 16:18:02] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 16:18:02] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 16:18:02] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 16:18:02] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 16:18:02] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 16:18:02] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 16:18:02] INFO     [rag_service.py:732]    - 数据检查: 0.376s
+[2026-04-17 16:18:02] INFO     [rag_service.py:733]    - 数据分析: 0.030s
+[2026-04-17 16:18:02] INFO     [rag_service.py:734]    - 总耗时: 0.376s
+[2026-04-17 16:18:02] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 16:18:02] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 16:18:02] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 16:18:10] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **共查询到16条记录**，价格单位为“台”。
+- **价格范围**：2461.0元 至 79632.0元。
+- **平均价格**：32941.75元。
+- **中位数价格**：29433.0元。
+- **推荐价格区间**（通过K-means聚类分析）：
+  - 第一区间：约19158.45元
+  - 第二区间：约63265.0元
+
+如需查看具体规格型号和价格明细，可以进一步筛选或联系供应商获取详细信息。
+[2026-04-17 16:29:04] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 16:29:04] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 16:29:09] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 16:29:09] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 16:29:09] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 16:29:09] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 16:29:09] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 16:29:09] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 16:29:09] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 7
+[2026-04-17 16:29:11] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 39 个 chunk
+[2026-04-17 16:29:14] INFO     [agent.py:288] [Agent Stream] 开始处理: session=7163c6d8-0a5, turn=2, entities={'materialName': '空调器', 'city': '深圳市', 'channel': 'information_price', 'brand': '天加'}
+[2026-04-17 16:29:14] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:29:16] INFO     [agent.py:364] [Agent Stream] 调用工具: extract_entities, 参数: {'question': '查一下深圳天加空调器信息价'}
+[2026-04-17 16:29:17] INFO     [llm_deepseek.py:163] LLM API 同步调用响应: {"materialName": "空调器", "city": "深圳市", "channel": "information_price", "brand": "天加"}
+[2026-04-17 16:29:17] INFO     [agent.py:304] [Agent Stream] ReAct Step 2
+[2026-04-17 16:29:19] INFO     [agent.py:364] [Agent Stream] 调用工具: query_price_data, 参数: {'channel': 'information_price', 'material_name': '空调器', 'city': '深圳市', 'brand': '天加'}
+[2026-04-17 16:29:19] INFO     [tools.py:333] [MCP Tool] query_price_data: channel=information_price, material=空调器
+[2026-04-17 16:29:19] INFO     [rag_service.py:566] 阶段1: 快速检查数据总数...
+[2026-04-17 16:29:19] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:29:19] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:29:19] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:29:19] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:29:19] INFO     [rag_service.py:975] 快速检查成功，总数: 25 条
+[2026-04-17 16:29:19] INFO     [rag_service.py:568] 数据总数: 25 条
+[2026-04-17 16:29:19] INFO     [rag_service.py:577] 数据量评估: 25 条记录, 预计 3,000 tokens, 可处理: True
+[2026-04-17 16:29:19] INFO     [rag_service.py:620] 阶段2: 数据量可控，开始获取具体数据...
+[2026-04-17 16:29:19] INFO     [rag_service.py:1062] 使用真实 API (分页拉取): http://113.31.103.48:8801/backend/material/factoryRelatedMaterials/getRelatedMaterial
+[2026-04-17 16:29:19] INFO     [rag_service.py:1120] 请求第 1 页，每页 2000 条...
+[2026-04-17 16:29:20] INFO     [rag_service.py:1141] 第 1 页获取 25 条数据，累计 25 条
+[2026-04-17 16:29:20] INFO     [rag_service.py:1161] 分页拉取完成，共 25 条数据
+[2026-04-17 16:29:20] INFO     [rag_service.py:718] ================================================================================
+[2026-04-17 16:29:20] INFO     [rag_service.py:719] 📊 价格查询数据处理统计
+[2026-04-17 16:29:20] INFO     [rag_service.py:720] ================================================================================
+[2026-04-17 16:29:20] INFO     [rag_service.py:721] 🔍 查询条件: {'materialName': '空调器', 'province': '', 'city': '深圳市', 'materialModelSpec': '', 'brand': '天加'}
+[2026-04-17 16:29:20] INFO     [rag_service.py:722] 📈 数据统计:
+[2026-04-17 16:29:20] INFO     [rag_service.py:723]    - 原始数据量: 25 条
+[2026-04-17 16:29:20] INFO     [rag_service.py:724]    - 过滤后数量: 16 条
+[2026-04-17 16:29:20] INFO     [rag_service.py:725]    - 返回数量: 16 条
+[2026-04-17 16:29:20] INFO     [rag_service.py:726] 🎫 Token 分析:
+[2026-04-17 16:29:20] INFO     [rag_service.py:727]    - 原始数据 Token: 3,000 tokens (如果全部处理)
+[2026-04-17 16:29:20] INFO     [rag_service.py:728]    - 过滤后数据 Token: 1,920 tokens (实际保留的数据)
+[2026-04-17 16:29:20] INFO     [rag_service.py:729]    - 传给 LLM 的 Token: ~231 tokens (统计结果，非原始数据)
+[2026-04-17 16:29:20] INFO     [rag_service.py:730]    - Token 优化率: 92.3%
+[2026-04-17 16:29:20] INFO     [rag_service.py:731] ⏱️  数据处理时间:
+[2026-04-17 16:29:20] INFO     [rag_service.py:732]    - 数据检查: 0.325s
+[2026-04-17 16:29:20] INFO     [rag_service.py:733]    - 数据分析: 0.031s
+[2026-04-17 16:29:20] INFO     [rag_service.py:734]    - 总耗时: 0.325s
+[2026-04-17 16:29:20] INFO     [rag_service.py:735] 💡 提示: LLM 生成时间将在流式响应中单独统计
+[2026-04-17 16:29:20] INFO     [rag_service.py:736] ================================================================================
+[2026-04-17 16:29:20] INFO     [agent.py:304] [Agent Stream] ReAct Step 3
+[2026-04-17 16:29:29] INFO     [agent.py:428] [Agent Stream] 最终回复: 根据查询结果，深圳市天加品牌的空调器信息价如下：
+
+- **共查询到16条记录**，价格单位为“台”。
+- **价格范围**：2461.0元 至 79632.0元。
+- **平均价格**：32941.75元。
+- **中位数价格**：29433.0元。
+- **推荐价格区间**（通过K-means聚类分析）：
+  - 第一区间：约19158.45元
+  - 第二区间：约63265.0元
+
+如需查看具体规格型号和价格明细，可以进一步筛选或联系供应商获取详细信息。
+[2026-04-17 16:37:03] INFO     [conversation_manager.py:516] 创建新会话: 76ec2e05-498 (类型: price_query, 用户: 1)
+[2026-04-17 16:37:03] INFO     [agent.py:288] [Agent Stream] 开始处理: session=76ec2e05-498, turn=1, entities={}
+[2026-04-17 16:37:03] INFO     [agent.py:304] [Agent Stream] ReAct Step 1
+[2026-04-17 16:37:05] INFO     [agent.py:428] [Agent Stream] 最终回复: 您好！欢迎使用「材价通」，我可以帮助您查询建筑材料的价格信息。请问您需要查询什么材料的价格呢？
+[2026-04-17 16:37:15] WARNING  [rag_service.py:1381] 查询重写器未初始化，退回到单轮查询
+[2026-04-17 16:37:15] INFO     [rag_service.py:1267] 检索完成，返回 20 个文档
+[2026-04-17 16:37:20] INFO     [rag_service.py:1281] rerank 完成，返回 10 个文档
+[2026-04-17 16:37:20] INFO     [rag_service.py:1286] 开始构建上下文，rerank_res 类型: <class 'list'>
+[2026-04-17 16:37:20] INFO     [rag_service.py:1289] 上下文构建成功，长度: 3497
+[2026-04-17 16:37:20] INFO     [rag_service.py:1300] process_single_query 即将返回结果，contexts数量: 10
+[2026-04-17 16:37:20] INFO     [llm_deepseek.py:262] stream_predict 开始，context长度: 3497, query: 你好
+[2026-04-17 16:37:20] INFO     [llm_deepseek.py:271] prompt构建成功，长度: 3938
+[2026-04-17 16:37:20] INFO     [llm_deepseek.py:278] 开始调用 openai_chat_by_api_as_astream，messages数量: 7
+[2026-04-17 16:37:22] INFO     [llm_deepseek.py:289] openai_chat_by_api_as_astream 完成，共 27 个 chunk

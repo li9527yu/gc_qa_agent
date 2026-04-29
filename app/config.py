@@ -67,13 +67,17 @@ API_SECRET_KEY = "uwRbSmxx9-X5NEFPTkjpqhj6GBaVVI6V5ulxtczgY5I"
 # 价格查询 API 账户 ID
 PRICE_API_ACCOUNT_ID = "dce1a70c6507f10d266385d9eec7db09"
 
-# # 真实数据： 工程造价
-# RELATED_DATA_PATH = "app/dataset/工程造价/"
-# DATA_PATH = "/home/tpc/suda/rag/easy-rag/app/dataset/工程造价/"
+# 真实数据： 工程造价
+RELATED_DATA_PATH = "app/dataset/工程造价/"
+DATA_PATH = "/home/tpc/suda/rag/rag_agent/app/dataset/工程造价"
 
-# 测试数据： data
-RELATED_DATA_PATH = "app/dataset/data/"
-DATA_PATH = "/home/tpc/suda/rag/rag_agent/app/dataset/data"
+# # 测试数据： data
+# RELATED_DATA_PATH = "app/dataset/data/"
+# DATA_PATH = "/home/tpc/suda/rag/rag_agent/app/dataset/data"
 
 # 根目录
 ROOT_PATH = "/home/tpc/suda/rag/rag_agent"     
+
+
+# 基于文件的对话历史存储根目录
+HISTORY_ROOT_PATH = ROOT_PATH + "/app/dataset/history/"

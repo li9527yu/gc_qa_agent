@@ -12,17 +12,19 @@ def build_template() -> Template:
     使用 Jinja2 构建 RAG Prompt 模板
     优势：支持复杂逻辑、避免大括号转义冲突、更好的可维护性
     """
-    template_str = """你是一个智能助手。回答用户问题时，请遵循以下优先级策略：
+    template_str = """你是一个严格基于检索文档回答问题的智能助手。
 
-【回答策略】
-1. **文档充分**：如果<Documents>中的信息足以回答问题，请严格基于文档内容回答。
-2. **文档不足但属常识**：如果无法根据文档信息内容回答问题，但问题属于通用常识，你可以基于自身知识回答，但必须在开头声明："提供的文档未涵盖此问题，以下回答基于我的训练知识："
-3. **文档不足且属专业/时效性**：如果文档信息不足，且问题涉及专业细节、实时信息或可能随时间变化的事实（如最新政策、具体产品版本等），请回答："【信息不足】提供的文档信息不足以回答该问题，且该问题需要特定上下文或最新数据支持，无法确保准确性。"
- 
+【回答原则】
+1. 只能依据 <Documents> 中能够明确支持的内容作答，不得补充训练知识、常识推断、行业经验或外部事实。
+2. 如果文档仅支持部分问题，只回答被文档支持的部分，并明确说明其余部分文档未提供依据。
+3. 如果文档不足以支撑答案，必须直接回答："【信息不足】提供的文档信息不足以回答该问题。"
+4. 如果文档之间存在矛盾，请分别列出冲突内容，并说明来源，不得自行裁决哪一方正确。
+5. 如果文档内容明显是 OCR 噪声、截图残片或与问题无关，忽略这部分内容，不要据此扩写答案。
 
-【格式要求】
+【输出要求】
 - 所有回答使用中文
-- 如果文档中存在矛盾信息，请分别陈述并标注来源，不做主观判断
+- 不要提及“根据我的训练知识”“我认为”“通常来说”这类脱离文档依据的表述
+- 回答中涉及结论时，优先使用“文档显示”“文档提到”“文档未提及”这类可追溯表述
 
 <Documents>
 {{ context | trim }}
@@ -30,7 +32,7 @@ def build_template() -> Template:
 
 用户问题：{{ query | trim }}
 
-请思考：1) 文档是否包含答案？ 2) 如果不包含，属于上述策略2还是策略3？ 然后给出回答。"""
+请先判断文档是否足以支持回答，再在文档支持的范围内作答。"""
 
     # 创建 Jinja2 Template 对象
     # trim 过滤器会自动去除首尾空白，避免文档或问题前后的换行影响格式
@@ -98,7 +100,9 @@ class LLMPredictor:
         variables: dict,
         guided_decoding=False,
         allowed_tokens=None,
-        max_tokens=None
+        max_tokens=None,
+        timeout: Optional[float] = None,
+        max_retries: Optional[int] = None
     ):
         """
         同步预测：一次性获取完整回答
@@ -141,9 +145,18 @@ class LLMPredictor:
                 request_params["logit_bias"] = logit_bias
                 guided_decoding_enabled = True
                 self.logger.info(f"尝试启用guided decoding，允许的token: {allowed_tokens}")
+
+        client = self.client
+        if timeout is not None or max_retries is not None:
+            option_kwargs = {}
+            if timeout is not None:
+                option_kwargs["timeout"] = timeout
+            if max_retries is not None:
+                option_kwargs["max_retries"] = max_retries
+            client = self.client.with_options(**option_kwargs)
         
         try:
-            response = self.client.chat.completions.create(**request_params)
+            response = client.chat.completions.create(**request_params)
             
             result = response.choices[0].message.content.strip()
             
@@ -171,7 +184,7 @@ class LLMPredictor:
                     del request_params["logit_bias"]
                 
                 try:
-                    response = self.client.chat.completions.create(**request_params)
+                    response = client.chat.completions.create(**request_params)
                     result = response.choices[0].message.content.strip()
                     logging.info(f"同步调用响应（无logit_bias）: {response}")
                     self.logger.info(f"LLM API 同步调用响应（无logit_bias）: {result}")

@@ -1,0 +1,161 @@
+{
+  "id": "3808ca5b-41e",
+  "username": "admin",
+  "conversation_list": [
+    {
+      "role": "user",
+      "content": "你好"
+    },
+    {
+      "role": "assistant",
+      "content": {
+        "text": "你好！有什么问题我可以帮助你吗？",
+        "contexts": [
+          {
+            "page_content": "- 当数据条数 \\*\\*> 阈值\\*\\* 时，自动渲染「价格分布图」和「价格散点图」\n#### 📤 上传知识库文件\n- \\*\\*支持格式\\*\\*：`TXT`、`PDF`、`MD`\n- \\*\\*大小限制\\*\\*：单个文件 ≤ 200MB\n- \\*\\*操作方式\\*\\*：\n1. 点击或拖拽文件到上传区域\n2. 点击「开始上传」按钮\n3. 上传成功后，系统将\\*\\*自动重建知识库\\*\\*，期间页面会显示进度条\n4. 重建完成后会提示「数据库更新完成，可以开始提问啦！」\n> ⚠️ \\*\\*注意\\*\\*：知识库更新期间，聊天输入框将被禁用，无法提问。\n> ⚠️ \\*\\*注意\\*\\*：知识库更新期间，聊天输入框将被禁用，无法提问。\n#### 📁 文件管理\n- \\*\\*刷新文件列表\\*\\*：点击「🔄 刷新文件列表」查看当前知识库中的所有文件\n- \\*\\*文件信息\\*\\*：显示文件名、大小（MB）、修改时间\n- \\*\\*批量删除\\*\\*：\n1. 在文件列表中勾选需要删除的文件\n2. 点击右下角悬浮的「🗑️ 批量删除」按钮\n3. 在弹窗中确认删除\n4. 删除后系统同样会自动重建知识库",
+            "metadata": {
+              "chunk_index": 3,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813855",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_df9b3c141b02be72",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -0.4396393597126007
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 21,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786535",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_e21963f6ab759f34",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": -1.1418694257736206
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ Phase 7: 生成 Markdown 表格 (parse\\_material\\_response) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 根据渠道类型选择不同表头 │ │\n│ │ • 格式化价格数据为 Markdown 表格 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 8: LLM 生成回答 (stream\\_price\\_predict) │",
+            "metadata": {
+              "chunk_index": 23,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786549",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_7dfa8948e67629d1",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": -1.2172809839248657
+            }
+          },
+          {
+            "page_content": "当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n| 图表名称 | 说明 |\n|----------|------|\n| \\*\\*价格分布频数图\\*\\* | 将价格按区间分箱（默认 5 个区间），展示各区间的数量分布 |\n| \\*\\*价格散点图\\*\\* | 以时间为横轴、价格为纵轴，展示各时间点的价格分布情况 |\n### 5.3 参考文档展示差异",
+            "metadata": {
+              "chunk_index": 10,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813908",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_d5cf8ecc217ee771",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -1.2503032684326172
+            }
+          },
+          {
+            "page_content": "### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异\n### 5.3 参考文档展示差异",
+            "metadata": {
+              "chunk_index": 11,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813915",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_68cc5cac21714376",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -1.294384241104126
+            }
+          },
+          {
+            "page_content": "> 💡 \\*\\*提示\\*\\*：若问题中未包含渠道关键词（如\"信息价\"、\"厂商报价\"），系统会提示\"请提供查询渠道关键词\"。\n### 4.3 文件上传与管理流程\n#### 上传文件\n1. 在左侧边栏选择文件（支持多选）\n2. 点击「开始上传」\n3. 等待「知识库正在更新...」进度完成\n4. 更新完成后即可基于新文档提问\n#### 删除文件\n1. 点击「🔄 刷新文件列表」\n2. 勾选要删除的文件\n3. 点击右下角「🗑️ 批量删除」\n4. 在弹窗中点击「确认」\n5. 等待知识库重建完成\n---\n#### 删除文件\n1. 点击「🔄 刷新文件列表」\n2. 勾选要删除的文件\n3. 点击右下角「🗑️ 批量删除」\n4. 在弹窗中点击「确认」\n5. 等待知识库重建完成\n---\n## 五、界面交互细节\n### 5.1 知识库更新状态\n- 上传或删除文件后，页面会进入「知识库正在更新...」状态\n- 此时聊天输入框被禁用，显示「知识库更新中，暂不可提问」\n- 系统每 2 秒轮询一次任务状态，最多等待约 20000 秒（进度条会循环走动）\n- 更新成功后会自动刷新页面\n### 5.2 价格图表展示",
+            "metadata": {
+              "chunk_index": 8,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813893",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_064d9a0232c48a7b",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -1.4036895036697388
+            }
+          },
+          {
+            "page_content": "### 5.3 参考文档展示差异\n| 问答类型 | 参考文档内容 |\n|----------|--------------|\n| 知识问答 | 文档片段原文 + 文件名 + 相似度 + 检索方式 |\n| 价格推荐 | Markdown 格式的价格原始数据表格 |\n---",
+            "metadata": {
+              "chunk_index": 12,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813922",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_114f0098d366470f",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -1.6971043348312378
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 22,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786542",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_905045941c74849a",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": -1.9481192827224731
+            }
+          },
+          {
+            "page_content": "> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。\n#### 流式回答效果\n- 发送问题后，界面显示「模型思考中，请稍候...」\n- 回答内容会\\*\\*逐字流式显示\\*\\*，提升交互体验\n- 回答完成后，相关内容会自动同步到「参考文档」区域\n### 3.3 参考文档区（页面底部）\n每次对话完成后，页面底部会展示该回答所依据的参考资料：\n- \\*\\*知识问答\\*\\*：显示 RAG 检索到的文档片段，包括文件名、相似度得分、检索方式、原文内容\n- \\*\\*价格推荐\\*\\*：显示价格原始数据表格（Markdown 表格格式）\n用户可通过下拉框切换查看不同的参考文档片段。\n---\n## 四、核心操作流程\n### 4.1 知识问答流程\n1. 用户输入问题（如：\"索赔的定义是什么？\"）\n2. 系统自动识别意图为 `knowledge\\_qa`",
+            "metadata": {
+              "chunk_index": 6,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813878",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_10cd176d3e45c4ff",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": -1.9485774040222168
+            }
+          },
+          {
+            "page_content": "│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │",
+            "metadata": {
+              "chunk_index": 19,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786520",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_f672befcbb6dc73f",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": -2.2474684715270996
+            }
+          }
+        ],
+        "session_id": "3808ca5b-41e",
+        "conversation_type": "knowledge_qa"
+      }
+    }
+  ],
+  "updated_at": "2026-04-15T16:34:06.756904"
+}

@@ -1,5 +1,6 @@
 d043ae67-959
-
+nohup python -m uvicorn app.api_server:app --host 0.0.0.0 --port 8001 > logs/$(date +%Y%m%d_%H%M%S)_myapp.log
+  2>&1 &
 
   curl -s -X POST http://localhost:8001/api/v1/query/stream \
   -H "Content-Type: application/json" \

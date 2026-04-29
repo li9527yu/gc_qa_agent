@@ -1,6 +1,6 @@
 import re
 import unicodedata
-from typing import List, Tuple
+from typing import List
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -49,6 +49,27 @@ def core_name(s: str) -> str:
     """
     return strip_noise(normalize(s))
 
+
+def is_exact_match(query: str, item_name: str) -> bool:
+    """判断是否为完全匹配，优先使用核心名称，其次回退到标准化字符串。"""
+    q_core = core_name(query)
+    i_core = core_name(item_name)
+    if q_core and i_core and q_core == i_core:
+        return True
+    return normalize(query) == normalize(item_name)
+
+
+def is_prefix_match(query: str, item_name: str) -> bool:
+    """判断候选名称是否以前缀方式匹配查询词。"""
+    q_core = core_name(query)
+    i_core = core_name(item_name)
+    if q_core and i_core and len(q_core.replace(" ", "")) >= 2 and i_core.startswith(q_core):
+        return True
+
+    q_norm = normalize(query)
+    i_norm = normalize(item_name)
+    return bool(q_norm and i_norm and len(q_norm.replace(" ", "")) >= 2 and i_norm.startswith(q_norm))
+
 def containment(q: str, i: str) -> float:
     """
     计算包含度分数：
@@ -79,9 +100,9 @@ def cosine_scores(query_core: str, item_cores: List[str]) -> List[float]:
     sims = cosine_similarity(X[0:1], X[1:]).flatten().tolist()
     return sims
 
-def filter_items(query: str, items: List[dict], alpha=0.4, T_keep=0.75, T_drop=0.50) -> List[Tuple[str, float, str]]:
+def filter_items(query: str, items: List[dict], alpha=0.4, T_keep=0.75, T_drop=0.50) -> List[dict]:
     """
-    过滤和标记候选项：
+    过滤候选项：
     参数：
         query: 查询词
         items: 候选项列表
@@ -89,17 +110,40 @@ def filter_items(query: str, items: List[dict], alpha=0.4, T_keep=0.75, T_drop=0
         T_keep: 保留阈值
         T_drop: 审核阈值
     返回：
-        列表of元组(候选项, 得分, 标记)，按得分降序排序
-    标记类型：
-        - keep: 得分>=T_keep，建议保留
-        - review: T_drop<=得分<T_keep，需人工审核
-        - drop: 得分<T_drop，建议删除
+        保留的候选项列表。
+    过滤优先级：
+        1. 优先保留完全匹配
+        2. 其次保留前缀匹配
+        3. 若前两类都不存在，再回退到模糊相似度过滤
     """
+    exact_matches = []
+    prefix_matches = []
+    remaining_items = []
+
+    for item in items:
+        item_name = str(item.get("materialName", "")).strip()
+        if not item_name:
+            continue
+        if is_exact_match(query, item_name):
+            exact_matches.append(item)
+        elif is_prefix_match(query, item_name):
+            prefix_matches.append(item)
+        else:
+            remaining_items.append(item)
+
+    if exact_matches:
+        return exact_matches + prefix_matches
+    if prefix_matches:
+        return prefix_matches
+
     q_core = core_name(query)
-    i_cores = [core_name(str(x.get("materialName", "")).strip()) for x in items]
+    if not q_core or not remaining_items:
+        return remaining_items
+
+    i_cores = [core_name(str(x.get("materialName", "")).strip()) for x in remaining_items]
     cos_list = cosine_scores(q_core, i_cores)
     results = []
-    for x, i_core, cos in zip(items, i_cores, cos_list):
+    for x, i_core, cos in zip(remaining_items, i_cores, cos_list):
         C = containment(q_core, i_core)
         # 查询词较短时提高保留阈值
         _T_keep = T_keep + (0.05 if len(q_core.replace(" ","")) <= 2 else 0.0)
@@ -119,11 +163,13 @@ def filter_items(query: str, items: List[dict], alpha=0.4, T_keep=0.75, T_drop=0
 if __name__ == "__main__":
     query = "不锈钢板"
     candidates = [
-        "304不锈钢板 2.0*1250*2500",
-        "冷轧钢板 1.5*1000*2000",
-        "不锈钢卷 304 拉丝面",
-        "HRB400E 螺纹钢 Φ12",
-        "钢板切割加工服务"
+        {"materialName": "不锈钢板"},
+        {"materialName": "不锈钢板 304"},
+        {"materialName": "304不锈钢板 2.0*1250*2500"},
+        {"materialName": "冷轧钢板 1.5*1000*2000"},
+        {"materialName": "不锈钢卷 304 拉丝面"},
+        {"materialName": "HRB400E 螺纹钢 Φ12"},
+        {"materialName": "钢板切割加工服务"},
     ]
-    for name, s, tag in filter_items(query, candidates):
-        print(f"{tag:6}  {s:.3f}  {name}")
+    for item in filter_items(query, candidates):
+        print(item["materialName"])

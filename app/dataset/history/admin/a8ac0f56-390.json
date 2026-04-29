@@ -1,0 +1,161 @@
+{
+  "id": "a8ac0f56-390",
+  "username": "admin",
+  "conversation_list": [
+    {
+      "role": "user",
+      "content": "string"
+    },
+    {
+      "role": "assistant",
+      "content": {
+        "text": "提供的文档未涵盖此问题，以下回答基于我的训练知识：  \n您输入的内容为 \"string\"，请提供具体问题或需要帮助的内容，以便我为您提供更准确的回答。",
+        "contexts": [
+          {
+            "page_content": "│ │ • 预估 Token 数量 │ │\n│ │ • 预估 Token 数量 │ │\n│ │ • 如果超限，返回引导用户细化条件的提示 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 4: 价格数据查询 (\\_query\\_price\\_data) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 根据渠道调用不同 API: │ │\n│ │ │ │\n│ │ • INFORMATION\\_PRICE ──▶ \\_get\\_infor\\_material() │ │\n│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │",
+            "metadata": {
+              "chunk_index": 19,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786520",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_f672befcbb6dc73f",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 3.0514185428619385
+            }
+          },
+          {
+            "page_content": "在底部输入框中输入问题，按回车发送。系统支持以下三类意图的自动识别：\n| 用户意图 | 示例问题 | 系统行为 |\n|----------|----------|----------|\n| \\*\\*知识问答\\*\\* | \"什么是清单计价？\" | 调用 RAG 检索文档，流式生成回答 |\n| \\*\\*价格推荐\\*\\* | \"304不锈钢价格多少？\" | 查询材料价格数据库，返回分析结果和图表 |\n| \\*\\*其他问题\\*\\* | \"今天几月几号？\" | 由大模型直接回答 |\n> 🛡️ \\*\\*安全拦截\\*\\*：若检测到 `dangerous\\_sql` 意图（如\"删除数据库\"），系统将拒绝回答并提示风险。",
+            "metadata": {
+              "chunk_index": 5,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813871",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_f295de08d4fd6d18",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 2.9248263835906982
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ Phase 5: 数据过滤 (filter\\_items) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 基于材料名称进行模糊匹配 │ │\n│ │ • 计算相似度，过滤低相似度结果 │ │\n│ │ • 阈值: T\\_keep=0.75, T\\_drop=0.50, alpha=0.4 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 21,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786535",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_e21963f6ab759f34",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.867934226989746
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │\n│ Phase 7: 生成 Markdown 表格 (parse\\_material\\_response) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ • 根据渠道类型选择不同表头 │ │\n│ │ • 格式化价格数据为 Markdown 表格 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 8: LLM 生成回答 (stream\\_price\\_predict) │",
+            "metadata": {
+              "chunk_index": 23,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786549",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_7dfa8948e67629d1",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.672794818878174
+            }
+          },
+          {
+            "page_content": "# 广诚智能问答项目模型更换指南\n本文档说明如何在 项目中更换\\*\\*向量模型 (Embedding)\\*\\*、\\*\\*重排模型 (Reranker)\\*\\* 和\\*\\*大语言模型 (LLM)\\*\\*。\n---\n## 一、向量模型 (Embedding Model) 更换\n### 1.1 配置文件\n编辑 `app/embedding\\_config.py`：\n```python\n# 模型路径\nEMBEDDING\\_MODEL\\_PATH = \"/home/tpc/suda/rag/easy-rag/models/Qwen3-Embedding-0.6B\"\n# 加载器类型\nEMBEDDING\\_TYPE = \"sentence\\_transformer\"\n# 向量维度 (必须与模型输出维度一致，用于 Milvus 建表)\nEMBEDDING\\_DIMENSION = 1024\n```\n### 1.2 支持的模型与加载器\n### 1.2 支持的模型与加载器",
+            "metadata": {
+              "chunk_index": 0,
+              "source": "MODEL_SWITCHING_GUIDE_05021406.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.782625",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "MODEL_SWITCHING_GUIDE_05021406.md_e0a869b739764aad",
+              "source_file": "MODEL_SWITCHING_GUIDE_05021406.md",
+              "rerank_score": 2.6049859523773193
+            }
+          },
+          {
+            "page_content": "│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ Phase 6: 价格数据分析 (analyze\\_by\\_unit) │\n│ ┌─────────────────────────────────────────────────────────────────────────┐ │\n│ │ 1. 按 unit (单位) 分组 │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ 2. 对每组进行统计分析: │ │\n│ │ • 去除异常值 (IQR 法: Q1-1.5\\*IQR ~ Q3+1.5\\*IQR) │ │\n│ │ • 计算: 总数、有效数、价格区间、均值、中位数 │ │\n│ │ • K-means 聚类推荐价格 (判断是否分档) │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 22,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786542",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_905045941c74849a",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.452180862426758
+            }
+          },
+          {
+            "page_content": "\\*\\*A\\*\\*: 价格查询需要明确渠道，请在问题中加入\"信息价\"、\"厂商报价\"或\"智诚信息价\"等关键词。\n### Q5: 如何清空对话历史？\n\\*\\*A\\*\\*: 当前版本未提供一键清空按钮，可通过刷新浏览器页面来重置对话（文件和知识库状态不受影响）。\n---\n## 八、相关文件位置\n## 八、相关文件位置",
+            "metadata": {
+              "chunk_index": 15,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813943",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "USER_MANUAL_16953d6b.md_7c2a53c36749d5de",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 2.3798084259033203
+            }
+          },
+          {
+            "page_content": "│ │ 信息价查询 (infor/getInforMaterial) │ │\n│ │ │ │\n│ │ │ │\n│ │ • MANUFACTURER\\_PRICE ──▶ \\_get\\_factory\\_material() │ │\n│ │ 厂商报价查询 (factory/getFactoryMaterial) │ │\n│ │ │ │\n│ │ • ZC\\_PRICE ──▶ \\_get\\_zhicheng\\_info\\_material() │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ 智诚信息价查询 (zhichengInfo/getZhichengInfoMaterial) │ │\n│ │ │ │\n│ │ 所有 API 支持: Mock 模式 / 真实 API + 签名验证 │ │\n│ └─────────────────────────────────────────────────────────────────────────┘ │\n│ │ │",
+            "metadata": {
+              "chunk_index": 20,
+              "source": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.786527",
+              "content_type": "text",
+              "type": "text",
+              "chunk_id": "PROJECT_ARCHITECTURE_2ac6b651.md_0aa4982372a1ea91",
+              "source_file": "PROJECT_ARCHITECTURE_2ac6b651.md",
+              "rerank_score": 2.3328588008880615
+            }
+          },
+          {
+            "page_content": "## 八、相关文件位置\n| 文件 | 说明 |\n|------|------|\n| `/home/tpc/suda/rag/h\\_rag/server/web\\_app.py` | Streamlit 前端主程序 |\n| `/home/tpc/suda/rag/h\\_rag/server/price\\_chart\\_component.py` | 价格图表组件（ECharts） |\n| `/home/tpc/suda/rag/easy-rag/app/api\\_server.py` | FastAPI 后端主入口 |\n| `/home/tpc/suda/rag/easy-rag/app/services/rag\\_service.py` | RAG 核心服务逻辑 |\n| `/home/tpc/suda/rag/easy-rag/app/config.py` | LLM 及 API 配置 |\n| `/home/tpc/suda/rag/easy-rag/app/embedding\\_config.py` | Embedding / Reranker 配置 |",
+            "metadata": {
+              "chunk_index": 16,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813949",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_688f503244c0aefd",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 2.1884498596191406
+            }
+          },
+          {
+            "page_content": "当价格查询返回的数据量超过阈值时，回答下方会自动展开两个图表：\n| 图表名称 | 说明 |\n|----------|------|\n| \\*\\*价格分布频数图\\*\\* | 将价格按区间分箱（默认 5 个区间），展示各区间的数量分布 |\n| \\*\\*价格散点图\\*\\* | 以时间为横轴、价格为纵轴，展示各时间点的价格分布情况 |\n### 5.3 参考文档展示差异",
+            "metadata": {
+              "chunk_index": 10,
+              "source": "USER_MANUAL_16953d6b.md",
+              "file_type": "md",
+              "upload_time": "2026-04-09T22:56:24.813908",
+              "content_type": "table",
+              "type": "table",
+              "chunk_id": "USER_MANUAL_16953d6b.md_d5cf8ecc217ee771",
+              "source_file": "USER_MANUAL_16953d6b.md",
+              "rerank_score": 1.9939711093902588
+            }
+          }
+        ],
+        "session_id": "a8ac0f56-390",
+        "conversation_type": "knowledge_qa"
+      }
+    }
+  ],
+  "updated_at": "2026-04-15T16:59:29.586950"
+}
